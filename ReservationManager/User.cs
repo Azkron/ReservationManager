@@ -14,8 +14,8 @@ namespace ReservationManager
     
     public partial class User
     {
-        public int idU { get; set; }
-        public string login { get; set; }
-        public string pwd { get; set; }
+        public int Id { get; set; }
+        public string Login { get; set; }
+        public string Pwd { get; set; }
     }
 }

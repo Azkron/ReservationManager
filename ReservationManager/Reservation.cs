@@ -14,10 +14,10 @@ namespace ReservationManager
     
     public partial class Reservation
     {
-        public int numS { get; set; }
-        public int numC { get; set; }
-        public int numCat { get; set; }
-        public int nbr { get; set; }
+        public int IdShow { get; set; }
+        public int IdClient { get; set; }
+        public int IdCat { get; set; }
+        public int Number { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Client Client { get; set; }

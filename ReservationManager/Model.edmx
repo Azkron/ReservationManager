@@ -156,79 +156,79 @@
       <Schema Namespace="ReservationManager.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Category">
           <Key>
-            <PropertyRef Name="idCat" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idCat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="catName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="placesNumber" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PlacesNumber" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PriceList" Relationship="Self.FK_PriceList_Category" FromRole="Category" ToRole="PriceList" />
           <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Category" FromRole="Category" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
-            <PropertyRef Name="idC" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="clientLName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="clientFName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="postalCode" Type="Int32" />
-          <Property Name="bdd" Type="DateTime" Precision="0" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PostalCode" Type="Int32" />
+          <Property Name="Bdd" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Client" FromRole="Client" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="PriceList">
           <Key>
-            <PropertyRef Name="numS" />
-            <PropertyRef Name="numCat" />
+            <PropertyRef Name="IdShow" />
+            <PropertyRef Name="IdCat" />
           </Key>
-          <Property Name="numS" Type="Int32" Nullable="false" />
-          <Property Name="numCat" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="IdShow" Type="Int32" Nullable="false" />
+          <Property Name="IdCat" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK_PriceList_Category" FromRole="PriceList" ToRole="Category" />
           <NavigationProperty Name="Show" Relationship="Self.FK_PriceList_Show" FromRole="PriceList" ToRole="Show" />
         </EntityType>
         <EntityType Name="Reservation">
           <Key>
-            <PropertyRef Name="numS" />
-            <PropertyRef Name="numC" />
-            <PropertyRef Name="numCat" />
+            <PropertyRef Name="IdShow" />
+            <PropertyRef Name="IdClient" />
+            <PropertyRef Name="IdCat" />
           </Key>
-          <Property Name="numS" Type="Int32" Nullable="false" />
-          <Property Name="numC" Type="Int32" Nullable="false" />
-          <Property Name="numCat" Type="Int32" Nullable="false" />
-          <Property Name="nbr" Type="Int32" Nullable="false" />
+          <Property Name="IdShow" Type="Int32" Nullable="false" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="IdCat" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Reservation_Category" FromRole="Reservation" ToRole="Category" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Reservation_Client" FromRole="Reservation" ToRole="Client" />
           <NavigationProperty Name="Show" Relationship="Self.FK_Reservation_Show" FromRole="Reservation" ToRole="Show" />
         </EntityType>
         <EntityType Name="Show">
           <Key>
-            <PropertyRef Name="idS" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idS" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="showName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="showDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="poster" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Poster" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="PriceList" Relationship="Self.FK_PriceList_Show" FromRole="Show" ToRole="PriceList" />
           <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Show" FromRole="Show" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="User">
           <Key>
-            <PropertyRef Name="idU" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="idU" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="login" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="pwd" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Pwd" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="FK_PriceList_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
-              <PropertyRef Name="idCat" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PriceList">
-              <PropertyRef Name="numCat" />
+              <PropertyRef Name="IdCat" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -237,10 +237,10 @@
           <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
-              <PropertyRef Name="idCat" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reservation">
-              <PropertyRef Name="numCat" />
+              <PropertyRef Name="IdCat" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -249,10 +249,10 @@
           <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Client">
-              <PropertyRef Name="idC" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reservation">
-              <PropertyRef Name="numC" />
+              <PropertyRef Name="IdClient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -261,10 +261,10 @@
           <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Show">
-              <PropertyRef Name="idS" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PriceList">
-              <PropertyRef Name="numS" />
+              <PropertyRef Name="IdShow" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -273,10 +273,10 @@
           <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Show">
-              <PropertyRef Name="idS" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Reservation">
-              <PropertyRef Name="numS" />
+              <PropertyRef Name="IdShow" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -317,59 +317,59 @@
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="ReservationManager.Model.Category">
               <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="idCat" ColumnName="idCat" />
-                <ScalarProperty Name="catName" ColumnName="catName" />
-                <ScalarProperty Name="placesNumber" ColumnName="placesNumber" />
+                <ScalarProperty Name="Id" ColumnName="idCat" />
+                <ScalarProperty Name="Name" ColumnName="catName" />
+                <ScalarProperty Name="PlacesNumber" ColumnName="placesNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Client">
             <EntityTypeMapping TypeName="ReservationManager.Model.Client">
               <MappingFragment StoreEntitySet="Client">
-                <ScalarProperty Name="idC" ColumnName="idC" />
-                <ScalarProperty Name="clientLName" ColumnName="clientLName" />
-                <ScalarProperty Name="clientFName" ColumnName="clientFName" />
-                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
-                <ScalarProperty Name="bdd" ColumnName="bdd" />
+                <ScalarProperty Name="Id" ColumnName="idC" />
+                <ScalarProperty Name="LastName" ColumnName="clientLName" />
+                <ScalarProperty Name="FirstName" ColumnName="clientFName" />
+                <ScalarProperty Name="PostalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="Bdd" ColumnName="bdd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PriceList">
             <EntityTypeMapping TypeName="ReservationManager.Model.PriceList">
               <MappingFragment StoreEntitySet="PriceList">
-                <ScalarProperty Name="numS" ColumnName="numS" />
-                <ScalarProperty Name="numCat" ColumnName="numCat" />
-                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="IdShow" ColumnName="numS" />
+                <ScalarProperty Name="IdCat" ColumnName="numCat" />
+                <ScalarProperty Name="Price" ColumnName="price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reservation">
             <EntityTypeMapping TypeName="ReservationManager.Model.Reservation">
               <MappingFragment StoreEntitySet="Reservation">
-                <ScalarProperty Name="numS" ColumnName="numS" />
-                <ScalarProperty Name="numC" ColumnName="numC" />
-                <ScalarProperty Name="numCat" ColumnName="numCat" />
-                <ScalarProperty Name="nbr" ColumnName="nbr" />
+                <ScalarProperty Name="IdShow" ColumnName="numS" />
+                <ScalarProperty Name="IdClient" ColumnName="numC" />
+                <ScalarProperty Name="IdCat" ColumnName="numCat" />
+                <ScalarProperty Name="Number" ColumnName="nbr" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Show">
             <EntityTypeMapping TypeName="ReservationManager.Model.Show">
               <MappingFragment StoreEntitySet="Show">
-                <ScalarProperty Name="idS" ColumnName="idS" />
-                <ScalarProperty Name="showName" ColumnName="showName" />
-                <ScalarProperty Name="showDate" ColumnName="showDate" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="poster" ColumnName="poster" />
+                <ScalarProperty Name="Id" ColumnName="idS" />
+                <ScalarProperty Name="Name" ColumnName="showName" />
+                <ScalarProperty Name="Date" ColumnName="showDate" />
+                <ScalarProperty Name="Description" ColumnName="description" />
+                <ScalarProperty Name="Poster" ColumnName="poster" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="ReservationManager.Model.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="idU" ColumnName="idU" />
-                <ScalarProperty Name="login" ColumnName="login" />
-                <ScalarProperty Name="pwd" ColumnName="pwd" />
+                <ScalarProperty Name="Id" ColumnName="idU" />
+                <ScalarProperty Name="Login" ColumnName="login" />
+                <ScalarProperty Name="Pwd" ColumnName="pwd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

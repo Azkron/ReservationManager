@@ -21,9 +21,9 @@ namespace ReservationManager
             this.Reservation = new HashSet<Reservation>();
         }
     
-        public int idCat { get; set; }
-        public string catName { get; set; }
-        public int placesNumber { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int PlacesNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PriceList> PriceList { get; set; }

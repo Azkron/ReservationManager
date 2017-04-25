@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0226ba299a344756982cf53af736bccf" Name="Diagram1">
-        <EntityTypeShape EntityType="ReservationManager.Model.Category" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ReservationManager.Model.Client" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ReservationManager.Model.PriceList" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ReservationManager.Model.Reservation" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ReservationManager.Model.Show" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ReservationManager.Model.User" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+      <Diagram DiagramId="0226ba299a344756982cf53af736bccf" Name="Diagram1" ZoomLevel="112">
+        <EntityTypeShape EntityType="ReservationManager.Model.Category" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationManager.Model.Client" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationManager.Model.PriceList" Width="1.5" PointX="4.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationManager.Model.Reservation" Width="1.5" PointX="4.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationManager.Model.Show" Width="1.5" PointX="8" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReservationManager.Model.User" Width="1.5" PointX="8" PointY="2.25" IsExpanded="true" />
         <AssociationConnector Association="ReservationManager.Model.FK_PriceList_Category" ManuallyRouted="false" />
         <AssociationConnector Association="ReservationManager.Model.FK_Reservation_Category" ManuallyRouted="false" />
         <AssociationConnector Association="ReservationManager.Model.FK_Reservation_Client" ManuallyRouted="false" />

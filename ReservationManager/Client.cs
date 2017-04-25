@@ -20,11 +20,11 @@ namespace ReservationManager
             this.Reservation = new HashSet<Reservation>();
         }
     
-        public int idC { get; set; }
-        public string clientLName { get; set; }
-        public string clientFName { get; set; }
-        public Nullable<int> postalCode { get; set; }
-        public Nullable<System.DateTime> bdd { get; set; }
+        public int Id { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public Nullable<int> PostalCode { get; set; }
+        public Nullable<System.DateTime> Bdd { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservation> Reservation { get; set; }

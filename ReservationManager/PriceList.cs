@@ -14,9 +14,9 @@ namespace ReservationManager
     
     public partial class PriceList
     {
-        public int numS { get; set; }
-        public int numCat { get; set; }
-        public decimal price { get; set; }
+        public int IdShow { get; set; }
+        public int IdCat { get; set; }
+        public decimal Price { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Show Show { get; set; }
