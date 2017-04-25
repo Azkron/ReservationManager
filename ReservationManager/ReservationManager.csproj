@@ -92,6 +92,8 @@
     <Compile Include="User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="user.ext.cs" />
+    <Compile Include="Util\Util.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
