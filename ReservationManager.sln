@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservationManager", "ReservationManager\ReservationManager.csproj", "{798CE061-CDA1-4C78-A5BA-841058ACA88A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRBD_Framework", "PRBD_Framework\PRBD_Framework.csproj", "{2E922430-EAAC-4589-A8F4-F35FBB9799B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{798CE061-CDA1-4C78-A5BA-841058ACA88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{798CE061-CDA1-4C78-A5BA-841058ACA88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{798CE061-CDA1-4C78-A5BA-841058ACA88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E922430-EAAC-4589-A8F4-F35FBB9799B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E922430-EAAC-4589-A8F4-F35FBB9799B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E922430-EAAC-4589-A8F4-F35FBB9799B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E922430-EAAC-4589-A8F4-F35FBB9799B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
