@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ReservationManager.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ReservationManager.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="idCat" />
           </Key>
           <Property Name="idCat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="catName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="catName" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="placesNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Client">
@@ -18,8 +18,8 @@
             <PropertyRef Name="idC" />
           </Key>
           <Property Name="idC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="clientLName" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="clientFName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="clientLName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="clientFName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="postalCode" Type="int" />
           <Property Name="bdd" Type="date" />
         </EntityType>
@@ -48,7 +48,7 @@
             <PropertyRef Name="idS" />
           </Key>
           <Property Name="idS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="showName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="showName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="showDate" Type="date" Nullable="false" />
           <Property Name="description" Type="nvarchar(max)" />
           <Property Name="poster" Type="image" />
@@ -58,8 +58,9 @@
             <PropertyRef Name="idU" />
           </Key>
           <Property Name="idU" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="login" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="pwd" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="pwd" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="admin" Type="smallint" Nullable="false" />
         </EntityType>
         <Association Name="FK_PriceList_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
@@ -149,8 +150,7 @@
             <End Role="Reservation" EntitySet="Reservation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ReservationManager.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -159,7 +159,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PlacesNumber" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PriceList" Relationship="Self.FK_PriceList_Category" FromRole="Category" ToRole="PriceList" />
           <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Category" FromRole="Category" ToRole="Reservation" />
@@ -169,8 +169,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PostalCode" Type="Int32" />
           <Property Name="Bdd" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Client" FromRole="Client" ToRole="Reservation" />
@@ -205,7 +205,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Poster" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -217,8 +217,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Pwd" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pwd" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Admin" Type="Int16" Nullable="false" />
         </EntityType>
         <Association Name="FK_PriceList_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
@@ -367,6 +368,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="ReservationManager.Model.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Admin" ColumnName="admin" />
                 <ScalarProperty Name="Id" ColumnName="idU" />
                 <ScalarProperty Name="Login" ColumnName="login" />
                 <ScalarProperty Name="Pwd" ColumnName="pwd" />

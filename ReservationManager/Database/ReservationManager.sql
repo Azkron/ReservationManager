@@ -16,7 +16,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Category](
 	[idCat] [int] IDENTITY(1,1) NOT NULL,
-	[catName] [nchar](10) NOT NULL,
+	[catName] [nvarchar](10) NOT NULL,
 	[placesNumber] [int] NOT NULL,
  CONSTRAINT [PK_Catégorie] PRIMARY KEY CLUSTERED 
 (
@@ -32,8 +32,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Client](
 	[idC] [int] IDENTITY(1,1) NOT NULL,
-	[clientLName] [nchar](20) NOT NULL,
-	[clientFName] [nchar](20) NOT NULL,
+	[clientLName] [nvarchar](20) NOT NULL,
+	[clientFName] [nvarchar](20) NOT NULL,
 	[postalCode] [int] NULL,
 	[bdd] [date] NULL,
  CONSTRAINT [PK_Client] PRIMARY KEY CLUSTERED 
@@ -69,7 +69,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Show](
 	[idS] [int] IDENTITY(1,1) NOT NULL,
-	[showName] [nchar](20) NOT NULL,
+	[showName] [nvarchar](20) NOT NULL,
 	[showDate] [date] NOT NULL,
 	[description] [nvarchar](max) NULL,
 	[poster] [image] NULL,
@@ -104,8 +104,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[User](
 	[idU] [int] IDENTITY(1,1) NOT NULL,
-	[login] [nchar](10) NOT NULL,
-	[pwd] [nchar](10) NOT NULL,
+	[login] [nvarchar](10) NOT NULL,
+	[pwd] [nvarchar](10) NOT NULL,
+	[admin] [smallint] NOT NULL,
  CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
 (
 	[idU] ASC
@@ -116,36 +117,36 @@ GO
 SET IDENTITY_INSERT [dbo].[Category] ON 
 
 GO
-INSERT [dbo].[Category] ([idCat], [catName], [placesNumber]) VALUES (1, N'CatA      ', 50)
+INSERT [dbo].[Category] ([idCat], [catName], [placesNumber]) VALUES (1, N'CatA', 50)
 GO
-INSERT [dbo].[Category] ([idCat], [catName], [placesNumber]) VALUES (2, N'CatB      ', 100)
+INSERT [dbo].[Category] ([idCat], [catName], [placesNumber]) VALUES (2, N'CatB', 100)
 GO
-INSERT [dbo].[Category] ([idCat], [catName], [placesNumber]) VALUES (3, N'CatC      ', 200)
+INSERT [dbo].[Category] ([idCat], [catName], [placesNumber]) VALUES (3, N'CatC', 200)
 GO
 SET IDENTITY_INSERT [dbo].[Category] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Client] ON 
 
 GO
-INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd) VALUES (1, N'Albin               ',N'De Smet', 1000, CAST(N'2000-01-01' AS Date))
+INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd) VALUES (1, N'Albin',N'De Smet', 1000, CAST(N'2000-01-01' AS Date))
 GO
 INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd) 
-VALUES (2, N'Bernard             ', N'Dupond',1010, CAST(N'1998-03-02' AS Date))
+VALUES (2, N'Bernard', N'Dupond',1010, CAST(N'1998-03-02' AS Date))
 GO
 INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd) 
-VALUES (3, N'Christophe          ', N'Frere',1020, CAST(N'1978-05-04' AS Date))
+VALUES (3, N'Christophe', N'Frere',1020, CAST(N'1978-05-04' AS Date))
 GO
 INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd)
-VALUES (4, N'Danièle             ', N'Lombard',1030, CAST(N'1965-12-06' AS Date))
+VALUES (4, N'Danièle', N'Lombard',1030, CAST(N'1965-12-06' AS Date))
 GO
 INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd) 
-VALUES (5, N'Emmanuelle          ', N'Van Uit',1040, CAST(N'2005-08-05' AS Date))
+VALUES (5, N'Emmanuelle', N'Van Uit',1040, CAST(N'2005-08-05' AS Date))
 GO
 INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd) 
-VALUES (6, N'Françoise           ', N'Valporte',1050, CAST(N'1983-07-25' AS Date))
+VALUES (6, N'Françoise', N'Valporte',1050, CAST(N'1983-07-25' AS Date))
 GO
 INSERT [dbo].[Client] (idC, clientFName, clientLName,  postalCode, bdd) 
-VALUES (7, N'Gaston              ', N'Lagaffe',1060, CAST(N'1994-09-14' AS Date))
+VALUES (7, N'Gaston', N'Lagaffe',1060, CAST(N'1994-09-14' AS Date))
 GO
 SET IDENTITY_INSERT [dbo].[Client] OFF
 GO
@@ -176,11 +177,11 @@ GO
 SET IDENTITY_INSERT [dbo].Show ON 
 
 GO
-INSERT [dbo].Show (idS,showName , showDate, [description], poster) VALUES (1, N'The Spectacle !     ', CAST(N'2017-05-06' AS Date),N'Le spectacle du siècle', NULL)
+INSERT [dbo].Show (idS,showName , showDate, [description], poster) VALUES (1, N'The Spectacle !', CAST(N'2017-05-06' AS Date),N'Le spectacle du siècle', NULL)
 GO
-INSERT [dbo].Show (idS,showName , showDate, [description], poster) VALUES (2, N'Magic One           ', CAST(N'2017-05-13' AS Date), N'La magie comme vous ne l''avez jamais vue', NULL)
+INSERT [dbo].Show (idS,showName , showDate, [description], poster) VALUES (2, N'Magic One', CAST(N'2017-05-13' AS Date), N'La magie comme vous ne l''avez jamais vue', NULL)
 GO
-INSERT [dbo].Show (idS,showName , showDate, [description], poster) VALUES (3, N'Super Dance         ', CAST(N'2017-06-01' AS Date), N'Apprenez la danse', NULL)
+INSERT [dbo].Show (idS,showName , showDate, [description], poster) VALUES (3, N'Super Dance', CAST(N'2017-06-01' AS Date), N'Apprenez la danse', NULL)
 GO
 INSERT [dbo].Show (idS,showName , showDate, [description], poster) VALUES (4, N'Music All Night Long', CAST(N'2017-06-07' AS Date), N'Dansez toute la nuit !', NULL)
 GO
@@ -207,9 +208,9 @@ GO
 SET IDENTITY_INSERT [dbo].[User] ON 
 
 GO
-INSERT [dbo].[User] ([idU], [login], [pwd]) VALUES (1, N'admin     ', N'admin     ')
+INSERT [dbo].[User] ([idU], [login], [pwd], [admin]) VALUES (1, N'admin', N'admin', 1)
 GO
-INSERT [dbo].[User] ([idU], [login], [pwd]) VALUES (2, N'vendor    ', N'vendor    ')
+INSERT [dbo].[User] ([idU], [login], [pwd], [admin]) VALUES (2, N'vendor', N'vendor', 0)
 GO
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO

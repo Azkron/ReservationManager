@@ -17,5 +17,6 @@ namespace ReservationManager
         public int Id { get; set; }
         public string Login { get; set; }
         public string Pwd { get; set; }
+        public short Admin { get; set; }
     }
 }
