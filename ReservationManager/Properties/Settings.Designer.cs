@@ -26,5 +26,7 @@ namespace ReservationManager.Properties
                 return defaultInstance;
             }
         }
+
+        public string Culture { get; internal set; }
     }
 }
