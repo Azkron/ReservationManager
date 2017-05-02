@@ -39,7 +39,7 @@ namespace ReservationManager
 
         private void ColdStart()
         {
-           // Model.User.Find("DUMMY");
+            Model.User.Find(1000);
         }
 
         public static void CancelChanges()

@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace ReservationManager
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ShowsView.xaml
     /// </summary>
-    public partial class MainWindow : WindowBase
+    public partial class ShowsView : UserControlBase
     {
-        public MainWindow()
+        public ShowsView()
         {
             InitializeComponent();
         }

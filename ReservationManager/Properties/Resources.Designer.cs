@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReservationManager.Properties
-{
-
-
+namespace ReservationManager.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,49 +22,203 @@ namespace ReservationManager.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    public class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ReservationManager.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to does not exist.
+        /// </summary>
+        public static string Error_DoesNotExist {
+            get {
+                return ResourceManager.GetString("Error_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to length must be &gt;= 3.
+        /// </summary>
+        public static string Error_LengthGreaterEqual3 {
+            get {
+                return ResourceManager.GetString("Error_LengthGreaterEqual3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to must match confirm password.
+        /// </summary>
+        public static string Error_MustMatchConfirmPassword {
+            get {
+                return ResourceManager.GetString("Error_MustMatchConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to must match password.
+        /// </summary>
+        public static string Error_MustMatchPassword {
+            get {
+                return ResourceManager.GetString("Error_MustMatchPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to not available.
+        /// </summary>
+        public static string Error_NotAvailable {
+            get {
+                return ResourceManager.GetString("Error_NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to required.
+        /// </summary>
+        public static string Error_Required {
+            get {
+                return ResourceManager.GetString("Error_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to wrong password.
+        /// </summary>
+        public static string Error_WrongPassword {
+            get {
+                return ResourceManager.GetString("Error_WrongPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string LoginView_Cancel {
+            get {
+                return ResourceManager.GetString("LoginView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string LoginView_Login {
+            get {
+                return ResourceManager.GetString("LoginView_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you don´t have a login and a password, click.
+        /// </summary>
+        public static string LoginView_Message_1 {
+            get {
+                return ResourceManager.GetString("LoginView_Message_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to here.
+        /// </summary>
+        public static string LoginView_Message_2 {
+            get {
+                return ResourceManager.GetString("LoginView_Message_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to sign-up..
+        /// </summary>
+        public static string LoginView_Message_3 {
+            get {
+                return ResourceManager.GetString("LoginView_Message_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password:.
+        /// </summary>
+        public static string LoginView_Password {
+            get {
+                return ResourceManager.GetString("LoginView_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pseudo:.
+        /// </summary>
+        public static string LoginView_Pseudo {
+            get {
+                return ResourceManager.GetString("LoginView_Pseudo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string LoginView_Title {
+            get {
+                return ResourceManager.GetString("LoginView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sand Box.
+        /// </summary>
+        public static string Menu_SandBox {
+            get {
+                return ResourceManager.GetString("Menu_SandBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testing DataGrid.
+        /// </summary>
+        public static string Menu_SandBox_DataGrid {
+            get {
+                return ResourceManager.GetString("Menu_SandBox_DataGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testing Master / Detail.
+        /// </summary>
+        public static string Menu_SandBox_MasterDetail {
+            get {
+                return ResourceManager.GetString("Menu_SandBox_MasterDetail", resourceCulture);
             }
         }
     }
