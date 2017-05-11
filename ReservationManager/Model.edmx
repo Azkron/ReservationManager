@@ -173,7 +173,7 @@
           <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PostalCode" Type="Int32" />
           <Property Name="Bdd" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Client" FromRole="Client" ToRole="Reservation" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Client" FromRole="Client" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="PriceList">
           <Key>

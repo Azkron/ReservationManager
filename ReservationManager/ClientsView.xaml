@@ -1,4 +1,4 @@
-﻿<f:UserControlBase x:Class="ReservationManager.ShowsView"
+﻿<f:UserControlBase x:Class="ReservationManager.ClientsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,15 +9,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700">
     <Grid>
-        <f:MyDataGrid x:Name="dataGrid" ItemsSource="{Binding Shows}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10,10,10,35" 
-                      SelectedItem="{Binding SelectedShow}">
+        <f:MyDataGrid x:Name="dataGrid" ItemsSource="{Binding Clients}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10,10,10,35" 
+                      SelectedItem="{Binding SelectedClient}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding Path=LastName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding Path=FirstName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="Postal Code" Binding="{Binding Path=PostalCode}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
+                <DataGridTextColumn Header="Bdd" Binding="{Binding Path=Bdd, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="Reservations" Binding="{Binding Path=TotalReservations}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
 
-                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*" />
-                <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlaces}" Width="*" />
-                <DataGridTextColumn Header="Prices €" Binding="{Binding Path=Prices}" Width="*" />
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

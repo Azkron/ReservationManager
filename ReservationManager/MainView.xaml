@@ -25,6 +25,16 @@
                     <local:ShowsView/>
                 </ContentControl>
             </TabItem>
+            <TabItem x:Name="clientsTab" Header="Clients">
+                <ContentControl>
+                    <local:ClientsView/>
+                </ContentControl>
+            </TabItem>
+            <TabItem x:Name="reservationsTab" Header="Reservations">
+                <ContentControl>
+                    <local:ReservationsView/>
+                </ContentControl>
+            </TabItem>
         </TabControl>
     </Grid>
 </f:WindowBase>
