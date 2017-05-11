@@ -162,7 +162,7 @@
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PlacesNumber" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PriceList" Relationship="Self.FK_PriceList_Category" FromRole="Category" ToRole="PriceList" />
-          <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Category" FromRole="Category" ToRole="Reservation" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Category" FromRole="Category" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
@@ -209,8 +209,8 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Poster" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="PriceList" Relationship="Self.FK_PriceList_Show" FromRole="Show" ToRole="PriceList" />
-          <NavigationProperty Name="Reservation" Relationship="Self.FK_Reservation_Show" FromRole="Show" ToRole="Reservation" />
+          <NavigationProperty Name="PriceLists" Relationship="Self.FK_PriceList_Show" FromRole="Show" ToRole="PriceList" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Show" FromRole="Show" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="User">
           <Key>

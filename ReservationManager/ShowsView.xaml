@@ -7,7 +7,7 @@
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="700">
     <Grid>
         <f:MyDataGrid x:Name="dataGrid" ItemsSource="{Binding Shows}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10,10,10,35" 
                       SelectedItem="{Binding SelectedShow}">
@@ -16,6 +16,8 @@
 
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*" />
+                <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlaces}" Width="*" />
+                <DataGridTextColumn Header="Prices €" Binding="{Binding Path=Prices}" Width="*" />
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -98,13 +98,14 @@
     <Compile Include="Show.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Show.ext.cs" />
     <Compile Include="ShowsView.xaml.cs">
       <DependentUpon>ShowsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="user.ext.cs" />
+    <Compile Include="User.ext.cs" />
     <Compile Include="Util\Util.cs" />
     <Page Include="LoginView.xaml">
       <SubType>Designer</SubType>
