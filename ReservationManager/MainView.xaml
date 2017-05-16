@@ -35,6 +35,11 @@
                     <local:ReservationsView/>
                 </ContentControl>
             </TabItem>
+            <TabItem x:Name="clientEditTab" Header="Client Edit">
+                <ContentControl>
+                    <local:ClientEdit/>
+                </ContentControl>
+            </TabItem>
         </TabControl>
     </Grid>
 </f:WindowBase>

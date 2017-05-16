@@ -10,9 +10,10 @@
 namespace ReservationManager
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class Entities : DbContext
     {
         public Entities()
@@ -25,11 +26,11 @@ namespace ReservationManager
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Category> Category { get; set; }
-        public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<PriceList> PriceList { get; set; }
-        public virtual DbSet<Reservation> Reservation { get; set; }
-        public virtual DbSet<Show> Show { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<PriceList> PriceLists { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Show> Shows { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

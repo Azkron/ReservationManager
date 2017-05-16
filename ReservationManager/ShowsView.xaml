@@ -12,13 +12,13 @@
         <f:MyDataGrid x:Name="dataGrid" ItemsSource="{Binding Shows}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10,10,10,35" 
                       SelectedItem="{Binding SelectedShow}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
 
-                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*" />
                 <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlaces}" Width="*" />
                 <DataGridTextColumn Header="Prices €" Binding="{Binding Path=Prices}" Width="*" />
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteCommand, ElementName=win}" CommandParameter="{Binding}" />

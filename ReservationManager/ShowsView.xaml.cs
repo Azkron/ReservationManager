@@ -46,7 +46,7 @@ namespace ReservationManager
 
             DataContext = this;
 
-            Shows = new MyObservableCollection<Show>(App.Model.Show);
+            Shows = new MyObservableCollection<Show>(App.Model.Shows);
             
             
 
@@ -55,7 +55,7 @@ namespace ReservationManager
             RefreshCommand = new RelayCommand(() =>
             {
                 App.CancelChanges();
-                Shows.Refresh(App.Model.Show);
+                Shows.Refresh(App.Model.Shows);
             },
             () => { return IsValid; });
         }

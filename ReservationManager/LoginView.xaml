@@ -45,12 +45,12 @@
                     HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" IsDefault="True" Margin="10,0,0,0" 
                     Command="{Binding Login}"/>
         </DockPanel>
-        <DockPanel Grid.Row="3" Grid.ColumnSpan="2">
+        <!--<DockPanel Grid.Row="3" Grid.ColumnSpan="2">
             <TextBlock Height="auto" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" Width="220" >
                 <Run Text="{x:Static p:Resources.LoginView_Message_1}"/>
                 <Hyperlink Command="{Binding SignUp}"><Run Text="{x:Static p:Resources.LoginView_Message_2}"/></Hyperlink>
                 <Run Text="{x:Static p:Resources.LoginView_Message_3}"/>
             </TextBlock>
-        </DockPanel>
+        </DockPanel>-->
     </Grid>
 </f:WindowBase>

@@ -20,7 +20,7 @@ namespace ReservationManager
     /// </summary>
     public partial class App : Application
     {
-        public const string MSG_NEW_MEMBER = "MSG_NEW_MEMBER", MSG_PSEUDO_CHANGED = "MSG_PSEUDO_CHANGED", MSG_MEMBER_CHANGED = "MSG_MEMBER_CHANGED",
+        public const string MSG_NEW_MEMBER = "MSG_NEW_MEMBER", MSG_CLIENT_CHANGED = "MSG_CLIENT_CHANGED", MSG_SHOW_CLIENT = "MSG_SHOW_CLIENT",
                         MSG_SHOW_MEMBER = "MSG_SHOW_MEMBER", MSG_CLOSE_TAB = "MSG_CLOSE_TAB";
 
         public static Messenger Messenger { get; } = new Messenger();
@@ -39,7 +39,7 @@ namespace ReservationManager
 
         private void ColdStart()
         {
-            Model.User.Find(1000);
+            Model.Users.Find(1000);
         }
 
         public static void CancelChanges()

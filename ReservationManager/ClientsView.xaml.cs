@@ -1,6 +1,7 @@
 ﻿using PRBD_Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,44 @@ namespace ReservationManager
     public partial class ClientsView : UserControlBase
     {
 
-
-        public MyObservableCollection<Client> Clients { get; private set; }
+        public ICommand ClearFilter { get; set; }
+        
         public ICommand DeleteCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public bool IsValid { get; set; }
+        
+        public ClientsView()
+        {
+            InitializeComponent();
+
+            DataContext = this;
+
+            Clients = new MyObservableCollection<Client>(App.Model.Clients);
+
+            ClearFilter = new RelayCommand(() => { NameFilter = ""; });
+
+
+            SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
+
+            RefreshCommand = new RelayCommand(() =>
+            {
+                App.CancelChanges();
+                Clients.Refresh(App.Model.Clients);
+            },
+            () => { return IsValid; });
+        }
+
+        public MyObservableCollection<Client> clients;
+        public MyObservableCollection<Client> Clients
+        {
+            get { return clients; }
+            set
+            {
+                clients = value;
+                RaisePropertyChanged(nameof(Clients));
+            }
+        }
 
         Client selectedClient;
         public Client SelectedClient
@@ -39,25 +72,34 @@ namespace ReservationManager
                 Console.WriteLine(selectedClient);
             }
         }
+        
 
-        public ClientsView()
+        private string nameFilter;
+        public string NameFilter
         {
-            InitializeComponent();
-
-            DataContext = this;
-
-            Clients = new MyObservableCollection<Client>(App.Model.Client);
-
-
-
-            SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
-
-            RefreshCommand = new RelayCommand(() =>
+            get { return nameFilter; }
+            set
             {
-                App.CancelChanges();
-                Clients.Refresh(App.Model.Client);
-            },
-            () => { return IsValid; });
+                nameFilter = value;
+                ApplyFilterAction();
+                RaisePropertyChanged(nameof(NameFilter));
+                // this changes the content of filter in view if it was changed in the code (using clear() for instance)
+            }
         }
+        
+        private void ApplyFilterAction()
+        {
+            if (!string.IsNullOrEmpty(NameFilter))
+            {
+                var filtered = from m in App.Model.Clients
+                               where m.FirstName.Contains(NameFilter) || m.LastName.Contains(NameFilter)
+                               select m;
+
+                Clients = new MyObservableCollection<Client>(filtered, App.Model.Clients);
+            }
+            else
+                Clients = new MyObservableCollection<Client>(App.Model.Clients);
+        }
+        
     }
 }

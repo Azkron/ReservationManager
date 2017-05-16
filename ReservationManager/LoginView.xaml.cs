@@ -64,10 +64,10 @@ namespace ReservationManager
         private User Validate()
         {
             ClearErrors();
-            //var user = App.Model.User.Find(Pseudo);
-            //var user = from u in App.Model.User where u.Login == Pseudo select u;
-            //Enumerator user = App.Model.User.Where(u => u.Login == Pseudo).GetEnumerator();
-            User user = App.Model.User.FirstOrDefault(u => u.Login == Pseudo);
+            //var user = App.Model.Users.Find(Pseudo);
+            //var user = from u in App.Model.Users where u.Login == Pseudo select u;
+            //Enumerator user = App.Model.Users.Where(u => u.Login == Pseudo).GetEnumerator();
+            User user = App.Model.Users.FirstOrDefault(u => u.Login == Pseudo);
 
             if (string.IsNullOrEmpty(Pseudo))
             {

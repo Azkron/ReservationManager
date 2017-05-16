@@ -61,10 +61,10 @@ namespace ReservationManager
                 (tabControl.SelectedItem as TabItem).Header = s;
             });*/
 
-            /*App.Messenger.Register<Member>(App.MSG_SHOW_MEMBER, (m) =>
+            App.Messenger.Register<Client>(App.MSG_SHOW_CLIENT, (c) =>
             {
                 TabItem tab = null;
-                string Header = "<" + m.Pseudo + ">";
+                string Header = "<" + c.FullName + ">";
                 foreach (TabItem t in tabControl.Items)
                     if (t.Header.Equals(Header))
                         tab = t;
@@ -73,8 +73,8 @@ namespace ReservationManager
                 {
                     tab = new TabItem()
                     {
-                        Header = "<" + m.Pseudo + ">",
-                        Content = new MemberDetailView(m, false)
+                        Header = "<" + c.FullName + ">",
+                        Content = new ClientEdit(c, false)
                     };
 
                     AddTabControls(tab);
@@ -84,7 +84,7 @@ namespace ReservationManager
 
                 Dispatcher.InvokeAsync(() => tab.Focus());
             });
-            */
+            
             App.Messenger.Register<string>(App.MSG_CLOSE_TAB, (pseudo) =>
             {
                 string tHeader = "<" + pseudo + ">";
