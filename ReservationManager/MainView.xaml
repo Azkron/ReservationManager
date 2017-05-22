@@ -7,7 +7,7 @@
         xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
         xmlns:p="clr-namespace:ReservationManager.Properties"
         mc:Ignorable="d"
-        Title="Reservation Manager" Height="350" Width="700">
+        Title="Reservation Manager" Height="700" Width="700">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -33,11 +33,6 @@
             <TabItem x:Name="reservationsTab" Header="Reservations">
                 <ContentControl>
                     <local:ReservationsView/>
-                </ContentControl>
-            </TabItem>
-            <TabItem x:Name="clientEditTab" Header="Client Edit">
-                <ContentControl>
-                    <local:ClientEdit/>
                 </ContentControl>
             </TabItem>
         </TabControl>

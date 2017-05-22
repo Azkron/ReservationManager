@@ -21,21 +21,17 @@ using System.Windows.Shapes;
 namespace ReservationManager
 {
     /// <summary>
-    /// Interaction logic for ClientEditView.xaml
+    /// Interaction logic for ShowEdit.xaml
     /// </summary>
-    public partial class ClientEdit : UserControlBase
+    public partial class ShowEdit : UserControlBase
     {
-        public Client Client { get; set; }
-        private ReservationsView reservationsView;
+        public Show Show { get; set; }
+        //private ReservationsView reservationsView;
+        
 
-        public ClientEdit() : this(App.Model.Clients.FirstOrDefault<Client>(), false)
+        public ShowEdit(Show show, bool isNew = false)
         {
-            
-        }
-
-        public ClientEdit(Client client, bool isNew = false)
-        {
-            Client = client;
+            Show = show;
             InitializeComponent();
 
             //App.Messenger.NotifyColleagues(App.MSG_CLIENT_RESERVATION, Client);
@@ -53,12 +49,7 @@ namespace ReservationManager
             Cancel = new RelayCommand(CancelAction);
             Delete = new RelayCommand(DeleteAction, CanDeleteAction);
         }
-        
-        
 
-        private bool isNotCurrentMember = false;
-        public bool IsExiIsNotCurrentMembersting { get; set; }
-        
 
         private bool isNew;
 
@@ -74,48 +65,45 @@ namespace ReservationManager
 
         public bool IsExisting { get { return !isNew; } }
 
-        public string LastName
+        public string Name
         {
-            get { return Client.LastName; }
+            get { return Show.Name; }
             set
             {
-                Client.LastName = value;
-                RaisePropertyChanged(nameof(LastName));
+                Show.Name = value;
+                RaisePropertyChanged(nameof(Name));
                 //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
             }
         }
 
-        public string FirstName
+        public string Description
         {
-            get { return Client.FirstName; }
+            get { return Show.Description; }
             set
             {
-                Client.FirstName = value;
-                RaisePropertyChanged(nameof(FirstName));
+                Show.Description = value;
+                RaisePropertyChanged(nameof(Description));
                 //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
             }
         }
 
-        public int? PostalCode
+        public byte[] Poster
         {
-            get { return Client.PostalCode; }
+            get { return Show.Poster; }
             set
             {
-                Client.PostalCode = value;
-                RaisePropertyChanged(nameof(PostalCode));
-                //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
+                Show.Poster = value;
+                RaisePropertyChanged(nameof(Show.Poster));
             }
         }
 
-        public DateTime? Bdd
+        public DateTime Date
         {
-            get { return Client.Bdd; }
+            get { return Show.Date; }
             set
             {
-                Client.Bdd = value;
-                Console.WriteLine("value = " + value);
-                Console.WriteLine("Client.Bdd = " + Client.Bdd);
-                RaisePropertyChanged(nameof(Bdd));
+                Show.Date = value;
+                RaisePropertyChanged(nameof(Date));
                 //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
             }
         }
@@ -128,23 +116,21 @@ namespace ReservationManager
         {
             if (IsNew)
             {
-                // A small shortcut  /(.)(.)\
-                //                     |  |
-                App.Model.Clients.Add(Client);
+                App.Model.Shows.Add(Show);
                 IsNew = false;
             }
 
             App.Model.SaveChanges();
-            App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
+            App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
         }
 
         private bool CanSaveOrCancelAction()
         {
             if (IsNew)
-                return !string.IsNullOrEmpty(LastName) && !HasErrors;
+                return !string.IsNullOrEmpty(Name) && !HasErrors;
 
-            var change = (from c in App.Model.ChangeTracker.Entries<Client>()
-                          where c.Entity == Client
+            var change = (from c in App.Model.ChangeTracker.Entries<Show>()
+                          where c.Entity == Show
                           select c).FirstOrDefault();
 
             return change != null && change.State != EntityState.Unchanged;
@@ -157,17 +143,17 @@ namespace ReservationManager
         {
             Console.WriteLine("Cancel");
 
-            var change = (from c in App.Model.ChangeTracker.Entries<Client>()
-                          where c.Entity == Client
+            var change = (from c in App.Model.ChangeTracker.Entries<Show>()
+                          where c.Entity == Show
                           select c).FirstOrDefault();
 
             if (change != null)
             {
                 change.Reload();
-                RaisePropertyChanged(nameof(FirstName));
-                RaisePropertyChanged(nameof(LastName));
-                RaisePropertyChanged(nameof(PostalCode));
-                RaisePropertyChanged(nameof(Bdd));
+                RaisePropertyChanged(nameof(Name));
+                RaisePropertyChanged(nameof(Description));
+                RaisePropertyChanged(nameof(Poster));
+                RaisePropertyChanged(nameof(Date));
             }
 
             // NOT NEEDED TO CLOSE TAB ON CANCEL, IT JUST RESETS THE DATA (CODE ABOVE)
@@ -179,12 +165,12 @@ namespace ReservationManager
 
         private void DeleteAction()
         {
-            App.Model.Clients.Remove(Client);
+            App.Model.Shows.Remove(Show);
             App.Model.SaveChanges();
 
-            App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Client.FullName);
+            App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Show.Name);
 
-            App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
+            App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
         }
 
         private bool CanDeleteAction()

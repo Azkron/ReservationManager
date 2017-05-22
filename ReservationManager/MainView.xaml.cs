@@ -15,53 +15,29 @@ namespace ReservationManager
         {
             DataContext = this;
 
-            /*SandBox = new RelayCommand<string>((name) =>
-            {
-                WindowBase frm = null;
-                switch (name)
-                {
-                    case "TestDataGrid":
-                        frm = new TestDataGrid();
-                        break;
-                    case "TestMasterDetail":
-                        frm = new TestMasterDetail();
-                        break;
-                }
-
-                if (frm != null)
-                    frm.ShowDialog();
-                else
-                    Console.WriteLine("no grid");
-            });*/
-
             InitializeComponent();
-            /*
-            App.Messenger.Register(App.MSG_NEW_MEMBER,
-                () =>
-                {
-                    // Create a new instance for a new member
-                    var member = App.Model.Members.Create();
-                    // Dyamically create a new tab with the title "<new member>"
-                    var tab = new TabItem()
-                    {
-                        Header = "<new member>",
-                        Content = new MemberDetailView(member, true)
-                    };
-
-                    AddTabControls(tab);
-
-                    // Add the tab to the list of tabs existant int TabControl
-                    tabControl.Items.Add(tab);
-                    // Execute the tab´s Focus() method to give it focus (to activate it)
-                    Dispatcher.InvokeAsync(() => tab.Focus());
-                });
-
-            App.Messenger.Register<string>(App.MSG_PSEUDO_CHANGED, (s) =>
+            
+            App.Messenger.Register(App.MSG_NEW_CLIENT, () =>
             {
-                (tabControl.SelectedItem as TabItem).Header = s;
-            });*/
+                var member = App.Model.Clients.Create();
+                var tab = new TabItem()
+                {
+                    Header = "<new member>",
+                    Content = new ClientEdit(member, true)
+                };
 
-            App.Messenger.Register<Client>(App.MSG_SHOW_CLIENT, (c) =>
+                AddTabControls(tab);
+                
+                tabControl.Items.Add(tab);
+                Dispatcher.InvokeAsync(() => tab.Focus());
+            });
+
+            App.Messenger.Register<Client>(App.MSG_CLIENT_CHANGED, (c) =>
+            {
+                (tabControl.SelectedItem as TabItem).Header = "<" + c.FullName + ">";
+            });
+
+            App.Messenger.Register<Client>(App.MSG_EDIT_CLIENT, (c) =>
             {
                 TabItem tab = null;
                 string Header = "<" + c.FullName + ">";

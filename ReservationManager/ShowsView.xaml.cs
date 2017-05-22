@@ -23,9 +23,10 @@ namespace ReservationManager
     {
 
         public ICommand ClearFilter { get; set; }
-        
+
         public ICommand DeleteCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
+        public ICommand EditCommand { get; set; }
+        public ICommand NewCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public bool IsValid { get; set; }
 
@@ -39,9 +40,7 @@ namespace ReservationManager
             Shows = new MyObservableCollection<Show>(App.Model.Shows);
 
             ClearFilter = new RelayCommand(() => { NameFilter = ""; DateFilter = null; });
-
-
-            SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
+            
 
             RefreshCommand = new RelayCommand(() =>
             {

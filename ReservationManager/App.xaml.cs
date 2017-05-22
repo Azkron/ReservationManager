@@ -20,8 +20,11 @@ namespace ReservationManager
     /// </summary>
     public partial class App : Application
     {
-        public const string MSG_NEW_MEMBER = "MSG_NEW_MEMBER", MSG_CLIENT_CHANGED = "MSG_CLIENT_CHANGED", MSG_SHOW_CLIENT = "MSG_SHOW_CLIENT",
-                        MSG_SHOW_MEMBER = "MSG_SHOW_MEMBER", MSG_CLOSE_TAB = "MSG_CLOSE_TAB";
+        public const string MSG_CLIENT_RESERVATION = "MSG_CLIENT_RESERVATION",
+            MSG_NEW_CLIENT = "MSG_NEW_CLIENT", MSG_CLIENT_CHANGED = "MSG_CLIENT_CHANGED", MSG_EDIT_CLIENT = "MSG_EDIT_CLIENT",
+            MSG_NEW_SHOW = "MSG_NEW_SHOW", MSG_SHOW_CHANGED = "MSG_SHOW_CHANGED", MSG_EDIT_SHOW = "MSG_EDIT_SHOW",
+            MSG_NEW_RESERVATION = "MSG_NEW_RESERVATION", MSG_RESERVATION_CHANGED = "MSG_RESERVATION_CHANGED", MSG_EDIT_RESERVATION = "MSG_EDIT_RESERVATION", 
+            MSG_CLOSE_TAB = "MSG_CLOSE_TAB";
 
         public static Messenger Messenger { get; } = new Messenger();
 

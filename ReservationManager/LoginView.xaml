@@ -32,7 +32,6 @@
         <Label Content="{x:Static p:Resources.LoginView_Password}" Grid.Row="1" VerticalAlignment="Center" Padding="5"/>
         <f:ValidatedField Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
             <PasswordBox x:Name="txtPassword"
-                     
                      f:PasswordHelper.Attach="True"
                      f:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}" 
                      Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" />

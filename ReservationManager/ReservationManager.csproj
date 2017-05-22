@@ -99,6 +99,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Reservation.ext.cs" />
+    <Compile Include="ReservationEdit.xaml.cs">
+      <DependentUpon>ReservationEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReservationsView.xaml.cs">
       <DependentUpon>ReservationsView.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,9 @@
     <Compile Include="Show.ext.cs" />
     <Compile Include="ClientEdit.xaml.cs">
       <DependentUpon>ClientEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShowEdit.xaml.cs">
+      <DependentUpon>ShowEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShowsView.xaml.cs">
       <DependentUpon>ShowsView.xaml</DependentUpon>
@@ -137,11 +143,19 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ReservationEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ReservationsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ClientEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShowEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

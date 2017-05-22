@@ -34,10 +34,22 @@
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
 
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="*" />
-                <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlaces}" Width="*" />
-                <DataGridTextColumn Header="Prices €" Binding="{Binding Path=Prices}" Width="*" />
-                <DataGridTemplateColumn Width="*">
+                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
+                <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlaces}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
+                <DataGridTextColumn Header="Prices €" Binding="{Binding Path=Prices}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnEdit" Content="Edit" Command="{Binding EditCommand, ElementName=win}" CommandParameter="{Binding}" />
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=IsNewItem}" Value="True">
+                                    <Setter TargetName="btnEdit" Property="Visibility" Value="Collapsed"></Setter>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteCommand, ElementName=win}" CommandParameter="{Binding}" />
@@ -51,7 +63,9 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </f:MyDataGrid>
-        <Button Content="Reload" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
+        <Button Grid.Row="2" Content="New show" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
+                Command="{Binding NewCommand}" HorizontalAlignment="Right" Width="97"/>
+        <Button Content="Refresh" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding RefreshCommand}"/>
     </Grid>
 </f:UserControlBase>

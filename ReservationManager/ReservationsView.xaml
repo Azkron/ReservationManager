@@ -26,21 +26,33 @@
             </Grid.ColumnDefinitions>
             <Label Content="Date"/>
             <DatePicker SelectedDate="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="1"/>
-            <Label Content="Client" Grid.Column="2"/>
-            <TextBox Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="3"/>
+            <Label Name ="ClientFilterLabel" Content="Client" Grid.Column="2"/>
+            <TextBox Name="ClientFilterTxt" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="3"/>
             <Label Content="Show" Grid.Column="4"/>
             <TextBox Text="{Binding ShowFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="5"/>
-            <Button Content="Clear" Margin="5,0,0,0" Command="{Binding ClearFilter}" Grid.Column="6"/>
+            <Button Content="Clear" Margin="5,0,0,0" Command="{Binding ClearFilterCommand}" Grid.Column="6"/>
         </Grid>
         <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Reservations}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedReservation}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Show.Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Show.Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
 
-                <DataGridTextColumn Header="Client" Binding="{Binding Path=Client.FullName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
-                <DataGridTextColumn Header="Show" Binding="{Binding Path=Show.Name}" Width="*" />
-                <DataGridTextColumn Header="Category" Binding="{Binding Path=Category.Name}" Width="*" />
-                <DataGridTextColumn Header="Number" Binding="{Binding Path=Number}" Width="*" />
+                <DataGridTextColumn Header="Client" Binding="{Binding Path=Client.FullName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="Show" Binding="{Binding Path=Show.Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="Category" Binding="{Binding Path=Category.Name}"  CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="Number" Binding="{Binding Path=Number}"  CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnEdit" Content="Edit" Command="{Binding EditCommand, ElementName=win}" CommandParameter="{Binding}" />
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=IsNewItem}" Value="True">
+                                    <Setter TargetName="btnEdit" Property="Visibility" Value="Collapsed"></Setter>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -55,9 +67,9 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </f:MyDataGrid>
-        <Button x:Name="button" Grid.Row="2" Content="Save" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
-                Command="{Binding SaveCommand}" HorizontalAlignment="Right" Width="75"/>
-        <Button Content="Reload" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
+        <Button Grid.Row="2" Content="New Reservation" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
+                Command="{Binding NewCommand}" HorizontalAlignment="Right" Width="97"/>
+        <Button Content="Refresh" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding RefreshCommand}"/>
     </Grid>
 </f:UserControlBase>

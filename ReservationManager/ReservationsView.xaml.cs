@@ -22,12 +22,15 @@ namespace ReservationManager
     public partial class ReservationsView : UserControlBase
     {
 
-        public ICommand ClearFilter { get; set; }
+        public ICommand ClearFilterCommand { get; set; }
 
         public ICommand DeleteCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
+        public ICommand EditCommand { get; set; }
+        public ICommand NewCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public bool IsValid { get; set; }
+
+        private Client client = null;
         
         public ReservationsView()
         {
@@ -35,19 +38,32 @@ namespace ReservationManager
 
             DataContext = this;
 
+            App.Messenger.Register<Client>(App.MSG_CLIENT_RESERVATION, client => { SingleClient(client);  });
+
             Reservations = new MyObservableCollection<Reservation>(App.Model.Reservations);
 
-            ClearFilter = new RelayCommand(() => { ShowFilter = ""; ClientFilter = ""; DateFilter = null; });
+            ClearFilterCommand = new RelayCommand(() => { ClearFilter(); });
 
-
-            SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
 
             RefreshCommand = new RelayCommand(() =>
             {
-                App.CancelChanges();
+                ClearFilter();
                 Reservations.Refresh(App.Model.Reservations);
             },
             () => { return IsValid; });
+        }
+
+        private void ClearFilter()
+        {
+            ShowFilter = ""; ClientFilter = ""; DateFilter = null;
+        }
+
+        private void SingleClient(Client client)
+        {
+            this.client = client;
+            ClientFilterTxt.Visibility = Visibility.Collapsed;
+            ClientFilterLabel.Visibility = Visibility.Collapsed;
+            ApplyFilterAction();
         }
 
         private MyObservableCollection<Reservation> reservations;
@@ -114,31 +130,38 @@ namespace ReservationManager
             if (!string.IsNullOrEmpty(ShowFilter) || !string.IsNullOrEmpty(ClientFilter) || DateFilter != null)
             {
                 Console.WriteLine("On apply filter");
-                IQueryable<Reservation> filtered = App.Model.Reservations;
+                IQueryable<Reservation> filtered;
+
+                if (client == null)
+                    filtered = App.Model.Reservations;
+                else
+                    filtered = from r in App.Model.Reservations
+                               where r.Client.Id == client.Id
+                               select r;
 
                 if (DateFilter != null)
                 {
                     Console.WriteLine("On date filter");
-                    filtered = from m in filtered
-                               where DateTime.Compare(m.Show.Date, (DateTime)DateFilter) == 0
-                               select m;
+                    filtered = from r in filtered
+                               where DateTime.Compare(r.Show.Date, (DateTime)DateFilter) == 0
+                               select r;
                 }
 
                 if (!string.IsNullOrEmpty(ShowFilter))
                 {
                     Console.WriteLine("On show filter");
-                    filtered = from m in filtered
-                               where m.Show.Name.Contains(ShowFilter)
-                               select m;
+                    filtered = from r in filtered
+                               where r.Show.Name.Contains(ShowFilter)
+                               select r;
                 }
                 
                 if(!string.IsNullOrEmpty(ClientFilter))
                 {
                     Console.WriteLine("On client filter");
-                    filtered = from m in filtered
-                               where m.Client.FirstName.Contains(ClientFilter) 
-                               || m.Client.LastName.Contains(ClientFilter)
-                               select m;
+                    filtered = from r in filtered
+                               where r.Client.FirstName.Contains(ClientFilter) 
+                               || r.Client.LastName.Contains(ClientFilter)
+                               select r;
                 }
 
                 Console.WriteLine("On reservations");

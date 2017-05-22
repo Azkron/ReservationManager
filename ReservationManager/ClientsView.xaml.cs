@@ -25,9 +25,10 @@ namespace ReservationManager
     {
 
         public ICommand ClearFilter { get; set; }
-        
+
         public ICommand DeleteCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
+        public ICommand EditCommand { get; set; }
+        public ICommand NewCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public bool IsValid { get; set; }
         
@@ -40,9 +41,9 @@ namespace ReservationManager
             Clients = new MyObservableCollection<Client>(App.Model.Clients);
 
             ClearFilter = new RelayCommand(() => { NameFilter = ""; PostalCodeFilter = ""; });
+            NewCommand = new RelayCommand(() => { App.Messenger.NotifyColleagues(App.MSG_NEW_CLIENT); });
+            EditCommand = new RelayCommand<Client>((c) => { App.Messenger.NotifyColleagues(App.MSG_EDIT_CLIENT, c); });
 
-
-            SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
 
             RefreshCommand = new RelayCommand(() =>
             {
