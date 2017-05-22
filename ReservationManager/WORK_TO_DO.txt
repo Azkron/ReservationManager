@@ -1,0 +1,1 @@
+﻿make query work on shows view with DateTime and Linq

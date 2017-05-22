@@ -198,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Database\ReservationManager.sql" />
+    <Resource Include="WORK_TO_DO.txt" />
     <Resource Include="Images\unknown-user.jpg" />
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -22,12 +22,45 @@ namespace ReservationManager
     public partial class ShowsView : UserControlBase
     {
 
-
-        public MyObservableCollection<Show> Shows { get; private set; }
+        public ICommand ClearFilter { get; set; }
+        
         public ICommand DeleteCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public bool IsValid { get; set; }
+
+
+        public ShowsView()
+        {
+            InitializeComponent();
+
+            DataContext = this;
+
+            Shows = new MyObservableCollection<Show>(App.Model.Shows);
+
+            ClearFilter = new RelayCommand(() => { NameFilter = ""; DateFilter = null; });
+
+
+            SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
+
+            RefreshCommand = new RelayCommand(() =>
+            {
+                App.CancelChanges();
+                Shows.Refresh(App.Model.Shows);
+            },
+            () => { return IsValid; });
+        }
+
+        public MyObservableCollection<Show> shows;
+        public MyObservableCollection<Show> Shows
+        {
+            get { return shows; }
+            set
+            {
+                shows = value;
+                RaisePropertyChanged(nameof(Shows));
+            }
+        }
 
         Show selectedShow;
         public Show SelectedShow
@@ -40,24 +73,58 @@ namespace ReservationManager
             }
         }
 
-        public ShowsView()
+        private string nameFilter;
+        public string NameFilter
         {
-            InitializeComponent();
-
-            DataContext = this;
-
-            Shows = new MyObservableCollection<Show>(App.Model.Shows);
-            
-            
-
-            SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
-
-            RefreshCommand = new RelayCommand(() =>
+            get { return nameFilter; }
+            set
             {
-                App.CancelChanges();
-                Shows.Refresh(App.Model.Shows);
-            },
-            () => { return IsValid; });
+                nameFilter = value;
+                ApplyFilterAction();
+                RaisePropertyChanged(nameof(NameFilter));
+                // this changes the content of filter in view if it was changed in the code (using clear() for instance)
+            }
+        }
+
+        private DateTime? dateFilter;
+        public DateTime? DateFilter
+        {
+            get { return dateFilter; }
+            set
+            {
+                Console.WriteLine("DateFilterSet");
+                dateFilter = value;
+                ApplyFilterAction();
+                RaisePropertyChanged(nameof(DateFilter));
+                // this changes the content of filter in view if it was changed in the code (using clear() for instance)
+            }
+        }
+
+
+        private void ApplyFilterAction()
+        {
+            if (!string.IsNullOrEmpty(NameFilter) || DateFilter != null)
+            {
+                IQueryable<Show> filtered = App.Model.Shows;
+
+                if(DateFilter != null)
+                {
+                    filtered = from m in filtered
+                               where DateTime.Compare(m.Date, (DateTime)DateFilter) == 0
+                                   select m;
+                }
+
+                if (!string.IsNullOrEmpty(NameFilter))
+                {
+                    filtered = from m in filtered
+                               where m.Name.Contains(NameFilter)
+                               select m;
+                }
+
+                Shows = new MyObservableCollection<Show>(filtered, App.Model.Shows);
+            }
+            else
+                Shows = new MyObservableCollection<Show>(App.Model.Shows);
         }
     }
 }

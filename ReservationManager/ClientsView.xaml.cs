@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,7 +39,7 @@ namespace ReservationManager
 
             Clients = new MyObservableCollection<Client>(App.Model.Clients);
 
-            ClearFilter = new RelayCommand(() => { NameFilter = ""; });
+            ClearFilter = new RelayCommand(() => { NameFilter = ""; PostalCodeFilter = ""; });
 
 
             SaveCommand = new RelayCommand(() => { App.Model.SaveChanges(); }, () => { return IsValid; });
@@ -72,7 +73,7 @@ namespace ReservationManager
                 Console.WriteLine(selectedClient);
             }
         }
-        
+
 
         private string nameFilter;
         public string NameFilter
@@ -83,17 +84,46 @@ namespace ReservationManager
                 nameFilter = value;
                 ApplyFilterAction();
                 RaisePropertyChanged(nameof(NameFilter));
-                // this changes the content of filter in view if it was changed in the code (using clear() for instance)
             }
         }
-        
+
+        private string postalCodeFilter;
+        public string PostalCodeFilter
+        {
+            get { return postalCodeFilter; }
+            set
+            {
+                postalCodeFilter = Regex.Replace(value, "[^0-9.]", "");
+                if(postalCodeFilter.Length > 4)
+                    postalCodeFilter = postalCodeFilter.Substring(0, 4);
+                if (!string.IsNullOrEmpty(PostalCodeFilter))
+                    Console.WriteLine(Int32.Parse(PostalCodeFilter));
+
+                ApplyFilterAction();
+                RaisePropertyChanged(nameof(PostalCodeFilter));
+            }
+        }
+
         private void ApplyFilterAction()
         {
-            if (!string.IsNullOrEmpty(NameFilter))
+            if (!string.IsNullOrEmpty(NameFilter) || !string.IsNullOrEmpty(PostalCodeFilter))
             {
-                var filtered = from m in App.Model.Clients
-                               where m.FirstName.Contains(NameFilter) || m.LastName.Contains(NameFilter)
-                               select m;
+                IQueryable<Client> filtered = App.Model.Clients;
+
+                if (!string.IsNullOrEmpty(NameFilter))
+                {
+                    filtered = from c in filtered
+                               where c.FirstName.Contains(NameFilter) || c.LastName.Contains(NameFilter)
+                               select c;
+                }
+
+                if (!string.IsNullOrEmpty(PostalCodeFilter))
+                {
+                    int? pCFilter = Convert.ToInt32(PostalCodeFilter);
+                    filtered = from c in filtered
+                               where c.PostalCode == pCFilter
+                               select c;
+                }
 
                 Clients = new MyObservableCollection<Client>(filtered, App.Model.Clients);
             }

@@ -34,6 +34,12 @@ namespace ReservationManager
             //Thread.CurrentThread.CurrentUICulture = new CultureInfo(Settings.Default.Culture);
             PrepareDatabase();
             ColdStart();
+
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Settings.Default.Culture);
+
+            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
+            ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            Thread.CurrentThread.CurrentCulture = ci;
             //TestingEntityFramework();
         }
 

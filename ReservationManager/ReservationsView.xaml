@@ -9,7 +9,30 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700">
     <Grid>
-        <f:MyDataGrid x:Name="dataGrid" ItemsSource="{Binding Reservations}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10,10,10,35" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Date"/>
+            <DatePicker SelectedDate="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="1"/>
+            <Label Content="Client" Grid.Column="2"/>
+            <TextBox Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="3"/>
+            <Label Content="Show" Grid.Column="4"/>
+            <TextBox Text="{Binding ShowFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="5"/>
+            <Button Content="Clear" Margin="5,0,0,0" Command="{Binding ClearFilter}" Grid.Column="6"/>
+        </Grid>
+        <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Reservations}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedReservation}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Show.Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
@@ -32,9 +55,9 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </f:MyDataGrid>
-        <Button x:Name="button" Content="Save" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
+        <Button x:Name="button" Grid.Row="2" Content="Save" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding SaveCommand}" HorizontalAlignment="Right" Width="75"/>
-        <Button Content="Reload" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
+        <Button Content="Reload" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding RefreshCommand}"/>
     </Grid>
 </f:UserControlBase>
