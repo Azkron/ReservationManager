@@ -30,36 +30,19 @@
         </Grid>
         <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Clients}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedClient}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding EditCommand}"
+                                           CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Last Name" Width="*"  Binding="{Binding Path=LastName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
                 <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding Path=FirstName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
                 <DataGridTextColumn Header="Postal Code" Width="*" Binding="{Binding Path=PostalCode}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
                 <DataGridTextColumn Header="Bdd" Width="*" Binding="{Binding Path=Bdd, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
                 <DataGridTextColumn Header="Reservations" Width="*" Binding="{Binding Path=TotalReservations}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="btnEdit" Content="Edit" Command="{Binding EditCommand, ElementName=win}" CommandParameter="{Binding}" />
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=IsNewItem}" Value="True">
-                                    <Setter TargetName="btnEdit" Property="Visibility" Value="Collapsed"></Setter>
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteCommand, ElementName=win}" CommandParameter="{Binding}" />
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=IsNewItem}" Value="True">
-                                    <Setter TargetName="btnDelete" Property="Visibility" Value="Collapsed"></Setter>
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
         </f:MyDataGrid>
         <Button Grid.Row="2" Content="New Client" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"

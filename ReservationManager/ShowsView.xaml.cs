@@ -40,7 +40,9 @@ namespace ReservationManager
             Shows = new MyObservableCollection<Show>(App.Model.Shows);
 
             ClearFilter = new RelayCommand(() => { NameFilter = ""; DateFilter = null; });
-            
+            NewCommand = new RelayCommand(() => { App.Messenger.NotifyColleagues(App.MSG_NEW_SHOW);});
+            EditCommand = new RelayCommand<Show>((s) => { App.Messenger.NotifyColleagues(App.MSG_EDIT_SHOW, s); });
+
 
             RefreshCommand = new RelayCommand(() =>
             {

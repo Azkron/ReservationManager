@@ -32,6 +32,11 @@ namespace ReservationManager
 
         public static User CurrentUser { get; set; }
 
+        public static Right Rights(Table table)
+        {
+            return CurrentUser.GetRights(table);
+        }
+
         public App()
         {
             //Thread.CurrentThread.CurrentUICulture = new CultureInfo(Settings.Default.Culture);

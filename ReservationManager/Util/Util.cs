@@ -1,8 +1,8 @@
 ﻿
 
-namespace Util
+namespace ReservationManager
 {
-    public enum Rights
+    public enum Right
     {
         ALL,
         READ,

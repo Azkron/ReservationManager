@@ -29,8 +29,7 @@ namespace ReservationManager
         public ICommand NewCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public bool IsValid { get; set; }
-
-        private Client client = null;
+        
         
         public ReservationsView()
         {
@@ -38,7 +37,7 @@ namespace ReservationManager
 
             DataContext = this;
 
-            App.Messenger.Register<Client>(App.MSG_CLIENT_RESERVATION, client => { SingleClient(client);  });
+            baseQuery = App.Model.Reservations;
 
             Reservations = new MyObservableCollection<Reservation>(App.Model.Reservations);
 
@@ -58,13 +57,35 @@ namespace ReservationManager
             ShowFilter = ""; ClientFilter = ""; DateFilter = null;
         }
 
-        private void SingleClient(Client client)
+        private Client client = null;
+        public Client Client
         {
-            this.client = client;
-            ClientFilterTxt.Visibility = Visibility.Collapsed;
-            ClientFilterLabel.Visibility = Visibility.Collapsed;
-            ApplyFilterAction();
+            set
+            {
+                client = value;
+                if (client != null)
+                {
+                    baseQuery = from r in App.Model.Reservations where r.Client.Id == client.Id select r;
+                    ClientFilterTxt.Visibility = Visibility.Collapsed;
+                    ClientFilterLabel.Visibility = Visibility.Collapsed;
+                    ApplyFilterAction();
+                }
+                else
+                {
+                    baseQuery = App.Model.Reservations;
+                    ClientFilterTxt.Visibility = Visibility.Visible;
+                    ClientFilterLabel.Visibility = Visibility.Visible;
+                    ApplyFilterAction();
+                }
+            }
+
+            get
+            {
+                return client;
+            }
         }
+
+        private IQueryable<Reservation> baseQuery;
 
         private MyObservableCollection<Reservation> reservations;
         public MyObservableCollection<Reservation> Reservations
@@ -129,19 +150,10 @@ namespace ReservationManager
         {
             if (!string.IsNullOrEmpty(ShowFilter) || !string.IsNullOrEmpty(ClientFilter) || DateFilter != null)
             {
-                Console.WriteLine("On apply filter");
-                IQueryable<Reservation> filtered;
-
-                if (client == null)
-                    filtered = App.Model.Reservations;
-                else
-                    filtered = from r in App.Model.Reservations
-                               where r.Client.Id == client.Id
-                               select r;
+                IQueryable<Reservation> filtered = baseQuery;
 
                 if (DateFilter != null)
                 {
-                    Console.WriteLine("On date filter");
                     filtered = from r in filtered
                                where DateTime.Compare(r.Show.Date, (DateTime)DateFilter) == 0
                                select r;
@@ -149,7 +161,6 @@ namespace ReservationManager
 
                 if (!string.IsNullOrEmpty(ShowFilter))
                 {
-                    Console.WriteLine("On show filter");
                     filtered = from r in filtered
                                where r.Show.Name.Contains(ShowFilter)
                                select r;
@@ -157,18 +168,16 @@ namespace ReservationManager
                 
                 if(!string.IsNullOrEmpty(ClientFilter))
                 {
-                    Console.WriteLine("On client filter");
                     filtered = from r in filtered
                                where r.Client.FirstName.Contains(ClientFilter) 
                                || r.Client.LastName.Contains(ClientFilter)
                                select r;
                 }
-
-                Console.WriteLine("On reservations");
+;
                 Reservations = new MyObservableCollection<Reservation>(filtered, App.Model.Reservations);
             }
             else
-                Reservations = new MyObservableCollection<Reservation>(App.Model.Reservations);
+                Reservations = new MyObservableCollection<Reservation>(baseQuery, App.Model.Reservations);
         }
     }
 }

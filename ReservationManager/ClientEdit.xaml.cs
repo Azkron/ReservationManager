@@ -26,7 +26,8 @@ namespace ReservationManager
     public partial class ClientEdit : UserControlBase
     {
         public Client Client { get; set; }
-        private ReservationsView reservationsView;
+
+        private ReservationsView reservations = null;
 
         public ClientEdit() : this(App.Model.Clients.FirstOrDefault<Client>(), false)
         {
@@ -35,29 +36,36 @@ namespace ReservationManager
 
         public ClientEdit(Client client, bool isNew = false)
         {
+            DataContext = this;
             Client = client;
             InitializeComponent();
 
-            //App.Messenger.NotifyColleagues(App.MSG_CLIENT_RESERVATION, Client);
-            /*reservationsView = new ReservationsView();
-            Console.WriteLine(reservationsView);
-            if (reservationsView == null)
-                Console.WriteLine("reservationsView == null");
-            else
-                ReservationsPanel.Children.Add(reservationsView);*/
-
-            DataContext = this;
+            ReadOnly = App.Rights(Table.CLIENT) != Right.ALL;
             IsNew = isNew;
+
+            reservations = Reservations.Content as ReservationsView;
+            reservations.Client = Client;
 
             Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
             Cancel = new RelayCommand(CancelAction);
             Delete = new RelayCommand(DeleteAction, CanDeleteAction);
         }
-        
-        
 
-        private bool isNotCurrentMember = false;
-        public bool IsExiIsNotCurrentMembersting { get; set; }
+        private bool readOnly;
+        public bool ReadOnly
+        {
+            get { return !readOnly; }
+
+            set
+            {
+                readOnly = value;
+                if(readOnly)
+                {
+                    btnDelete.Visibility = Visibility.Collapsed;
+                    btnSave.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
         
 
         private bool isNew;
