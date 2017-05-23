@@ -25,36 +25,41 @@ namespace ReservationManager
     /// </summary>
     public partial class ClientEdit : UserControlBase
     {
+
+
+        public ICommand SaveCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        public ICommand TestCommand { get; set; }
+
         public Client Client { get; set; }
 
         private ReservationsView reservations = null;
-
-        public ClientEdit() : this(App.Model.Clients.FirstOrDefault<Client>(), false)
-        {
-            
-        }
-
+        
         public ClientEdit(Client client, bool isNew = false)
         {
-            DataContext = this;
             Client = client;
+
             InitializeComponent();
+
+            DataContext = this;
 
             ReadOnly = App.Rights(Table.CLIENT) != Right.ALL;
             IsNew = isNew;
 
             reservations = Reservations.Content as ReservationsView;
             reservations.Client = Client;
-
-            Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
-            Cancel = new RelayCommand(CancelAction);
-            Delete = new RelayCommand(DeleteAction, CanDeleteAction);
+            
+            SaveCommand = new RelayCommand(SaveAction, CanSaveOrCancelAction);
+            CancelCommand = new RelayCommand(CancelAction);
+            DeleteCommand = new RelayCommand(DeleteAction, CanDeleteAction);
+            
         }
 
         private bool readOnly;
         public bool ReadOnly
         {
-            get { return !readOnly; }
+            get { return readOnly; }
 
             set
             {
@@ -63,7 +68,10 @@ namespace ReservationManager
                 {
                     btnDelete.Visibility = Visibility.Collapsed;
                     btnSave.Visibility = Visibility.Collapsed;
+                    btnCancel.Visibility = Visibility.Collapsed;
                 }
+
+                RaisePropertyChanged(nameof(ReadOnly));
             }
         }
         
@@ -121,23 +129,15 @@ namespace ReservationManager
             set
             {
                 Client.Bdd = value;
-                Console.WriteLine("value = " + value);
-                Console.WriteLine("Client.Bdd = " + Client.Bdd);
                 RaisePropertyChanged(nameof(Bdd));
                 //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
             }
         }
 
-
-
-        public ICommand Save { get; set; }
-
         private void SaveAction()
         {
             if (IsNew)
             {
-                // A small shortcut  /(.)(.)\
-                //                     |  |
                 App.Model.Clients.Add(Client);
                 IsNew = false;
             }
@@ -159,12 +159,8 @@ namespace ReservationManager
         }
 
 
-        public ICommand Cancel { get; set; }
-
         private void CancelAction()
         {
-            Console.WriteLine("Cancel");
-
             var change = (from c in App.Model.ChangeTracker.Entries<Client>()
                           where c.Entity == Client
                           select c).FirstOrDefault();
@@ -183,7 +179,7 @@ namespace ReservationManager
             //App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Pseudo);
         }
 
-        public ICommand Delete { get; set; }
+
 
         private void DeleteAction()
         {

@@ -1,4 +1,4 @@
-﻿<f:UserControlBase x:Class="ReservationManager.ClientEdit"
+﻿<f:UserControlBase x:Name="win" x:Class="ReservationManager.ClientEdit"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -31,29 +31,29 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- ROW #1 -->
-        <Label Content="Last Name :" />
-            <TextBox x:Name="txtLastName" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsExisting}" VerticalAlignment="Center" />
+            <Label Content="Last Name :" />
+            <TextBox x:Name="txtLastName" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
         <!-- ROW #2 -->
         <Label Content="First Name :" Grid.Row="1"/>
-            <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsExisting}" VerticalAlignment="Center" />
+            <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
         <!-- ROW #3 -->
         <Label Content="Bdd :" Grid.Row="2"/>
             <DatePicker x:Name="txtBdd" Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Bdd, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
                 <DatePicker.Resources>
                     <Style TargetType="DatePickerTextBox">
-                        <Setter Property="IsReadOnly" Value="{Binding IsExisting}"/>
+                        <Setter Property="IsReadOnly" Value="{Binding ReadOnly}"/>
                     </Style>
                 </DatePicker.Resources>
             </DatePicker>
             <!-- ROW #4 -->
         <Label Content="Postal Code :" Grid.Row="3"/>
-            <TextBox x:Name="txtPostalCode" Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsExisting}" VerticalAlignment="Center" />
+            <TextBox x:Name="txtPostalCode" Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
         
         <!-- ROW #4 -->
         <WrapPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Width="166">
-            <Button x:Name="btnCancel" Content="Cancel" Command="{Binding Cancel}" Width="auto" Padding="5,1"/>
-            <Button x:Name="btnSave" Content="Save" Command="{Binding Save}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
-            <Button x:Name="btnDelete" Content="Delete" Command="{Binding Delete}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
+        <Button x:Name="btnCancel" Content="Cancel" Command="{Binding CancelCommand}" Width="auto" Padding="5,1"/>
+        <Button x:Name="btnSave" Content="Save" Command="{Binding SaveCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
+        <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
         </WrapPanel>
         </Grid>
         <DockPanel Grid.Row="1"  Margin="0,0,5,0">
