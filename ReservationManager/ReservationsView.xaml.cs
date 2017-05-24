@@ -47,12 +47,23 @@ namespace ReservationManager
             
             RefreshCommand = new RelayCommand(() =>
             {
-                ClearFilter();
-                Reservations.Refresh(App.Model.Reservations);
+                Refresh();
+                //Reservations.Refresh(baseQuery);
             },
             () => { return IsValid; });
         }
 
+        private void Refresh()
+        {
+            ClearFilter();
+            if (showId != null)
+                Show = (from s in App.Model.Shows where s.Id == showId select s).FirstOrDefault();
+            else if(clientId != null)
+                Client = (from c in App.Model.Clients where c.Id == clientId select c).FirstOrDefault();
+            SelectedReservation = null;
+            SetMode();
+
+        }
 
         private bool readOnly;
         public bool ReadOnly
@@ -69,36 +80,68 @@ namespace ReservationManager
             }
         }
 
+        private void SetMode()
+        {
+            if (Show != null)
+            {
+                baseQuery = from r in App.Model.Reservations where r.Show.Id == show.Id select r;
+                ShowFilterTxt.Visibility = Visibility.Collapsed;
+                ShowFilterLabel.Visibility = Visibility.Collapsed;
+                ApplyFilterAction();
+            }
+            else if (Client != null)
+            {
+                baseQuery = from r in App.Model.Reservations where r.Client.Id == client.Id select r;
+                ClientFilterTxt.Visibility = Visibility.Collapsed;
+                ClientFilterLabel.Visibility = Visibility.Collapsed;
+                ApplyFilterAction();
+            }
+            else
+            {
+                baseQuery = App.Model.Reservations;
+                ShowFilterTxt.Visibility = Visibility.Visible;
+                ShowFilterLabel.Visibility = Visibility.Visible;
+                ApplyFilterAction();
+            }
+
+        }
+
         private void ClearFilter()
         {
             ShowFilter = ""; ClientFilter = ""; DateFilter = null;
         }
 
+        private int? clientId = null;//To recover the client in case of an App.CancelChanges or something similar
         private Client client = null;
         public Client Client
         {
             set
             {
                 client = value;
-                if (client != null)
-                {
-                    baseQuery = from r in App.Model.Reservations where r.Client.Id == client.Id select r;
-                    ClientFilterTxt.Visibility = Visibility.Collapsed;
-                    ClientFilterLabel.Visibility = Visibility.Collapsed;
-                    ApplyFilterAction();
-                }
-                else
-                {
-                    baseQuery = App.Model.Reservations;
-                    ClientFilterTxt.Visibility = Visibility.Visible;
-                    ClientFilterLabel.Visibility = Visibility.Visible;
-                    ApplyFilterAction();
-                }
+                clientId = client.Id;
+                SetMode();
             }
 
             get
             {
                 return client;
+            }
+        }
+
+        private int? showId = null;//To recover the client in case of an App.CancelChanges or something similar
+        private Show show = null;
+        public Show Show
+        {
+            set
+            {
+                show = value;
+                showId = show.Id;
+                SetMode();
+            }
+
+            get
+            {
+                return show;
             }
         }
 

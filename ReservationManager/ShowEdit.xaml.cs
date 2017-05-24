@@ -25,13 +25,19 @@ namespace ReservationManager
     /// </summary>
     public partial class ShowEdit : UserControlBase
     {
-        public Show Show { get; set; }
+        public int? showId = null;// save the id of the show in case the model gets reloaded from other tab
+        private Show show = null;
+        public Show Show { get { return show; } set { show = value;  showId = Show.Id; } }
         //private ReservationsView reservationsView;
 
         public ICommand DeleteCommand { get; set; }
         public ICommand DeletePriceCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand LoadImage { get; set; }
+        public ICommand ClearImage { get; set; }
+
+        private ReservationsView reservations = null;
 
         public ShowEdit(Show show, bool isNew = false)
         {
@@ -43,12 +49,37 @@ namespace ReservationManager
             ReadOnly = App.Rights(Table.SHOW) != Right.ALL;
             IsNew = isNew;
 
+            reservations = Reservations.Content as ReservationsView;
+            reservations.Show = Show;
+            HasReservationsTxt = null;
+            Category = null;
+
             SaveCommand = new RelayCommand(SaveAction, CanSaveOrCancelAction);
             CancelCommand = new RelayCommand(CancelAction, CanSaveOrCancelAction);
             DeleteCommand = new RelayCommand(DeleteAction, CanDeleteAction);
             DeletePriceCommand = new RelayCommand(DeletePriceAction);
+            LoadImage = new RelayCommand(LoadImageAction);
+            ClearImage = new RelayCommand(ClearImageAction);
         }
 
+        private void Refresh()
+        {
+            Show = (from s in App.Model.Shows where s.Id == showId select s).FirstOrDefault();
+            
+            PriceList = null;
+            Category = null;
+            categories = null;
+            HasReservationsTxt = null;
+            RaisePropertyChanged(nameof(Categories));
+            //RaisePropertyChanged(nameof(Category));
+            Show.RefreshStrings();
+            RaisePropertyChanged(nameof(Price));
+            RaisePropertyChanged(nameof(Show));
+            RaisePropertyChanged(nameof(ShowName));
+            RaisePropertyChanged(nameof(Description));
+            RaisePropertyChanged(nameof(Poster));
+            RaisePropertyChanged(nameof(Date));
+        }
 
         private bool isNew;
 
@@ -87,7 +118,7 @@ namespace ReservationManager
                     txtPrice.Visibility = Visibility.Collapsed;
                     txtCurrency.Visibility = Visibility.Collapsed;
                     btnDeletePrice.Visibility = Visibility.Collapsed;
-                    txtHasReservatoins.Visibility = Visibility.Collapsed;
+                    lblPriceHasReservations.Visibility = Visibility.Collapsed;
                     RaisePropertyChanged(nameof(Category));
                     RaisePropertyChanged(nameof(Price));
                     Show.RefreshStrings();
@@ -115,16 +146,17 @@ namespace ReservationManager
 
                     int ResCount = Show.ReservationsCount(Category.Id);
                     if (ResCount > 0)
-                        HasReservationsTxt = ResCount + " reservations !!!";
+                        HasReservationsPriceTxt = ResCount + " reservations !!!";
                     else
-                        HasReservationsTxt = "No reservations";
+                        HasReservationsPriceTxt = "No reservations";
 
                     confirmDelete = false;
+                    confirmPriceDelete = false;
                     DeletePriceTxt = "Delete";
                     txtPrice.Visibility = Visibility.Visible;
                     txtCurrency.Visibility = Visibility.Visible;
                     btnDeletePrice.Visibility = Visibility.Visible;
-                    txtHasReservatoins.Visibility = Visibility.Visible;
+                    lblPriceHasReservations.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -140,14 +172,41 @@ namespace ReservationManager
             }
         }
 
-        private string hasReservationsTxt = "";
-        public string HasReservationsTxt
+        private string deleteTxt = "Delete";
+        public string DeleteTxt
         {
-            get { return hasReservationsTxt; }
+            get { return deleteTxt; }
             set
             {
-                hasReservationsTxt = value;
-                RaisePropertyChanged(nameof(HasReservationsTxt));
+                deleteTxt = value;
+                RaisePropertyChanged(nameof(deleteTxt));
+            }
+        }
+
+        private string hasReservationsTxt = null;
+        public string HasReservationsTxt
+        {
+            get {  return hasReservationsTxt; }
+            set
+            {
+                int ResCount = Show.Reservations.Count;
+                if (ResCount > 0)
+                    hasReservationsTxt = ResCount + " reservations !!!";
+                else
+                    hasReservationsTxt = "No reservations";
+
+                RaisePropertyChanged(nameof(HasReservationsPriceTxt));
+            }
+        }
+
+        private string hasReservationsPriceTxt = "";
+        public string HasReservationsPriceTxt
+        {
+            get { return hasReservationsPriceTxt; }
+            set
+            {
+                hasReservationsPriceTxt = value;
+                RaisePropertyChanged(nameof(HasReservationsPriceTxt));
             }
         }
 
@@ -210,6 +269,10 @@ namespace ReservationManager
                     btnDelete.Visibility = Visibility.Collapsed;
                     btnSave.Visibility = Visibility.Collapsed;
                     btnCancel.Visibility = Visibility.Collapsed;
+                    btnLoad.Visibility = Visibility.Collapsed;
+                    btnClear.Visibility = Visibility.Collapsed;
+                    lblSetPrice.Visibility = Visibility.Collapsed;
+                    gridSetPrice.Visibility = Visibility.Collapsed;
                 }
 
                 RaisePropertyChanged(nameof(ReadOnly));
@@ -308,21 +371,8 @@ namespace ReservationManager
 
             if(changePrice != null || changeShow != null)
             {
-                int showId = Show.Id;
                 App.CancelChanges();
-                Show = (from s in App.Model.Shows where s.Id == showId select s).FirstOrDefault();
-                PriceList = null;
-                Category = null;
-                categories = null;
-                RaisePropertyChanged(nameof(Categories));
-                RaisePropertyChanged(nameof(Category));
-                RaisePropertyChanged(nameof(Price));
-                Show.RefreshStrings();
-                RaisePropertyChanged(nameof(Show));
-                RaisePropertyChanged(nameof(ShowName));
-                RaisePropertyChanged(nameof(Description));
-                RaisePropertyChanged(nameof(Poster));
-                RaisePropertyChanged(nameof(Date));
+                Refresh();
             }
 
             // NOT NEEDED TO CLOSE TAB ON CANCEL, IT JUST RESETS THE DATA (CODE ABOVE)
@@ -331,25 +381,48 @@ namespace ReservationManager
         }
 
 
+        private bool confirmDelete = false;
         private void DeleteAction()
         {
-            App.Model.Shows.Remove(Show);
-            App.Model.SaveChanges();
+            if (Show.Reservations.Count != 0)
+            {
+                if (!confirmDelete)
+                {
+                    confirmDelete = true;
+                    DeleteTxt = "CONFIRM";
+                }
+                else
+                {
+                    show.Reservations.Clear();
+                    show.PriceLists.Clear();
 
-            App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Show.Name);
+                    App.Model.Shows.Remove(show);
+                    App.Model.SaveChanges();
+                    App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Show.Name);
+                    
+                }
+            }
+            else
+            {
+                show.Reservations.Clear();
+                show.PriceLists.Clear();
 
-            //App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
+                App.Model.Shows.Remove(show);
+                App.Model.SaveChanges();
+                App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Show.Name);
+            }
+            
         }
 
-        private bool confirmDelete = false;
+        private bool confirmPriceDelete = false;
 
         private void DeletePriceAction()
         {
             if (Show.ReservationsCount(Category.Id) != 0)
             {
-                if(!confirmDelete)
+                if(!confirmPriceDelete)
                 {
-                    confirmDelete = true;
+                    confirmPriceDelete = true;
                     DeletePriceTxt = "CONFIRM";
                 }
                 else
@@ -359,6 +432,7 @@ namespace ReservationManager
 
                     App.Model.PriceLists.Remove(PriceList);
 
+                    HasReservationsTxt = null;
                     Category = null;
                 }
             }
@@ -377,68 +451,42 @@ namespace ReservationManager
         {
             return IsExisting;
         }
-        /*
-        private class CatRow
+
+        private void LoadImageAction()
         {
-            private Category cat;
-            private Show Show;
-            private string name;
-
-
-            public CatRow(Show show, Category cat)
+            var fd = new OpenFileDialog();
+            if (fd.ShowDialog() == true)
             {
-                this.cat = cat;
-                this.Show = show;
-
-            }
-
-            
-            PriceList PriceList
-            {
-                get { return (from p in Show.PriceLists where p.IdCat == cat.Id select p).FirstOrDefault(null); }
-                set
+                var filename = fd.FileName;
+                if (filename != null && File.Exists(filename))
                 {
-                    Show.PriceLists.Add(value);
-                }
-            }
+                    var img = System.Drawing.Image.FromFile(filename);
+                    var ms = new MemoryStream();
+                    var ext = System.IO.Path.GetExtension(filename).ToUpper();
 
-            private bool isActive;
-            bool IsActive
-            {
-                get { return PriceList != null; }
-
-                set
-                {
-                    isActive = value;
-                    if (isActive && PriceList == null)
+                    switch (ext)
                     {
-                        PriceList = new PriceList();
-                        PriceList.Show = show;
-                        PriceList.Category = cat;
-                        PriceList.Price = 10;
+                        case ".PNG":
+                            img.Save(ms, ImageFormat.Png);
+                            break;
+                        case ".GIF":
+                            img.Save(ms, ImageFormat.Gif);
+                            break;
+                        case ".JPG":
+                            img.Save(ms, ImageFormat.Jpeg);
+                            break;
                     }
+
+                    Poster = ms.ToArray();
                 }
             }
+        }
+        
 
-            
-            public decimal? Price
-            {
-                get { return PriceList != null ? (decimal?)PriceList.Price : null; }
-
-                set
-                {
-                    if (PriceList != null)
-                        PriceList.Price = (decimal)value;
-                    else
-                        throw new SystemException("Can´t set the price of a category without a pricelist");
-                }
-            }
-
-            //Category
-            //Price
-            //Name
-            //IsActive
-        }*/
+        private void ClearImageAction()
+        {
+            Poster = null;
+        }
 
     }
 }

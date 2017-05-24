@@ -28,11 +28,11 @@
             <DatePicker SelectedDate="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="1"/>
             <Label Name ="ClientFilterLabel" Content="Client" Grid.Column="2"/>
             <TextBox Name="ClientFilterTxt" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="3"/>
-            <Label Content="Show" Grid.Column="4"/>
-            <TextBox Text="{Binding ShowFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="5"/>
+            <Label Name ="ShowFilterLabel" Content="Show" Grid.Column="4"/>
+            <TextBox Name="ShowFilterTxt" Text="{Binding ShowFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="5"/>
             <Button Content="Clear" Margin="5,0,0,0" Command="{Binding ClearFilterCommand}" Grid.Column="6"/>
         </Grid>
-        <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Reservations}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
+        <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedReservation}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Show.Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
