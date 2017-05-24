@@ -27,27 +27,26 @@ namespace ReservationManager
     {
         public Show Show { get; set; }
         //private ReservationsView reservationsView;
-        
+
+        public ICommand DeleteCommand { get; set; }
+        public ICommand DeletePriceCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
 
         public ShowEdit(Show show, bool isNew = false)
         {
             Show = show;
             InitializeComponent();
-
-            //App.Messenger.NotifyColleagues(App.MSG_CLIENT_RESERVATION, Client);
-            /*reservationsView = new ReservationsView();
-            Console.WriteLine(reservationsView);
-            if (reservationsView == null)
-                Console.WriteLine("reservationsView == null");
-            else
-                ReservationsPanel.Children.Add(reservationsView);*/
-
+                    
             DataContext = this;
+
+            ReadOnly = App.Rights(Table.SHOW) != Right.ALL;
             IsNew = isNew;
 
-            Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
-            Cancel = new RelayCommand(CancelAction);
-            Delete = new RelayCommand(DeleteAction, CanDeleteAction);
+            SaveCommand = new RelayCommand(SaveAction, CanSaveOrCancelAction);
+            CancelCommand = new RelayCommand(CancelAction, CanSaveOrCancelAction);
+            DeleteCommand = new RelayCommand(DeleteAction, CanDeleteAction);
+            DeletePriceCommand = new RelayCommand(DeletePriceAction);
         }
 
 
@@ -60,18 +59,172 @@ namespace ReservationManager
             {
                 isNew = value;
                 RaisePropertyChanged(nameof(IsNew));
+
+                if (isNew)
+                {
+                    btnDelete.Visibility = Visibility.Collapsed;
+                    btnCancel.Visibility = Visibility.Collapsed;
+                }
+                else if(!ReadOnly)
+                {
+                    btnDelete.Visibility = Visibility.Visible;
+                    btnCancel.Visibility = Visibility.Visible;
+                }
+
+            }
+        }
+
+        private Category category = null;
+        public Category Category
+        {
+            get { return category; }
+            set
+            {
+                category = value;
+                if (category == null)
+                {
+                    PriceList = null;
+                    txtPrice.Visibility = Visibility.Collapsed;
+                    txtCurrency.Visibility = Visibility.Collapsed;
+                    btnDeletePrice.Visibility = Visibility.Collapsed;
+                    txtHasReservatoins.Visibility = Visibility.Collapsed;
+                    RaisePropertyChanged(nameof(Category));
+                    RaisePropertyChanged(nameof(Price));
+                    Show.RefreshStrings();
+                    RaisePropertyChanged(nameof(Show));
+                }
+                else
+                {
+                    PriceList p = (from pl in Show.PriceLists where pl.IdCat == Category.Id select pl).ToList().FirstOrDefault();
+
+                    if (p == null)
+                    {
+                        p = new PriceList();
+                        p.IdCat = Category.Id;
+                        p.IdShow = Show.Id;
+                        p.Price = 10;
+                        App.Model.PriceLists.Add(p);
+                    }
+
+                    PriceList = p;
+                    RaisePropertyChanged(nameof(Price));
+                    Show.RefreshStrings();
+                    RaisePropertyChanged(nameof(Show));
+
+                    DeletePriceTxt = "Delete";
+
+                    int ResCount = Show.ReservationsCount(Category.Id);
+                    if (ResCount > 0)
+                        HasReservationsTxt = ResCount + " reservations !!!";
+                    else
+                        HasReservationsTxt = "No reservations";
+
+                    confirmDelete = false;
+                    DeletePriceTxt = "Delete";
+                    txtPrice.Visibility = Visibility.Visible;
+                    txtCurrency.Visibility = Visibility.Visible;
+                    btnDeletePrice.Visibility = Visibility.Visible;
+                    txtHasReservatoins.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private string deletePriceTxt = "Delete";
+        public string DeletePriceTxt
+        {
+            get { return deletePriceTxt; }
+            set
+            {
+                deletePriceTxt = value;
+                RaisePropertyChanged(nameof(DeletePriceTxt));
+            }
+        }
+
+        private string hasReservationsTxt = "";
+        public string HasReservationsTxt
+        {
+            get { return hasReservationsTxt; }
+            set
+            {
+                hasReservationsTxt = value;
+                RaisePropertyChanged(nameof(HasReservationsTxt));
+            }
+        }
+
+        public string Price
+        {
+            get {
+                Console.WriteLine(PriceList != null ? PriceList.Price.ToString("G29") : null);
+                return PriceList != null ? PriceList.Price.ToString("G29") : null; }
+            set
+            {
+                int intPrice = 0;
+                if(!string.IsNullOrEmpty(value))
+                {
+                    intPrice = Util.StrToInt(value);
+                    if (intPrice < 0) intPrice = 0;
+                }
+
+                PriceList.Price = intPrice;
+                Show.RefreshStrings();
+                RaisePropertyChanged(nameof(Show));
+
+                RaisePropertyChanged(nameof(Price));
+            }
+        }
+
+        private PriceList priceList = null;
+        public PriceList PriceList
+        {
+            get { return priceList; }
+            set
+            {
+                priceList = value;
+            }
+        }
+
+
+        private MyObservableCollection<Category> categories = null;
+        public MyObservableCollection<Category> Categories
+        {
+            get
+            {
+                if(categories == null)
+                    categories = new MyObservableCollection<Category>(App.Model.Categories);
+                
+                return categories;
+            }
+        }
+        
+
+        private bool readOnly;
+        public bool ReadOnly
+        {
+            get { return readOnly; }
+
+            set
+            {
+                readOnly = value;
+                if (readOnly)
+                {
+                    btnDelete.Visibility = Visibility.Collapsed;
+                    btnSave.Visibility = Visibility.Collapsed;
+                    btnCancel.Visibility = Visibility.Collapsed;
+                }
+
+                RaisePropertyChanged(nameof(ReadOnly));
             }
         }
 
         public bool IsExisting { get { return !isNew; } }
 
-        public string Name
+        public string ShowName
         {
             get { return Show.Name; }
             set
             {
                 Show.Name = value;
-                RaisePropertyChanged(nameof(Name));
+                RaisePropertyChanged(nameof(ShowName));
                 //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
             }
         }
@@ -109,9 +262,6 @@ namespace ReservationManager
         }
 
 
-
-        public ICommand Save { get; set; }
-
         private void SaveAction()
         {
             if (IsNew)
@@ -127,30 +277,49 @@ namespace ReservationManager
         private bool CanSaveOrCancelAction()
         {
             if (IsNew)
-                return !string.IsNullOrEmpty(Name) && !HasErrors;
+                return !string.IsNullOrEmpty(ShowName) && !string.IsNullOrEmpty(Description) && Date != null && !HasErrors;
 
-            var change = (from c in App.Model.ChangeTracker.Entries<Show>()
+            var changeShow = (from c in App.Model.ChangeTracker.Entries<Show>()
                           where c.Entity == Show
                           select c).FirstOrDefault();
 
-            return change != null && change.State != EntityState.Unchanged;
+            
+            var changePrice = (from p in App.Model.ChangeTracker.Entries<PriceList>()
+                          where p.Entity.IdShow == Show.Id
+                          select p).FirstOrDefault();
+            
+
+            return (changePrice != null && changePrice.State != EntityState.Unchanged) 
+                || (changeShow != null && changeShow.State != EntityState.Unchanged);
         }
 
 
-        public ICommand Cancel { get; set; }
-
         private void CancelAction()
         {
-            Console.WriteLine("Cancel");
+            var changeShow = (from c in App.Model.ChangeTracker.Entries<Show>()
+                              where c.Entity == Show
+                              select c).FirstOrDefault();
 
-            var change = (from c in App.Model.ChangeTracker.Entries<Show>()
-                          where c.Entity == Show
-                          select c).FirstOrDefault();
 
-            if (change != null)
+            var changePrice = (from p in App.Model.ChangeTracker.Entries<PriceList>()
+                               where p.Entity.IdShow == Show.Id
+                               select p).FirstOrDefault();
+
+
+            if(changePrice != null || changeShow != null)
             {
-                change.Reload();
-                RaisePropertyChanged(nameof(Name));
+                int showId = Show.Id;
+                App.CancelChanges();
+                Show = (from s in App.Model.Shows where s.Id == showId select s).FirstOrDefault();
+                PriceList = null;
+                Category = null;
+                categories = null;
+                RaisePropertyChanged(nameof(Categories));
+                RaisePropertyChanged(nameof(Category));
+                RaisePropertyChanged(nameof(Price));
+                Show.RefreshStrings();
+                RaisePropertyChanged(nameof(Show));
+                RaisePropertyChanged(nameof(ShowName));
                 RaisePropertyChanged(nameof(Description));
                 RaisePropertyChanged(nameof(Poster));
                 RaisePropertyChanged(nameof(Date));
@@ -161,7 +330,6 @@ namespace ReservationManager
             //App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Pseudo);
         }
 
-        public ICommand Delete { get; set; }
 
         private void DeleteAction()
         {
@@ -170,13 +338,107 @@ namespace ReservationManager
 
             App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Show.Name);
 
-            App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
+            //App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
+        }
+
+        private bool confirmDelete = false;
+
+        private void DeletePriceAction()
+        {
+            if (Show.ReservationsCount(Category.Id) != 0)
+            {
+                if(!confirmDelete)
+                {
+                    confirmDelete = true;
+                    DeletePriceTxt = "CONFIRM";
+                }
+                else
+                {
+                    foreach (var res in from r in App.Model.Reservations where r.IdCat == Category.Id && r.IdShow == Show.Id select r)
+                        App.Model.Reservations.Remove(res);
+
+                    App.Model.PriceLists.Remove(PriceList);
+
+                    Category = null;
+                }
+            }
+            else
+            {
+                App.Model.PriceLists.Remove(PriceList);
+
+                Category = null;
+            }
+
+
+            //App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
         }
 
         private bool CanDeleteAction()
         {
             return IsExisting;
         }
+        /*
+        private class CatRow
+        {
+            private Category cat;
+            private Show Show;
+            private string name;
+
+
+            public CatRow(Show show, Category cat)
+            {
+                this.cat = cat;
+                this.Show = show;
+
+            }
+
+            
+            PriceList PriceList
+            {
+                get { return (from p in Show.PriceLists where p.IdCat == cat.Id select p).FirstOrDefault(null); }
+                set
+                {
+                    Show.PriceLists.Add(value);
+                }
+            }
+
+            private bool isActive;
+            bool IsActive
+            {
+                get { return PriceList != null; }
+
+                set
+                {
+                    isActive = value;
+                    if (isActive && PriceList == null)
+                    {
+                        PriceList = new PriceList();
+                        PriceList.Show = show;
+                        PriceList.Category = cat;
+                        PriceList.Price = 10;
+                    }
+                }
+            }
+
+            
+            public decimal? Price
+            {
+                get { return PriceList != null ? (decimal?)PriceList.Price : null; }
+
+                set
+                {
+                    if (PriceList != null)
+                        PriceList.Price = (decimal)value;
+                    else
+                        throw new SystemException("Can´t set the price of a category without a pricelist");
+                }
+            }
+
+            //Category
+            //Price
+            //Name
+            //IsActive
+        }*/
 
     }
 }

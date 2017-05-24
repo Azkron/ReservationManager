@@ -41,15 +41,32 @@ namespace ReservationManager
 
             Reservations = new MyObservableCollection<Reservation>(App.Model.Reservations);
 
+            ReadOnly = App.Rights(Table.RESERVATION) != Right.ALL;
+
             ClearFilterCommand = new RelayCommand(() => { ClearFilter(); });
-
-
+            
             RefreshCommand = new RelayCommand(() =>
             {
                 ClearFilter();
                 Reservations.Refresh(App.Model.Reservations);
             },
             () => { return IsValid; });
+        }
+
+
+        private bool readOnly;
+        public bool ReadOnly
+        {
+            get { return readOnly; }
+
+            set
+            {
+                readOnly = value;
+                if (readOnly)
+                    btnNew.Visibility = Visibility.Collapsed;
+
+                RaisePropertyChanged(nameof(ReadOnly));
+            }
         }
 
         private void ClearFilter()

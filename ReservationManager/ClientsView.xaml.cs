@@ -44,6 +44,7 @@ namespace ReservationManager
             NewCommand = new RelayCommand(() => { App.Messenger.NotifyColleagues(App.MSG_NEW_CLIENT); });
             EditCommand = new RelayCommand<Client>((c) => { App.Messenger.NotifyColleagues(App.MSG_EDIT_CLIENT, c); });
 
+            ReadOnly = App.Rights(Table.CLIENT) != Right.ALL;
 
             RefreshCommand = new RelayCommand(() =>
             {
@@ -51,6 +52,21 @@ namespace ReservationManager
                 Clients.Refresh(App.Model.Clients);
             },
             () => { return IsValid; });
+        }
+
+        private bool readOnly;
+        public bool ReadOnly
+        {
+            get { return readOnly; }
+
+            set
+            {
+                readOnly = value;
+                if (readOnly)
+                    btnNew.Visibility = Visibility.Collapsed;
+
+                RaisePropertyChanged(nameof(ReadOnly));
+            }
         }
 
         public MyObservableCollection<Client> clients;
@@ -94,11 +110,7 @@ namespace ReservationManager
             get { return postalCodeFilter; }
             set
             {
-                postalCodeFilter = Regex.Replace(value, "[^0-9.]", "");
-                if(postalCodeFilter.Length > 4)
-                    postalCodeFilter = postalCodeFilter.Substring(0, 4);
-                if (!string.IsNullOrEmpty(PostalCodeFilter))
-                    Console.WriteLine(Int32.Parse(PostalCodeFilter));
+                postalCodeFilter = Util.FilterLetters(value);
 
                 ApplyFilterAction();
                 RaisePropertyChanged(nameof(PostalCodeFilter));

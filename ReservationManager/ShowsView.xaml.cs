@@ -43,6 +43,7 @@ namespace ReservationManager
             NewCommand = new RelayCommand(() => { App.Messenger.NotifyColleagues(App.MSG_NEW_SHOW);});
             EditCommand = new RelayCommand<Show>((s) => { App.Messenger.NotifyColleagues(App.MSG_EDIT_SHOW, s); });
 
+            ReadOnly = App.Rights(Table.SHOW) != Right.ALL;
 
             RefreshCommand = new RelayCommand(() =>
             {
@@ -50,6 +51,21 @@ namespace ReservationManager
                 Shows.Refresh(App.Model.Shows);
             },
             () => { return IsValid; });
+        }
+
+        private bool readOnly;
+        public bool ReadOnly
+        {
+            get { return readOnly; }
+
+            set
+            {
+                readOnly = value;
+                if (readOnly)
+                    btnNew.Visibility = Visibility.Collapsed;
+
+                RaisePropertyChanged(nameof(ReadOnly));
+            }
         }
 
         public MyObservableCollection<Show> shows;

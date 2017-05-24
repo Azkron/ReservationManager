@@ -85,6 +85,10 @@ namespace ReservationManager
             {
                 isNew = value;
                 RaisePropertyChanged(nameof(IsNew));
+                if (isNew)
+                    btnCancel.Visibility = Visibility.Collapsed;
+                else if (!ReadOnly)
+                    btnCancel.Visibility = Visibility.Visible;
             }
         }
 
@@ -188,7 +192,7 @@ namespace ReservationManager
 
             App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Client.FullName);
 
-            App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
+           // App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
         }
 
         private bool CanDeleteAction()

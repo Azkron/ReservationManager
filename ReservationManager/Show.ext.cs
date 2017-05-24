@@ -18,6 +18,12 @@ namespace ReservationManager
             return li;
         }
 
+        public void RefreshStrings()
+        {
+            freePlaces = "";
+            prices = "";
+        }
+
         private string freePlaces = "";
         public string FreePlaces
         {
@@ -31,12 +37,27 @@ namespace ReservationManager
             }
         }
 
+        public int ReservationsCount(int IdCat)
+        {
+                return (from r in Reservations where r.IdCat == IdCat select r).Count();
+        }
+
 
         private decimal CalcFreePlacesByCat(Category cat)
         {
             decimal placesUsed = (from r in Reservations where r.IdCat == cat.Id select r.Number).Sum();
 
             return cat.PlacesNumber - placesUsed;
+        }
+        
+        public int? GetPrice(int idCat)
+        {
+            PriceList priceList = (from p in PriceLists where p.IdCat == idCat select p).FirstOrDefault(null);
+
+            if (priceList == null)
+                return null;
+            else
+                return (int?)priceList.Price;
         }
 
         private string prices = "";

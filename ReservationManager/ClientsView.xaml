@@ -45,7 +45,7 @@
                 
             </DataGrid.Columns>
         </f:MyDataGrid>
-        <Button Grid.Row="2" Content="New Client" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
+        <Button Grid.Row="2" Name="btnNew" Content="New Client" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding NewCommand}" HorizontalAlignment="Right" Width="97"/>
         <Button Content="Refresh" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding RefreshCommand}"/>
