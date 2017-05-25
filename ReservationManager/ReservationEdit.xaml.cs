@@ -51,9 +51,16 @@ namespace ReservationManager
             ReadOnly = App.Rights(Table.RESERVATION) != Right.ALL;
             IsNew = isNew;
 
+            SaveCommand = new RelayCommand(SaveAction, CanSaveOrCancelAction);
+            CancelCommand = new RelayCommand(CancelAction, CanSaveOrCancelAction);
+            DeleteCommand = new RelayCommand(DeleteAction, CanDeleteAction);
 
         }
 
+
+        public bool CantModify { get { return IsExisting || ReadOnly; } }
+
+        public bool IsExisting { get { return !isNew; } }
 
         private bool isNew;
         public bool IsNew
@@ -63,18 +70,20 @@ namespace ReservationManager
             {
                 isNew = value;
                 RaisePropertyChanged(nameof(IsNew));
-
                 if (isNew)
                 {
                     btnDelete.Visibility = Visibility.Collapsed;
                     btnCancel.Visibility = Visibility.Collapsed;
                 }
-                else if (!ReadOnly)
+                else
                 {
-                    btnDelete.Visibility = Visibility.Visible;
-                    btnCancel.Visibility = Visibility.Visible;
+                    ClientsPanel.Visibility = Visibility.Collapsed;
+                    if (!ReadOnly)
+                    {
+                        btnDelete.Visibility = Visibility.Visible;
+                        btnCancel.Visibility = Visibility.Visible;
+                    }
                 }
-
             }
         }
 
@@ -97,18 +106,18 @@ namespace ReservationManager
                 RaisePropertyChanged(nameof(ReadOnly));
             }
         }
-
-        private Client client;
+        
         public Client Client
         {
-            get { return client; }
+            get { return Reservation.Client; }
             set
             {
-                client = value;
-                if (client != null)
-                    ClientName = client.FullName;
+                Reservation.Client = value;
+                if (value != null)
+                    ClientName = value.FullName;
                 else
                     ClientName = "Select a client from the list below";
+                
             }
         }
 
@@ -132,8 +141,13 @@ namespace ReservationManager
                 {
                     List<Show> li = new List<Show>();
                     foreach (Show s in App.Model.Shows)
+                    {
+                        if (s == Show)
+                            s.DiscountResPlaces(Reservation);
+
                         if (s.FreePlacesTotal > 0)
                             li.Add(s);
+                    }
                     shows = new MyObservableCollection<Show>(li);
                 }
 
@@ -252,21 +266,113 @@ namespace ReservationManager
             set
             {
                 int intNumber = 0;
+                bool selectText = false;
                 if (!string.IsNullOrEmpty(value))
                 {
                     intNumber = Util.StrToInt(value);
-                    if (intNumber < 0) intNumber = 0;
+                    if (intNumber < 1)
+                    {
+                        intNumber = 1;
+                        selectText = true;
+                    }
                     else
                     {
                         int free = (int)Show.CalcFreePlacesByCat(Category);
                         if (intNumber > free)
+                        {
                             intNumber = free;
+                            selectText = true;
+                        }
                     } 
                 }
 
                 Reservation.Number = intNumber;
                 RaisePropertyChanged(nameof(NumberInput));
+                if (selectText)
+                    Util.SelectText(txtNumber);
             }
+        }
+
+        private void SaveAction()
+        {
+            if (IsNew)
+            {
+                App.Model.Reservations.Add(Reservation);
+                IsNew = false;
+            }
+
+            App.Model.SaveChanges();
+            App.Messenger.NotifyColleagues(App.MSG_RESERVATION_CHANGED, Reservation);
+        }
+
+        private bool CanSaveOrCancelAction()
+        {
+            if (IsNew)
+                return Reservation.Category != null 
+                    && Reservation.Client != null
+                    && Reservation.Number > 0
+                    && !HasErrors;
+
+            var change = (from r in App.Model.ChangeTracker.Entries<Reservation>()
+                          where r.Entity == Reservation
+                          select r).FirstOrDefault();
+
+            return change != null && change.State != EntityState.Unchanged;
+        }
+
+
+        private void CancelAction()
+        {
+            var change = (from r in App.Model.ChangeTracker.Entries<Reservation>()
+                          where r.Entity == Reservation
+                          select r).FirstOrDefault();
+
+            if (change != null)
+            {
+                change.Reload();
+                RaisePropertyChanged(nameof(Show));
+                RaisePropertyChanged(nameof(Category));
+                RaisePropertyChanged(nameof(NumberInput));
+            }
+
+            // NOT NEEDED TO CLOSE TAB ON CANCEL, IT JUST RESETS THE DATA (CODE ABOVE)
+            //App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, !isNew ? Pseudo : "new member");
+            //App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Pseudo);
+        }
+
+        private string deleteTxt = "Delete";
+        public string DeleteTxt
+        {
+            get { return deleteTxt; }
+            set
+            {
+                deleteTxt = value;
+                RaisePropertyChanged(nameof(DeleteTxt));
+            }
+        }
+
+        private bool confirmDelete = false;
+        private void DeleteAction()
+        {
+            if(!confirmDelete)
+            {
+                DeleteTxt = "CONFIRM";
+                confirmDelete = true;
+            }
+            else
+            {
+                App.Model.Reservations.Remove(Reservation);
+                App.Model.SaveChanges();
+
+                App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Reservation.TabHeaderPseudo);
+            }
+
+            // App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
+        }
+
+        private bool CanDeleteAction()
+        {
+            return IsExisting;
         }
     }
 }

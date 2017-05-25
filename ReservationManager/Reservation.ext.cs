@@ -8,6 +8,18 @@ namespace ReservationManager
 {
     public partial class Reservation
     {
+        public string TabHeader { get { return "<" + TabHeaderPseudo + ">"; } }
+
+        public string TabHeaderPseudo
+        {
+            get
+            {
+                if (Client != null)
+                    return Client.FullName + " reservation";
+                else
+                    return "new reservation";
+            }
+        }
 
     }
 }

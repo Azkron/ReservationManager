@@ -2,6 +2,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
 
 namespace ReservationManager
 {
@@ -33,6 +34,12 @@ namespace ReservationManager
                 str = str.Substring(0, length);
 
             return str;
+        }
+
+        public static void SelectText(TextBox t)
+        {
+            t.Focus();
+            t.Select(0, t.Text.Length);
         }
 
         public static int StrToInt(string str, int length = 4)

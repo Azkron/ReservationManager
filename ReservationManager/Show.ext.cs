@@ -30,7 +30,7 @@ namespace ReservationManager
             get
             {
                 if (freePlacesString == "")
-                    foreach(Category cat in GetCategories())
+                    foreach (Category cat in GetCategories())
                         freePlacesString += cat.Name.Substring(3) + "/" + CalcFreePlacesByCat(cat) + "  ";
 
                 return freePlacesString;
@@ -49,7 +49,7 @@ namespace ReservationManager
                         freePlacesTotal += (int)CalcFreePlacesByCat(c);
                 }
 
-                return freePlacesTotal;
+                return freePlacesTotal - dNum;
             }
         }
 
@@ -58,13 +58,20 @@ namespace ReservationManager
                 return (from r in Reservations where r.IdCat == IdCat select r).Count();
         }
 
+        private int dCatId = -1;
+        private int dNum = 0;
 
+        public void DiscountResPlaces(Reservation r)
+        {
+            dCatId = r.Category.Id;
+            dNum = r.Number;
+        }
 
         public decimal CalcFreePlacesByCat(Category cat)
         {
             decimal placesUsed = (from r in Reservations where r.IdCat == cat.Id && r.IdShow == Id select r.Number).Sum();
 
-            return cat.PlacesNumber - placesUsed;
+            return cat.PlacesNumber - placesUsed - (dCatId == cat.Id ? dNum : 0);
         }
         
         public int? GetPrice(int idCat)

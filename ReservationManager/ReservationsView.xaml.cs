@@ -47,7 +47,7 @@ namespace ReservationManager
 
             NewCommand = new RelayCommand(() => 
             { App.Messenger.NotifyColleagues(App.MSG_NEW_RESERVATION); });
-            EditCommand = new RelayCommand<Reservation>((r) => 
+            EditCommand = new RelayCommand<Reservation>((r) =>
             { App.Messenger.NotifyColleagues(App.MSG_EDIT_RESERVATION, r); });
 
 
@@ -101,6 +101,9 @@ namespace ReservationManager
                 ClientFilterTxt.Visibility = Visibility.Collapsed;
                 ClientFilterLabel.Visibility = Visibility.Collapsed;
                 ApplyFilterAction();
+
+                NewCommand = new RelayCommand(() =>
+                { App.Messenger.NotifyColleagues(App.MSG_NEW_CLIENT_RESERVATION, Client); });
             }
             else
             {

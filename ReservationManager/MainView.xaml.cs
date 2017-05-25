@@ -126,15 +126,31 @@ namespace ReservationManager
                 Dispatcher.InvokeAsync(() => tab.Focus());
             });
 
+            App.Messenger.Register<Client>(App.MSG_NEW_CLIENT_RESERVATION, (c) =>
+            {
+                var reservation = App.Model.Reservations.Create();
+                reservation.Client = c;
+                var tab = new TabItem()
+                {
+                    Header = "<new reservation>",
+                    Content = new ReservationEdit(reservation, true)
+                };
+
+                AddTabControls(tab);
+
+                tabControl.Items.Add(tab);
+                Dispatcher.InvokeAsync(() => tab.Focus());
+            });
+
             App.Messenger.Register<Reservation>(App.MSG_RESERVATION_CHANGED, (r) =>
             {
-                (tabControl.SelectedItem as TabItem).Header = "<" + r.Client.FullName + " reservation>";
+                (tabControl.SelectedItem as TabItem).Header = r.TabHeader;
             });
 
             App.Messenger.Register<Reservation>(App.MSG_EDIT_RESERVATION, (r) =>
             {
                 TabItem tab = null;
-                string Header = "<" + r.Client.FullName + " reservation>";
+                string Header = r.TabHeader;
                 foreach (TabItem t in tabControl.Items)
                     if (t.Header.Equals(Header))
                         tab = t;
@@ -143,7 +159,7 @@ namespace ReservationManager
                 {
                     tab = new TabItem()
                     {
-                        Header = "<" + r.Client.FullName + " reservation>",
+                        Header = r.TabHeader,
                         Content = new ReservationEdit(r, false)
                     };
 

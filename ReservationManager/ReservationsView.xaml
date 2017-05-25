@@ -34,6 +34,12 @@
         </Grid>
         <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedReservation}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding EditCommand}"
+                                           CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Show.Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
 
