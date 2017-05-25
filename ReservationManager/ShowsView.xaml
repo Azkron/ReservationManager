@@ -41,7 +41,7 @@
 
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
-                <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlaces}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
+                <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlacesString}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
                 <DataGridTextColumn Header="Prices €" Binding="{Binding Path=Prices}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
                 
             </DataGrid.Columns>

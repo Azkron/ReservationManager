@@ -108,7 +108,53 @@ namespace ReservationManager
 
                 Dispatcher.InvokeAsync(() => tab.Focus());
             });
-            
+
+
+            // RESERVATION EDIT COMMANDS
+            App.Messenger.Register(App.MSG_NEW_RESERVATION, () =>
+            {
+                var reservation = App.Model.Reservations.Create();
+                var tab = new TabItem()
+                {
+                    Header = "<new reservation>",
+                    Content = new ReservationEdit(reservation, true)
+                };
+
+                AddTabControls(tab);
+
+                tabControl.Items.Add(tab);
+                Dispatcher.InvokeAsync(() => tab.Focus());
+            });
+
+            App.Messenger.Register<Reservation>(App.MSG_RESERVATION_CHANGED, (r) =>
+            {
+                (tabControl.SelectedItem as TabItem).Header = "<" + r.Client.FullName + " reservation>";
+            });
+
+            App.Messenger.Register<Reservation>(App.MSG_EDIT_RESERVATION, (r) =>
+            {
+                TabItem tab = null;
+                string Header = "<" + r.Client.FullName + " reservation>";
+                foreach (TabItem t in tabControl.Items)
+                    if (t.Header.Equals(Header))
+                        tab = t;
+
+                if (tab == null)
+                {
+                    tab = new TabItem()
+                    {
+                        Header = "<" + r.Client.FullName + " reservation>",
+                        Content = new ReservationEdit(r, false)
+                    };
+
+                    AddTabControls(tab);
+
+                    tabControl.Items.Add(tab);
+                }
+
+                Dispatcher.InvokeAsync(() => tab.Focus());
+            });
+
 
 
             // CLOSE TABS

@@ -9,7 +9,7 @@ namespace ReservationManager
     public partial class Show
     {
 
-        private List<Category> GetCategories()
+        public List<Category> GetCategories()
         {
             List<Category> li = new List<Category>();
             foreach (PriceList p in PriceLists)
@@ -20,20 +20,36 @@ namespace ReservationManager
 
         public void RefreshStrings()
         {
-            freePlaces = "";
+            freePlacesString = "";
             prices = "";
         }
 
-        private string freePlaces = "";
-        public string FreePlaces
+        private string freePlacesString = "";
+        public string FreePlacesString
         {
             get
             {
-                if (freePlaces == "")
+                if (freePlacesString == "")
                     foreach(Category cat in GetCategories())
-                        freePlaces += cat.Name.Substring(3) + "/" + CalcFreePlacesByCat(cat) + "  ";
+                        freePlacesString += cat.Name.Substring(3) + "/" + CalcFreePlacesByCat(cat) + "  ";
 
-                return freePlaces;
+                return freePlacesString;
+            }
+        }
+
+        private int freePlacesTotal = -1;
+        public int FreePlacesTotal
+        {
+            get
+            {
+                if (freePlacesTotal == -1)
+                {
+                    freePlacesTotal = 0;
+                    foreach(Category c in App.Model.Categories)
+                        freePlacesTotal += (int)CalcFreePlacesByCat(c);
+                }
+
+                return freePlacesTotal;
             }
         }
 
@@ -43,9 +59,10 @@ namespace ReservationManager
         }
 
 
-        private decimal CalcFreePlacesByCat(Category cat)
+
+        public decimal CalcFreePlacesByCat(Category cat)
         {
-            decimal placesUsed = (from r in Reservations where r.IdCat == cat.Id select r.Number).Sum();
+            decimal placesUsed = (from r in Reservations where r.IdCat == cat.Id && r.IdShow == Id select r.Number).Sum();
 
             return cat.PlacesNumber - placesUsed;
         }

@@ -213,7 +213,6 @@ namespace ReservationManager
         public string Price
         {
             get {
-                Console.WriteLine(PriceList != null ? PriceList.Price.ToString("G29") : null);
                 return PriceList != null ? PriceList.Price.ToString("G29") : null; }
             set
             {

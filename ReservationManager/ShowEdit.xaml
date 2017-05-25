@@ -81,7 +81,7 @@
                     </DatePicker.Resources>
                 </DatePicker>
                 <Label Content="Cat Places :" Grid.Row="3"/>
-                <Label Content="{Binding Show.FreePlaces}" Grid.Row="3" Grid.Column="1"/>
+                <Label Content="{Binding Show.FreePlacesString}" Grid.Row="3" Grid.Column="1"/>
                 <Label Content="Cat Price € :" Grid.Row="4"/>
                 <Label Content="{Binding Show.Prices}" Grid.Row="4" Grid.Column="1"/>
                 <Label Name="lblSetPrice" Content="Set price € :" Grid.Row="5"/>

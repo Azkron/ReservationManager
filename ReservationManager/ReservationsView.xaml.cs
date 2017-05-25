@@ -44,7 +44,13 @@ namespace ReservationManager
             ReadOnly = App.Rights(Table.RESERVATION) != Right.ALL;
 
             ClearFilterCommand = new RelayCommand(() => { ClearFilter(); });
-            
+
+            NewCommand = new RelayCommand(() => 
+            { App.Messenger.NotifyColleagues(App.MSG_NEW_RESERVATION); });
+            EditCommand = new RelayCommand<Reservation>((r) => 
+            { App.Messenger.NotifyColleagues(App.MSG_EDIT_RESERVATION, r); });
+
+
             RefreshCommand = new RelayCommand(() =>
             {
                 Refresh();

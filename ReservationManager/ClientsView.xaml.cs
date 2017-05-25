@@ -31,6 +31,8 @@ namespace ReservationManager
         public ICommand NewCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public bool IsValid { get; set; }
+
+        public ReservationEdit ReservationEdit { get; set; }
         
         public ClientsView()
         {
@@ -42,7 +44,7 @@ namespace ReservationManager
 
             ClearFilter = new RelayCommand(() => { NameFilter = ""; PostalCodeFilter = ""; });
             NewCommand = new RelayCommand(() => { App.Messenger.NotifyColleagues(App.MSG_NEW_CLIENT); });
-            EditCommand = new RelayCommand<Client>((c) => { App.Messenger.NotifyColleagues(App.MSG_EDIT_CLIENT, c); });
+            EditCommand = new RelayCommand<Client>(EditAction);
 
             ReadOnly = App.Rights(Table.CLIENT) != Right.ALL;
 
@@ -52,6 +54,15 @@ namespace ReservationManager
                 Clients.Refresh(App.Model.Clients);
             },
             () => { return IsValid; });
+        }
+
+        private void EditAction(Client c)
+        {
+            if (ReservationEdit == null)
+                App.Messenger.NotifyColleagues(App.MSG_EDIT_CLIENT, c);
+            else
+                ReservationEdit.Client = c;
+
         }
 
         private bool readOnly;
