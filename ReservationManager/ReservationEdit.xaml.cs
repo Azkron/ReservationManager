@@ -143,7 +143,7 @@ namespace ReservationManager
                     foreach (Show s in App.Model.Shows)
                     {
                         if (s == Show)
-                            s.DiscountResPlaces(Reservation);
+                            s.DiscountResPlaces(Reservation.Category.Id, Reservation.Number);
 
                         if (s.FreePlacesTotal > 0)
                             li.Add(s);
@@ -361,10 +361,14 @@ namespace ReservationManager
             }
             else
             {
+                //DataContext = this;
+                //App.Model.Reservations.Attach(Reservation);
+                string tabHeader = Reservation.TabHeaderPseudo;
                 App.Model.Reservations.Remove(Reservation);
                 App.Model.SaveChanges();
 
-                App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Reservation.TabHeaderPseudo);
+                App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
+                App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, tabHeader);
             }
 
             // App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);

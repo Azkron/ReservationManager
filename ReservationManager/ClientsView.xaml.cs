@@ -50,10 +50,17 @@ namespace ReservationManager
 
             RefreshCommand = new RelayCommand(() =>
             {
-                App.CancelChanges();
+                //App.CancelChanges();
                 Clients.Refresh(App.Model.Clients);
             },
             () => { return IsValid; });
+
+
+
+            App.Messenger.Register(App.MSG_GENERAL_REFRESH, () =>
+            {
+                this.Clients.Refresh(App.Model.Clients);
+            });
         }
 
         private void EditAction(Client c)

@@ -333,6 +333,7 @@ namespace ReservationManager
             }
 
             App.Model.SaveChanges();
+            App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
             App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
         }
 
@@ -397,6 +398,7 @@ namespace ReservationManager
 
                     App.Model.Shows.Remove(show);
                     App.Model.SaveChanges();
+                    App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
                     App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Show.Name);
                     
                 }
@@ -408,6 +410,7 @@ namespace ReservationManager
 
                 App.Model.Shows.Remove(show);
                 App.Model.SaveChanges();
+                App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
                 App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Show.Name);
             }
             

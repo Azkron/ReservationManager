@@ -57,11 +57,17 @@ namespace ReservationManager
                 //Reservations.Refresh(baseQuery);
             },
             () => { return IsValid; });
+
+            App.Messenger.Register(App.MSG_GENERAL_REFRESH, () =>
+            {
+                this.Refresh();
+            });
         }
 
         private void Refresh()
         {
             ClearFilter();
+            Reservations.Refresh(App.Model.Reservations);
             if (showId != null)
                 Show = (from s in App.Model.Shows where s.Id == showId select s).FirstOrDefault();
             else if(clientId != null)
@@ -127,7 +133,8 @@ namespace ReservationManager
             set
             {
                 client = value;
-                clientId = client.Id;
+                if (client != null)
+                    clientId = client.Id;
                 SetMode();
             }
 
@@ -144,7 +151,8 @@ namespace ReservationManager
             set
             {
                 show = value;
-                showId = show.Id;
+                if (show != null)
+                    showId = show.Id;
                 SetMode();
             }
 

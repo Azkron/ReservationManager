@@ -62,7 +62,7 @@ namespace ReservationManager
 
                 Dispatcher.InvokeAsync(() => tab.Focus());
             });
-
+            
 
             // SHOW EDIT COMMANDS
             App.Messenger.Register(App.MSG_NEW_SHOW, () =>

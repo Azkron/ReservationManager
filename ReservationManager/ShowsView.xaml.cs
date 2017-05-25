@@ -47,10 +47,16 @@ namespace ReservationManager
 
             RefreshCommand = new RelayCommand(() =>
             {
-                App.CancelChanges();
+                //App.CancelChanges();
                 Shows.Refresh(App.Model.Shows);
             },
             () => { return IsValid; });
+
+            
+            App.Messenger.Register(App.MSG_GENERAL_REFRESH, () =>
+            {
+                this.Shows.Refresh(App.Model.Shows);
+            });
         }
 
         private bool readOnly;

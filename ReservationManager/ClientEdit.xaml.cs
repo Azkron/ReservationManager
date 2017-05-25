@@ -147,6 +147,7 @@ namespace ReservationManager
             }
 
             App.Model.SaveChanges();
+            App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
             App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
         }
 
@@ -187,9 +188,11 @@ namespace ReservationManager
 
         private void DeleteAction()
         {
+            Client.Reservations.Clear();
             App.Model.Clients.Remove(Client);
             App.Model.SaveChanges();
 
+            App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
             App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Client.FullName);
 
            // App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
