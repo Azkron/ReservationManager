@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+//using ReservationManager.Properties;
+using R = ReservationManager.Properties;
 
 namespace ReservationManager
 {
@@ -33,6 +35,8 @@ namespace ReservationManager
         
         public ReservationsView()
         {
+
+            string testRes = R.Resources.Date;
             InitializeComponent();
 
             DataContext = this;

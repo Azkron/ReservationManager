@@ -66,9 +66,18 @@ namespace ReservationManager
                 readOnly = value;
                 if(readOnly)
                 {
-                    btnDelete.Visibility = Visibility.Collapsed;
+                    txtBdd.Visibility = Visibility.Collapsed;
+                    txtFirstName.Visibility = Visibility.Collapsed;
+                    txtLastName.Visibility = Visibility.Collapsed;
+                    txtPostalCode.Visibility = Visibility.Collapsed;
                     btnSave.Visibility = Visibility.Collapsed;
                     btnCancel.Visibility = Visibility.Collapsed;
+                    btnDelete.Visibility = Visibility.Collapsed;
+
+                    lblBdd.Visibility = Visibility.Visible;
+                    lblFirstName.Visibility = Visibility.Visible;
+                    lblLastName.Visibility = Visibility.Visible;
+                    lblPostalCode.Visibility = Visibility.Visible;
                 }
 
                 RaisePropertyChanged(nameof(ReadOnly));

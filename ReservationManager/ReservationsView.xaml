@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ReservationManager"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:p="clr-namespace:ReservationManager.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700">
     <Grid>
@@ -24,13 +25,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Date"/>
+            <Label Content="{x:Static p:Resources.Date}"/>
             <DatePicker SelectedDate="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="1"/>
-            <Label Name ="ClientFilterLabel" Content="Client" Grid.Column="2"/>
+            <Label Name ="ClientFilterLabel" Content="{x:Static p:Resources.Client}" Grid.Column="2"/>
             <TextBox Name="ClientFilterTxt" Text="{Binding ClientFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="3"/>
-            <Label Name ="ShowFilterLabel" Content="Show" Grid.Column="4"/>
+            <Label Name ="ShowFilterLabel" Content="{x:Static p:Resources.Show}" Grid.Column="4"/>
             <TextBox Name="ShowFilterTxt" Text="{Binding ShowFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="5"/>
-            <Button Content="Clear" Margin="5,0,0,0" Command="{Binding ClearFilterCommand}" Grid.Column="6"/>
+            <Button Content="{x:Static p:Resources.Clear}" Margin="5,0,0,0" Command="{Binding ClearFilterCommand}" Grid.Column="6"/>
         </Grid>
         <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Reservations, UpdateSourceTrigger=PropertyChanged}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedReservation}">
@@ -41,18 +42,18 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Show.Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Date}" Binding="{Binding Path=Show.Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
 
-                <DataGridTextColumn Header="Client" Binding="{Binding Path=Client.FullName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
-                <DataGridTextColumn Header="Show" Binding="{Binding Path=Show.Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
-                <DataGridTextColumn Header="Category" Binding="{Binding Path=Category.Name}"  CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
-                <DataGridTextColumn Header="Number" Binding="{Binding Path=Number}"  CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Client}" Binding="{Binding Path=Client.FullName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Show}" Binding="{Binding Path=Show.Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Category}" Binding="{Binding Path=Category.Name}"  CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Client}" Binding="{Binding Path=Number}"  CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*" />
                 
             </DataGrid.Columns>
         </f:MyDataGrid>
-        <Button Grid.Row="2" Name="btnNew" Content="New Reservation" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
+        <Button Grid.Row="2" Name="btnNew" Content="{x:Static p:Resources.New_reservation}" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding NewCommand}" HorizontalAlignment="Right" Width="97"/>
-        <Button Content="Refresh" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
+        <Button Content="{x:Static p:Resources.Refresh}" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding RefreshCommand}"/>
     </Grid>
 </f:UserControlBase>

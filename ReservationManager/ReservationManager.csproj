@@ -211,6 +211,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\ReservationManager _BACKUP.sql" />
     <Content Include="Database\ReservationManager.sql" />
     <Resource Include="WORK_TO_DO.txt" />
     <Resource Include="Images\show.jpg" />

@@ -32,29 +32,36 @@
         </Grid.RowDefinitions>
         <!-- ROW #1 -->
             <Label Content="Last Name :" />
-            <TextBox x:Name="txtLastName" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
-        <!-- ROW #2 -->
-        <Label Content="First Name :" Grid.Row="1"/>
-            <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
-        <!-- ROW #3 -->
-        <Label Content="Bdd :" Grid.Row="2"/>
-            <DatePicker x:Name="txtBdd" Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Bdd, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
+            <Label Name="lblLastName" Content="{Binding LastName}" Visibility="Collapsed" Grid.Column="1"/>
+            <TextBox Name="txtLastName" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
+            
+            <!-- ROW #2 -->
+            <Label Content="First Name :" Grid.Row="1"/>
+            <Label Name="lblFirstName" Content="{Binding FirstName}" Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
+            <TextBox Name="txtFirstName" Grid.Row="1" Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
+            
+            <!-- ROW #3 -->
+            <Label Content="Bdd :" Grid.Row="2"/>
+            <Label Name="lblBdd" Content="{Binding Bdd}" Visibility="Collapsed" Grid.Row="2" Grid.Column="1"/>
+            <DatePicker Name="txtBdd" Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Bdd, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
                 <DatePicker.Resources>
                     <Style TargetType="DatePickerTextBox">
                         <Setter Property="IsReadOnly" Value="{Binding ReadOnly}"/>
                     </Style>
                 </DatePicker.Resources>
             </DatePicker>
-            <!-- ROW #4 -->
-        <Label Content="Postal Code :" Grid.Row="3"/>
-            <TextBox x:Name="txtPostalCode" Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
         
-        <!-- ROW #4 -->
-        <WrapPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Width="166">
-        <Button x:Name="btnCancel" Content="Cancel" Command="{Binding CancelCommand}" Width="auto" Padding="5,1"/>
-        <Button x:Name="btnSave" Content="Save" Command="{Binding SaveCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
-        <Button x:Name="btnDelete" Content="Delete" Command="{Binding DeleteCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
-        </WrapPanel>
+            <!-- ROW #4 -->
+            <Label Content="Postal Code :" Grid.Row="3"/>
+            <Label Name="lblPostalCode" Content="{Binding PostalCode}" Visibility="Collapsed" Grid.Row="3" Grid.Column="1"/>
+            <TextBox Name="txtPostalCode" Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
+        
+            <!-- ROW #4 -->
+            <WrapPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Width="166">
+                <Button Name="btnCancel" Content="Cancel" Command="{Binding CancelCommand}" Width="auto" Padding="5,1"/>
+                <Button Name="btnSave" Content="Save" Command="{Binding SaveCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
+                <Button Name="btnDelete" Content="Delete" Command="{Binding DeleteCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
+            </WrapPanel>
         </Grid>
         <DockPanel Grid.Row="1"  Margin="0,0,5,0">
             <ContentControl Name="Reservations">

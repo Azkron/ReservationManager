@@ -58,17 +58,23 @@
                 </Grid.RowDefinitions>
                 <!-- ROW #1 -->
                 <Label Content="Client :" />
-                <Label Content="{Binding ClientName, UpdateSourceTrigger=PropertyChanged }"  Grid.Column="1"/>
+                <Label Content="{Binding ClientName, UpdateSourceTrigger=PropertyChanged }" Grid.Column="1"/>
                 <Label Content="Show :" Grid.Row="1"  Grid.Column="0"/>
-                <ComboBox ItemsSource="{Binding Shows}" SelectedValue="{Binding Show}" IsReadOnly="{Binding CantModify}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="1"/>
+                <Label Name="lblShow" Content="{Binding Show.Name, UpdateSourceTrigger=PropertyChanged }" Visibility="Hidden" Grid.Row="1" Grid.Column="1"/>
+                <ComboBox Name="cmbShows" ItemsSource="{Binding Shows}" SelectedValue="{Binding Show}" IsReadOnly="{Binding CantModify}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="1"/>
+
                 
                 <Label Name="lblPlacesTitle" Content="Category Places :" Grid.Row="2" Grid.Column="0"/>
                 <Label Name="lblPlaces" Content="{Binding ShowFreePlaces}" Grid.Row="2" Grid.Column="1"/>
                 <Label Name="lblPricesTitle" Content="Category Prices € :" Grid.Row="3" Grid.Column="0"/>
                 <Label Name="lblPrices" Content="{Binding ShowPrices}" Grid.Row="3" Grid.Column="1"/>
+                    
+
                 <Label Name="lblCategoryTitle" Content="Category :" Grid.Row="4" Grid.Column="0"/>
+                <Label Name="lblCategory" Content="{Binding Category.Name, UpdateSourceTrigger=PropertyChanged }" Visibility="Hidden" Grid.Row="4" Grid.Column="1"/>
                 <ComboBox Name="cmbCategory" ItemsSource="{Binding Categories}" SelectedValue="{Binding Category}" IsReadOnly="{Binding CantModify}" DisplayMemberPath="Name" Grid.Row="4" Grid.Column="1"/>
                 <Label Name="lblNumberTitle" Content="Number :" Grid.Row="5" Grid.Column="0"/>
+                <Label Name="lblNumber" Content="{Binding NumberInput, UpdateSourceTrigger=PropertyChanged }" Visibility="Hidden" Grid.Row="5" Grid.Column="1"/>
                 <TextBox Name="txtNumber" Text="{Binding NumberInput, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" RenderTransformOrigin="0.735,0.483" Margin="5,0,0,0" Grid.Row="5" Grid.Column="1"/>
 
             </Grid>

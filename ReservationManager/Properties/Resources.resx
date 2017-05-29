@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Error_DoesNotExist" xml:space="preserve">
     <value>does not exist</value>
   </data>
@@ -137,6 +158,9 @@
   </data>
   <data name="Error_WrongPassword" xml:space="preserve">
     <value>wrong password</value>
+  </data>
+  <data name="Has" xml:space="preserve">
+    <value>Has</value>
   </data>
   <data name="LoginView_Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -170,5 +194,26 @@
   </data>
   <data name="Menu_SandBox_MasterDetail" xml:space="preserve">
     <value>Testing Master / Detail</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="New_reservation" xml:space="preserve">
+    <value>New reservation</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Reservation" xml:space="preserve">
+    <value>Reservation</value>
+  </data>
+  <data name="Reservations" xml:space="preserve">
+    <value>Reservations</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
   </data>
 </root>

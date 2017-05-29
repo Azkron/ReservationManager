@@ -78,10 +78,17 @@ namespace ReservationManager
                 else
                 {
                     ClientsPanel.Visibility = Visibility.Collapsed;
+                    cmbShows.Visibility = Visibility.Collapsed;
+                    cmbCategory.Visibility = Visibility.Collapsed;
+
+                    lblShow.Visibility = Visibility.Visible;
+                    lblCategory.Visibility = Visibility.Visible;
+
                     if (!ReadOnly)
                     {
                         btnDelete.Visibility = Visibility.Visible;
                         btnCancel.Visibility = Visibility.Visible;
+                        btnSave.Visibility = Visibility.Visible;
                     }
                 }
             }
@@ -98,9 +105,21 @@ namespace ReservationManager
                 readOnly = value;
                 if (readOnly)
                 {
+                    ClientsPanel.Visibility = Visibility.Collapsed;
+                    cmbShows.Visibility = Visibility.Collapsed;
+                    cmbCategory.Visibility = Visibility.Collapsed;
+                    txtNumber.Visibility = Visibility.Collapsed;
                     btnDelete.Visibility = Visibility.Collapsed;
                     btnSave.Visibility = Visibility.Collapsed;
                     btnCancel.Visibility = Visibility.Collapsed;
+                    lblPlacesTitle.Visibility = Visibility.Collapsed;
+                    lblPlaces.Visibility = Visibility.Collapsed;
+                    lblPricesTitle.Visibility = Visibility.Collapsed;
+                    lblPrices.Visibility = Visibility.Collapsed;
+
+                    lblShow.Visibility = Visibility.Visible;
+                    lblCategory.Visibility = Visibility.Visible;
+                    lblNumber.Visibility = Visibility.Visible;
                 }
 
                 RaisePropertyChanged(nameof(ReadOnly));

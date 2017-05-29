@@ -59,7 +59,7 @@ namespace ReservationManager
 
             App.Messenger.Register(App.MSG_GENERAL_REFRESH, () =>
             {
-                this.Clients.Refresh(App.Model.Clients);
+                Clients.Refresh(App.Model.Clients);
             });
         }
 

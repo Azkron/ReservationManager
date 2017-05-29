@@ -27,7 +27,7 @@ namespace ReservationManager
     {
         public int? showId = null;// save the id of the show in case the model gets reloaded from other tab
         private Show show = null;
-        public Show Show { get { return show; } set { show = value;  showId = Show.Id; } }
+        public Show Show { get { return show; } set { show = value;  if(show != null)showId = Show.Id; } }
         //private ReservationsView reservationsView;
 
         public ICommand DeleteCommand { get; set; }
@@ -46,7 +46,9 @@ namespace ReservationManager
                     
             DataContext = this;
 
-            ReadOnly = App.Rights(Table.SHOW) != Right.ALL;
+            ShowReadOnly = App.Rights(Table.SHOW) != Right.ALL;
+            PriceReadOnly = App.Rights(Table.PRICE) != Right.ALL;
+
             IsNew = isNew;
 
             reservations = Reservations.Content as ReservationsView;
@@ -65,7 +67,6 @@ namespace ReservationManager
         private void Refresh()
         {
             Show = (from s in App.Model.Shows where s.Id == showId select s).FirstOrDefault();
-            
             PriceList = null;
             Category = null;
             categories = null;
@@ -96,10 +97,13 @@ namespace ReservationManager
                     btnDelete.Visibility = Visibility.Collapsed;
                     btnCancel.Visibility = Visibility.Collapsed;
                 }
-                else if(!ReadOnly)
+                else
                 {
-                    btnDelete.Visibility = Visibility.Visible;
-                    btnCancel.Visibility = Visibility.Visible;
+                    if (!ShowReadOnly)
+                    {
+                        btnCancel.Visibility = Visibility.Visible;
+                        btnDelete.Visibility = Visibility.Visible;
+                    }
                 }
 
             }
@@ -253,28 +257,57 @@ namespace ReservationManager
                 return categories;
             }
         }
-        
 
-        private bool readOnly;
-        public bool ReadOnly
+
+        private bool showReadOnly;
+        public bool ShowReadOnly
         {
-            get { return readOnly; }
+            get { return showReadOnly; }
 
             set
             {
-                readOnly = value;
-                if (readOnly)
+                showReadOnly = value;
+                if (showReadOnly)
                 {
+                    txtName.Visibility = Visibility.Collapsed;
+                    txtDescription.Visibility = Visibility.Collapsed;
+                    txtDate.Visibility = Visibility.Collapsed;
                     btnDelete.Visibility = Visibility.Collapsed;
                     btnSave.Visibility = Visibility.Collapsed;
                     btnCancel.Visibility = Visibility.Collapsed;
                     btnLoad.Visibility = Visibility.Collapsed;
                     btnClear.Visibility = Visibility.Collapsed;
+                    lblHasReservations.Visibility = Visibility.Collapsed;
+
+                    lblName.Visibility = Visibility.Visible;
+                    lblDescription.Visibility = Visibility.Visible;
+                    lblDate.Visibility = Visibility.Visible;
+                }
+
+                RaisePropertyChanged(nameof(ShowReadOnly));
+            }
+        }
+
+        private bool priceReadOnly;
+        public bool PriceReadOnly
+        {
+            get { return priceReadOnly; }
+
+            set
+            {
+                priceReadOnly = value;
+                if (priceReadOnly)
+                {
                     lblSetPrice.Visibility = Visibility.Collapsed;
                     gridSetPrice.Visibility = Visibility.Collapsed;
                 }
+                else
+                {
+                    lblSetPrice.Visibility = Visibility.Visible;
+                    gridSetPrice.Visibility = Visibility.Visible;
+                }
 
-                RaisePropertyChanged(nameof(ReadOnly));
+                RaisePropertyChanged(nameof(PriceReadOnly));
             }
         }
 
@@ -333,7 +366,9 @@ namespace ReservationManager
             }
 
             App.Model.SaveChanges();
+
             App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
+
             App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
         }
 
@@ -371,13 +406,10 @@ namespace ReservationManager
 
             if(changePrice != null || changeShow != null)
             {
-                App.CancelChanges();
+                changeShow.Reload();
                 Refresh();
             }
-
-            // NOT NEEDED TO CLOSE TAB ON CANCEL, IT JUST RESETS THE DATA (CODE ABOVE)
-            //App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, !isNew ? Pseudo : "new member");
-            //App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Pseudo);
+            
         }
 
 
