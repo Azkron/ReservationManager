@@ -44,7 +44,11 @@ namespace ReservationManager
 
         public static int StrToInt(string str, int length = 4)
         {
-            return Convert.ToInt32(FilterLetters(str, length));
+            int res = -1;
+
+            Int32.TryParse(FilterLetters(str, length), out res);
+
+            return res;
         }
     }
 }

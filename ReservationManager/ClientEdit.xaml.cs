@@ -127,6 +127,20 @@ namespace ReservationManager
             }
         }
 
+        public string PostalCode
+        {
+            get { return Client.PostalCode != null ? Client.PostalCode.ToString() : null; }
+            set
+            {
+                int cp = 0;
+                if (!string.IsNullOrEmpty(value))
+                    cp = Util.StrToInt(value);
+                Client.PostalCode = cp;
+                RaisePropertyChanged(nameof(PostalCode));
+                //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
+            }
+        }
+        /*
         public int? PostalCode
         {
             get { return Client.PostalCode; }
@@ -136,7 +150,7 @@ namespace ReservationManager
                 RaisePropertyChanged(nameof(PostalCode));
                 //App.Messenger.NotifyColleagues(App.MSG_LAST_NAME_CHANGED, string.IsNullOrEmpty(value) ? "<new member>" : value);
             }
-        }
+        }*/
 
         public DateTime? Bdd
         {

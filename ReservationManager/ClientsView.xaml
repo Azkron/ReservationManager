@@ -30,7 +30,7 @@
             <Button Content="{x:Static p:Resources.Clear}" Margin="5,0,0,0" Command="{Binding ClearFilter}" Grid.Column="4"/>
         </Grid>
         <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Clients}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
-                      SelectedItem="{Binding SelectedClient}">
+                      SelectedItem="{Binding SelectedClient}" CanUserAddRows="false">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding EditCommand}"
