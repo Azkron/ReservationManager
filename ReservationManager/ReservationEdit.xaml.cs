@@ -318,13 +318,10 @@ namespace ReservationManager
             App.Messenger.NotifyColleagues(App.MSG_RESERVATION_CHANGED, Reservation);
         }
 
-        private bool CanSaveOrCancelAction()
+        public bool CanSaveOrCancelAction()
         {
             if (IsNew)
             {
-                Console.WriteLine("Category = " + Reservation.Category);
-                Console.WriteLine("Client = " + Reservation.Client);
-                Console.WriteLine("Number = " + Reservation.Number);
                 return Reservation.Category != null
                     && Reservation.Client != null
                     && Reservation.Number > 0
@@ -339,7 +336,7 @@ namespace ReservationManager
         }
 
 
-        private void CancelAction()
+        public void CancelAction()
         {
             var change = (from r in App.Model.ChangeTracker.Entries<Reservation>()
                           where r.Entity == Reservation
@@ -348,6 +345,7 @@ namespace ReservationManager
             if (change != null)
             {
                 change.Reload();
+                App.Messenger.NotifyColleagues(App.MSG_REFRESH);
                 RaisePropertyChanged(nameof(Show));
                 RaisePropertyChanged(nameof(Category));
                 RaisePropertyChanged(nameof(NumberInput));

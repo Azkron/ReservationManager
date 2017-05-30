@@ -51,8 +51,9 @@ namespace ReservationManager
             reservations.Client = Client;
             
             SaveCommand = new RelayCommand(SaveAction, CanSaveOrCancelAction);
-            CancelCommand = new RelayCommand(CancelAction);
+            CancelCommand = new RelayCommand(CancelAction, CanSaveOrCancelAction);
             DeleteCommand = new RelayCommand(DeleteAction, CanDeleteAction);
+            
 
 
         }
@@ -161,7 +162,7 @@ namespace ReservationManager
             App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
         }
 
-        private bool CanSaveOrCancelAction()
+        public bool CanSaveOrCancelAction()
         {
             if (IsNew)
                 return !string.IsNullOrEmpty(LastName) && !HasErrors;
@@ -174,7 +175,7 @@ namespace ReservationManager
         }
 
 
-        private void CancelAction()
+        public void CancelAction()
         {
             var change = (from c in App.Model.ChangeTracker.Entries<Client>()
                           where c.Entity == Client
@@ -187,6 +188,7 @@ namespace ReservationManager
                 RaisePropertyChanged(nameof(LastName));
                 RaisePropertyChanged(nameof(PostalCode));
                 RaisePropertyChanged(nameof(Bdd));
+                App.Messenger.NotifyColleagues(App.MSG_REFRESH);
             }
 
             // NOT NEEDED TO CLOSE TAB ON CANCEL, IT JUST RESETS THE DATA (CODE ABOVE)
@@ -202,7 +204,7 @@ namespace ReservationManager
             App.Model.Clients.Remove(Client);
             App.Model.SaveChanges();
 
-            App.Messenger.NotifyColleagues(App.MSG_REFRESH, Client.FullName);
+            App.Messenger.NotifyColleagues(App.MSG_REFRESH);
             App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Client.FullName);
 
            // App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);

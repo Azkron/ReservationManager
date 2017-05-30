@@ -105,7 +105,6 @@ namespace ReservationManager
             set
             {
                 selectedClient = value;
-                Console.WriteLine(selectedClient);
             }
         }
 

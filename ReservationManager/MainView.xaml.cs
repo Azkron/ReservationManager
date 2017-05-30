@@ -16,7 +16,6 @@ namespace ReservationManager
             DataContext = this;
 
             InitializeComponent();
-            
 
             // CLIENT EDIT COMMANDS
             App.Messenger.Register(App.MSG_NEW_CLIENT, () =>
@@ -49,13 +48,15 @@ namespace ReservationManager
 
                 if (tab == null)
                 {
+                    var clientEdit = new ClientEdit(c, false);
                     tab = new TabItem()
                     {
                         Header = "<" + c.FullName + ">",
-                        Content = new ClientEdit(c, false)
+                        Content = clientEdit
                     };
 
-                    AddTabControls(tab);
+
+                    AddTabControls(tab, () => { if (clientEdit.CanSaveOrCancelAction()) clientEdit.CancelAction(); });
 
                     tabControl.Items.Add(tab);
                 }
@@ -95,13 +96,14 @@ namespace ReservationManager
 
                 if (tab == null)
                 {
+                    var editShow = new ShowEdit(s, false);
                     tab = new TabItem()
                     {
                         Header = "<" + s.Name + ">",
-                        Content = new ShowEdit(s, false)
+                        Content = editShow
                     };
 
-                    AddTabControls(tab);
+                    AddTabControls(tab, () => { if (editShow.CanSaveOrCancelAction()) editShow.CancelAction(); });
 
                     tabControl.Items.Add(tab);
                 }
@@ -157,13 +159,14 @@ namespace ReservationManager
 
                 if (tab == null)
                 {
+                    var resEdit = new ReservationEdit(r, false);
                     tab = new TabItem()
                     {
                         Header = r.TabHeader,
-                        Content = new ReservationEdit(r, false)
+                        Content = resEdit
                     };
 
-                    AddTabControls(tab);
+                    AddTabControls(tab, () => { if (resEdit.CanSaveOrCancelAction()) resEdit.CancelAction(); });
 
                     tabControl.Items.Add(tab);
                 }
@@ -186,12 +189,16 @@ namespace ReservationManager
             });
         }
 
-        private void AddTabControls(TabItem tab)
+        private void AddTabControls(TabItem tab, Action act = null)
         {
             tab.MouseDown += (o, e) =>
             {
                 if (e.ChangedButton == System.Windows.Input.MouseButton.Middle && e.ButtonState == System.Windows.Input.MouseButtonState.Pressed)
+                {
+                    act?.Invoke();
+
                     tabControl.Items.Remove(o);
+                }
             };
 
             tab.KeyDown += (o, e) =>

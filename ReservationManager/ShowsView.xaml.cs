@@ -92,7 +92,6 @@ namespace ReservationManager
             set
             {
                 selectedShow = value;
-                Console.WriteLine(selectedShow);
             }
         }
 
@@ -115,7 +114,6 @@ namespace ReservationManager
             get { return dateFilter; }
             set
             {
-                Console.WriteLine("DateFilterSet");
                 dateFilter = value;
                 ApplyFilterAction();
                 RaisePropertyChanged(nameof(DateFilter));

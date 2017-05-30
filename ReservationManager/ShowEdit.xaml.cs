@@ -64,6 +64,14 @@ namespace ReservationManager
             DeletePriceCommand = new RelayCommand(DeletePriceAction);
             LoadImage = new RelayCommand(LoadImageAction);
             ClearImage = new RelayCommand(ClearImageAction);
+
+
+            App.Messenger.Register(App.MSG_REFRESH, () =>
+            {
+                if (CanSaveOrCancelAction())
+                    CancelAction();
+            });
+
         }
 
         private void Refresh()
@@ -375,7 +383,7 @@ namespace ReservationManager
             App.Messenger.NotifyColleagues(App.MSG_SHOW_CHANGED, Show);
         }
 
-        private bool CanSaveOrCancelAction()
+        public bool CanSaveOrCancelAction()
         {
             if (IsNew)
                 return !string.IsNullOrEmpty(ShowName) && !string.IsNullOrEmpty(Description) && Date != null && !HasErrors;
@@ -395,7 +403,7 @@ namespace ReservationManager
         }
 
 
-        private void CancelAction()
+        public void CancelAction()
         {
             var changeShow = (from c in App.Model.ChangeTracker.Entries<Show>()
                               where c.Entity == Show
@@ -410,7 +418,8 @@ namespace ReservationManager
             if(changePrice != null || changeShow != null)
             {
                 changeShow.Reload();
-                Refresh();
+                App.Messenger.NotifyColleagues(App.MSG_REFRESH);
+                //Refresh();
             }
             
         }
