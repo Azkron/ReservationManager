@@ -53,7 +53,7 @@ namespace ReservationManager
             () => { return IsValid; });
 
             
-            App.Messenger.Register(App.MSG_GENERAL_REFRESH, () =>
+            App.Messenger.Register(App.MSG_REFRESH, () =>
             {
                 this.Shows.Refresh(App.Model.Shows);
             });

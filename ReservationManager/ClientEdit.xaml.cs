@@ -53,7 +53,8 @@ namespace ReservationManager
             SaveCommand = new RelayCommand(SaveAction, CanSaveOrCancelAction);
             CancelCommand = new RelayCommand(CancelAction);
             DeleteCommand = new RelayCommand(DeleteAction, CanDeleteAction);
-            
+
+
         }
 
         private bool readOnly;
@@ -156,7 +157,7 @@ namespace ReservationManager
             }
 
             App.Model.SaveChanges();
-            App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
+            App.Messenger.NotifyColleagues(App.MSG_REFRESH);
             App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
         }
 
@@ -201,7 +202,7 @@ namespace ReservationManager
             App.Model.Clients.Remove(Client);
             App.Model.SaveChanges();
 
-            App.Messenger.NotifyColleagues(App.MSG_GENERAL_REFRESH);
+            App.Messenger.NotifyColleagues(App.MSG_REFRESH, Client.FullName);
             App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Client.FullName);
 
            // App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
