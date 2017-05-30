@@ -430,12 +430,8 @@ namespace ReservationManager
         {
             if (Show.Reservations.Count != 0)
             {
-                if (!confirmDelete)
-                {
-                    confirmDelete = true;
-                    DeleteTxt = Properties.Resources.Confirm;
-                }
-                else
+                MessageBoxResult result = MessageBox.Show(Properties.Resources.DeleteReservations, Properties.Resources.Confirmation, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
                 {
                     show.Reservations.Clear();
                     show.PriceLists.Clear();
@@ -466,12 +462,8 @@ namespace ReservationManager
         {
             if (Show.ReservationsCount(Category.Id) != 0)
             {
-                if(!confirmPriceDelete)
-                {
-                    confirmPriceDelete = true;
-                    DeletePriceTxt = Properties.Resources.Confirm;
-                }
-                else
+                MessageBoxResult result = MessageBox.Show(Properties.Resources.DeleteReservations, Properties.Resources.Confirmation, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
                 {
                     foreach (var res in from r in App.Model.Reservations where r.IdCat == Category.Id && r.IdShow == Show.Id select r)
                         App.Model.Reservations.Remove(res);

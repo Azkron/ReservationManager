@@ -150,6 +150,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirmar</value>
   </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Confirmación</value>
+  </data>
   <data name="Currency" xml:space="preserve">
     <value>€</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Eliminar</value>
+  </data>
+  <data name="DeleteReservations" xml:space="preserve">
+    <value>Esta acción cancelará reservaciones !</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Descripción</value>
@@ -261,8 +267,14 @@
   <data name="New_reservation" xml:space="preserve">
     <value>Nueva reservación</value>
   </data>
+  <data name="NoPlaces" xml:space="preserve">
+    <value>No hay plazas disponibles para este show !</value>
+  </data>
   <data name="NoReservations" xml:space="preserve">
     <value>Sin reservaciones</value>
+  </data>
+  <data name="NotPossible" xml:space="preserve">
+    <value>Imposible</value>
   </data>
   <data name="Number_Field" xml:space="preserve">
     <value>Cantidad :</value>

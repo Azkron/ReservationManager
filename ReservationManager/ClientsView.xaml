@@ -42,7 +42,7 @@
                 <DataGridTextColumn Header="{x:Static p:Resources.FirstName}" Width="*" Binding="{Binding Path=FirstName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
                 <DataGridTextColumn Header="{x:Static p:Resources.PostalCode}" Width="*" Binding="{Binding Path=PostalCode}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
                 <DataGridTextColumn Header="{x:Static p:Resources.Bdd}" Width="*" Binding="{Binding Path=Bdd, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.Reservations}" Width="*" Binding="{Binding Path=TotalReservations}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Reservations}" Width="*" Binding="{Binding Path=Reservations.Count}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
                 
             </DataGrid.Columns>
         </f:MyDataGrid>

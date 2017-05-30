@@ -150,6 +150,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="Currency" xml:space="preserve">
     <value>€</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="DeleteReservations" xml:space="preserve">
+    <value>This action will delete some reservations !</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
@@ -261,8 +267,14 @@
   <data name="New_reservation" xml:space="preserve">
     <value>New reservation</value>
   </data>
+  <data name="NoPlaces" xml:space="preserve">
+    <value>There are no places availible for this show !</value>
+  </data>
   <data name="NoReservations" xml:space="preserve">
     <value>No reservations</value>
+  </data>
+  <data name="NotPossible" xml:space="preserve">
+    <value>Not Possible</value>
   </data>
   <data name="Number_Field" xml:space="preserve">
     <value>Number :</value>

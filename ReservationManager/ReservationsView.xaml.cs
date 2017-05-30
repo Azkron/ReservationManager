@@ -104,6 +104,8 @@ namespace ReservationManager
                 ShowFilterTxt.Visibility = Visibility.Collapsed;
                 ShowFilterLabel.Visibility = Visibility.Collapsed;
                 ApplyFilterAction();
+                NewCommand = new RelayCommand(() =>
+                { App.Messenger.NotifyColleagues(App.MSG_NEW_SHOW_RESERVATION, Show); });
             }
             else if (Client != null)
             {

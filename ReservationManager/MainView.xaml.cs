@@ -2,6 +2,7 @@
 
 using PRBD_Framework;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -40,28 +41,32 @@ namespace ReservationManager
 
             App.Messenger.Register<Client>(App.MSG_EDIT_CLIENT, (c) =>
             {
-                TabItem tab = null;
-                string Header = "<" + c.FullName + ">";
-                foreach (TabItem t in tabControl.Items)
-                    if (t.Header.Equals(Header))
-                        tab = t;
-
-                if (tab == null)
+                if(c != null)
                 {
-                    var clientEdit = new ClientEdit(c, false);
-                    tab = new TabItem()
+                    TabItem tab = null;
+                    string Header = "<" + c.FullName + ">";
+                    foreach (TabItem t in tabControl.Items)
+                        if (t.Header.Equals(Header))
+                            tab = t;
+
+                    if (tab == null)
                     {
-                        Header = "<" + c.FullName + ">",
-                        Content = clientEdit
-                    };
+                        var clientEdit = new ClientEdit(c, false);
+                        tab = new TabItem()
+                        {
+                            Header = "<" + c.FullName + ">",
+                            Content = clientEdit
+                        };
 
 
-                    AddTabControls(tab, () => { if (clientEdit.CanSaveOrCancelAction()) clientEdit.CancelAction(); });
+                        AddTabControls(tab, () => { if (clientEdit.CanSaveOrCancelAction()) clientEdit.CancelAction(); });
 
-                    tabControl.Items.Add(tab);
+                        tabControl.Items.Add(tab);
+                    }
+
+                    Dispatcher.InvokeAsync(() => tab.Focus());
+
                 }
-
-                Dispatcher.InvokeAsync(() => tab.Focus());
             });
             
 
@@ -88,27 +93,30 @@ namespace ReservationManager
 
             App.Messenger.Register<Show>(App.MSG_EDIT_SHOW, (s) =>
             {
-                TabItem tab = null;
-                string Header = "<" + s.Name + ">";
-                foreach (TabItem t in tabControl.Items)
-                    if (t.Header.Equals(Header))
-                        tab = t;
-
-                if (tab == null)
+                if (s != null)
                 {
-                    var editShow = new ShowEdit(s, false);
-                    tab = new TabItem()
+                    TabItem tab = null;
+                    string Header = "<" + s.Name + ">";
+                    foreach (TabItem t in tabControl.Items)
+                        if (t.Header.Equals(Header))
+                            tab = t;
+
+                    if (tab == null)
                     {
-                        Header = "<" + s.Name + ">",
-                        Content = editShow
-                    };
+                        var editShow = new ShowEdit(s, false);
+                        tab = new TabItem()
+                        {
+                            Header = "<" + s.Name + ">",
+                            Content = editShow
+                        };
 
-                    AddTabControls(tab, () => { if (editShow.CanSaveOrCancelAction()) editShow.CancelAction(); });
+                        AddTabControls(tab, () => { if (editShow.CanSaveOrCancelAction()) editShow.CancelAction(); });
 
-                    tabControl.Items.Add(tab);
+                        tabControl.Items.Add(tab);
+                    }
+
+                    Dispatcher.InvokeAsync(() => tab.Focus());
                 }
-
-                Dispatcher.InvokeAsync(() => tab.Focus());
             });
 
 
@@ -130,18 +138,47 @@ namespace ReservationManager
 
             App.Messenger.Register<Client>(App.MSG_NEW_CLIENT_RESERVATION, (c) =>
             {
-                var reservation = App.Model.Reservations.Create();
-                reservation.Client = c;
-                var tab = new TabItem()
+                if (c != null)
                 {
-                    Header = "<new reservation>",
-                    Content = new ReservationEdit(reservation, true)
-                };
+                    var reservation = App.Model.Reservations.Create();
+                    reservation.Client = c;
+                    var tab = new TabItem()
+                    {
+                        Header = "<new reservation>",
+                        Content = new ReservationEdit(reservation, true)
+                    };
 
-                AddTabControls(tab);
+                    AddTabControls(tab);
 
-                tabControl.Items.Add(tab);
-                Dispatcher.InvokeAsync(() => tab.Focus());
+                    tabControl.Items.Add(tab);
+                    Dispatcher.InvokeAsync(() => tab.Focus());
+                }
+            });
+
+            App.Messenger.Register<Show>(App.MSG_NEW_SHOW_RESERVATION, (s) =>
+            {
+                if (s != null)
+                {
+                    if(s.FreePlacesTotal <= 0)
+                    {
+                        MessageBoxResult result = MessageBox.Show(Properties.Resources.NoPlaces, Properties.Resources.NotPossible, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        var reservation = App.Model.Reservations.Create();
+                        reservation.Show = s;
+                        var tab = new TabItem()
+                        {
+                            Header = "<new reservation>",
+                            Content = new ReservationEdit(reservation, true)
+                        };
+
+                        AddTabControls(tab);
+
+                        tabControl.Items.Add(tab);
+                        Dispatcher.InvokeAsync(() => tab.Focus());
+                    }
+                }
             });
 
             App.Messenger.Register<Reservation>(App.MSG_RESERVATION_CHANGED, (r) =>
@@ -151,27 +188,30 @@ namespace ReservationManager
 
             App.Messenger.Register<Reservation>(App.MSG_EDIT_RESERVATION, (r) =>
             {
-                TabItem tab = null;
-                string Header = r.TabHeader;
-                foreach (TabItem t in tabControl.Items)
-                    if (t.Header.Equals(Header))
-                        tab = t;
-
-                if (tab == null)
+                if (r != null)
                 {
-                    var resEdit = new ReservationEdit(r, false);
-                    tab = new TabItem()
+                    TabItem tab = null;
+                    string Header = r.TabHeader;
+                    foreach (TabItem t in tabControl.Items)
+                        if (t.Header.Equals(Header))
+                            tab = t;
+
+                    if (tab == null)
                     {
-                        Header = r.TabHeader,
-                        Content = resEdit
-                    };
+                        var resEdit = new ReservationEdit(r, false);
+                        tab = new TabItem()
+                        {
+                            Header = r.TabHeader,
+                            Content = resEdit
+                        };
 
-                    AddTabControls(tab, () => { if (resEdit.CanSaveOrCancelAction()) resEdit.CancelAction(); });
+                        AddTabControls(tab, () => { if (resEdit.CanSaveOrCancelAction()) resEdit.CancelAction(); });
 
-                    tabControl.Items.Add(tab);
+                        tabControl.Items.Add(tab);
+                    }
+
+                    Dispatcher.InvokeAsync(() => tab.Focus());
                 }
-
-                Dispatcher.InvokeAsync(() => tab.Focus());
             });
 
 

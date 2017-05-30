@@ -200,13 +200,19 @@ namespace ReservationManager
 
         private void DeleteAction()
         {
-            Client.Reservations.Clear();
-            App.Model.Clients.Remove(Client);
-            App.Model.SaveChanges();
+            MessageBoxResult result = MessageBoxResult.Yes;
+            if(Client.Reservations.Count > 0)
+                result = MessageBox.Show(Properties.Resources.DeleteReservations, Properties.Resources.Confirmation, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            App.Messenger.NotifyColleagues(App.MSG_REFRESH);
-            App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Client.FullName);
+            if (result == MessageBoxResult.Yes)
+            {
+                Client.Reservations.Clear();
+                App.Model.Clients.Remove(Client);
+                App.Model.SaveChanges();
 
+                App.Messenger.NotifyColleagues(App.MSG_REFRESH);
+                App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Client.FullName);
+            }
            // App.Messenger.NotifyColleagues(App.MSG_CLIENT_CHANGED, Client);
         }
 

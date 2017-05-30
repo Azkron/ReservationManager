@@ -160,6 +160,15 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string Confirmation {
+            get {
+                return ResourceManager.GetString("Confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to €.
         /// </summary>
         public static string Currency {
@@ -192,6 +201,15 @@ namespace ReservationManager.Properties {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This action will delete some reservations !.
+        /// </summary>
+        public static string DeleteReservations {
+            get {
+                return ResourceManager.GetString("DeleteReservations", resourceCulture);
             }
         }
         
@@ -493,11 +511,29 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no places availible for this show !.
+        /// </summary>
+        public static string NoPlaces {
+            get {
+                return ResourceManager.GetString("NoPlaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No reservations.
         /// </summary>
         public static string NoReservations {
             get {
                 return ResourceManager.GetString("NoReservations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Possible.
+        /// </summary>
+        public static string NotPossible {
+            get {
+                return ResourceManager.GetString("NotPossible", resourceCulture);
             }
         }
         

@@ -17,17 +17,5 @@ namespace ReservationManager
             }
         }
 
-        private int totalReservations = -1;
-
-		public int TotalReservations
-        {
-            get
-            {
-				if(totalReservations == -1)
-                    totalReservations = (from r in Reservations select r.Number).Sum();
-
-                return totalReservations;
-            }
-        }
     }
 }
