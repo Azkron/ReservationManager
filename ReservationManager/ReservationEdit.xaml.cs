@@ -40,11 +40,13 @@ namespace ReservationManager
             Reservation = reservation;
             InitializeComponent();
 
-            Client = Reservation.Client;
+            DataContext = this;
             Show = Reservation.Show;
             Category = Reservation.Category;
 
-            DataContext = this;
+            Client = Reservation.Client;
+            if(Client != null)
+                ClientsPanel.Visibility = Visibility.Collapsed;
             clientsView = ClientsControl.Content as ClientsView;
             clientsView.ReservationEdit = this;
 

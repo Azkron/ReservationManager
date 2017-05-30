@@ -13,12 +13,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Menu>
+        <!--<Menu>
             <MenuItem Header="{x:Static p:Resources.Menu_SandBox}">
                 <MenuItem Header="{x:Static p:Resources.Menu_SandBox_DataGrid}" Command="{Binding SandBox}" CommandParameter="TestDataGrid" />
                 <MenuItem Header="{x:Static p:Resources.Menu_SandBox_MasterDetail}" Command="{Binding SandBox}" CommandParameter="TestMasterDetail" />
             </MenuItem>
-        </Menu>
+        </Menu>-->
         <TabControl x:Name="tabControl" Margin="10" Grid.Row="1">
             <TabItem x:Name="showsTab" Header="Shows">
                 <ContentControl>

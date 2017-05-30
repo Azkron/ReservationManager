@@ -165,7 +165,7 @@ namespace ReservationManager
         public bool CanSaveOrCancelAction()
         {
             if (IsNew)
-                return !string.IsNullOrEmpty(LastName) && !HasErrors;
+                return !string.IsNullOrEmpty(LastName) && !string.IsNullOrEmpty(Name) && !HasErrors;
 
             var change = (from c in App.Model.ChangeTracker.Entries<Client>()
                           where c.Entity == Client
