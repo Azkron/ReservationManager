@@ -139,14 +139,15 @@ namespace ReservationManager
                         p.IdShow = Show.Id;
                         p.Price = 10;
                         App.Model.PriceLists.Add(p);
+                        Show.PriceLists.Add(p);
+                        Category.PriceList.Add(p);
                     }
 
                     PriceList = p;
                     RaisePropertyChanged(nameof(Price));
                     Show.RefreshStrings();
                     RaisePropertyChanged(nameof(Show));
-
-                    DeletePriceTxt = "Delete";
+                    
 
                     int ResCount = Show.ReservationsCount(Category.Id);
                     if (ResCount > 0)
@@ -156,7 +157,7 @@ namespace ReservationManager
 
                     confirmDelete = false;
                     confirmPriceDelete = false;
-                    DeletePriceTxt = "Delete";
+                    DeletePriceTxt = "Del Cat";
                     txtPrice.Visibility = Visibility.Visible;
                     txtCurrency.Visibility = Visibility.Visible;
                     btnDeletePrice.Visibility = Visibility.Visible;
@@ -165,7 +166,7 @@ namespace ReservationManager
             }
         }
 
-        private string deletePriceTxt = "Delete";
+        private string deletePriceTxt = "Del Cat";
         public string DeletePriceTxt
         {
             get { return deletePriceTxt; }

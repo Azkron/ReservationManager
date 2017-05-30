@@ -9,11 +9,12 @@ namespace ReservationManager
     public partial class Show
     {
 
-        public List<Category> GetCategories()
+        public List<Category> GetCategories(bool includeFull = true, Reservation res = null)
         {
             List<Category> li = new List<Category>();
             foreach (PriceList p in PriceLists)
-                li.Add(p.Category);
+                if(includeFull || CalcFreePlacesByCat(p.Category,res) > 0)
+                    li.Add(p.Category);
 
             return li;
         }
@@ -29,51 +30,72 @@ namespace ReservationManager
         {
             get
             {
-                if (freePlacesString == "")
-                    foreach (Category cat in GetCategories())
-                        freePlacesString += cat.Name.Substring(3) + "/" + CalcFreePlacesByCat(cat) + "  ";
+                //if (freePlacesString == "")
+                freePlacesString = "";
+                foreach (Category cat in GetCategories())
+                    freePlacesString += cat.Name.Substring(3) + "/" + CalcFreePlacesByCat(cat) + "  ";
 
                 return freePlacesString;
             }
         }
 
-        private int freePlacesTotal = -1;
+        public string GetFreePlacesStr(Reservation r = null)
+        {
+
+            freePlacesString = "";
+            foreach (Category cat in GetCategories())
+                freePlacesString += cat.Name.Substring(3) + "/" + CalcFreePlacesByCat(cat, r) + "  ";
+
+            return freePlacesString;
+        }
+
+
         public int FreePlacesTotal
         {
             get
             {
-                if (freePlacesTotal == -1)
-                {
-                    freePlacesTotal = 0;
-                    foreach(Category c in App.Model.Categories)
-                        freePlacesTotal += (int)CalcFreePlacesByCat(c);
-                }
+                var freePlacesTotal = 0;
+                foreach (Category c in GetCategories())
+                    freePlacesTotal += (int)CalcFreePlacesByCat(c);
 
-                return freePlacesTotal + dNum;
+                return freePlacesTotal;
             }
         }
 
-        public int ReservationsCount(int IdCat)
+        public int GetFreePlacesTotal(Reservation r = null)
         {
-                return (from r in Reservations where r.IdCat == IdCat select r).Count();
+
+            var freePlacesTotal = 0;
+            foreach (Category c in GetCategories())
+                freePlacesTotal += (int)CalcFreePlacesByCat(c, r);
+
+            return freePlacesTotal;
         }
 
-        private int dCatId = -1;
+
+        public int ReservationsCount(int IdCat)
+        {
+            return (from r in Reservations where r.IdCat == IdCat select r).Count();
+        }
+
+        /*private int dCatId = -1;
         private int dNum = 0;
 
         public void DiscountResPlaces(int catId, int num)
         {
             dCatId = catId;
             dNum = num;
-        }
+        }*/
 
-        public decimal CalcFreePlacesByCat(Category cat)
+
+        public decimal CalcFreePlacesByCat(Category cat, Reservation res = null)
         {
-            decimal placesUsed = (from r in Reservations where r.IdCat == cat.Id && r.IdShow == Id select r.Number).Sum();
+            decimal placesUsed = (from r in Reservations where r.IdCat == cat.Id && r.IdShow == Id && r != res select r.Number).Sum();
 
-            return cat.PlacesNumber - placesUsed + (dCatId == cat.Id ? dNum : 0);
+            var freePlaces = (cat.PlacesNumber - placesUsed);
+            return freePlaces;
         }
-        
+
         public int? GetPrice(int idCat)
         {
             PriceList priceList = (from p in PriceLists where p.IdCat == idCat select p).FirstOrDefault(null);
@@ -89,11 +111,12 @@ namespace ReservationManager
         {
             get
             {
-                if (prices == "")
+                prices = "";
+                //if (prices == "")
                 {
                     foreach (PriceList pl in PriceLists)
                         prices += pl.Category.Name.Substring(3) + "/" + pl.Price.ToString("G29") + "  ";
-                    
+
                 }
 
                 return prices;

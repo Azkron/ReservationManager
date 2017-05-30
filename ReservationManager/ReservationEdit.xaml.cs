@@ -125,7 +125,7 @@ namespace ReservationManager
                 RaisePropertyChanged(nameof(ReadOnly));
             }
         }
-        
+
         public Client Client
         {
             get { return Reservation.Client; }
@@ -136,7 +136,7 @@ namespace ReservationManager
                     ClientName = value.FullName;
                 else
                     ClientName = "Select a client from the list below";
-                
+
             }
         }
 
@@ -161,10 +161,7 @@ namespace ReservationManager
                     List<Show> li = new List<Show>();
                     foreach (Show s in App.Model.Shows)
                     {
-                        if (s == Show)
-                            s.DiscountResPlaces(Reservation.Category.Id, Reservation.Number);
-
-                        if (s.FreePlacesTotal > 0)
+                        if (s.GetFreePlacesTotal(Reservation) > 0)
                             li.Add(s);
                     }
                     shows = new MyObservableCollection<Show>(li);
@@ -173,25 +170,26 @@ namespace ReservationManager
                 return shows;
             }
         }
-        
+
         public Show Show
         {
             get { return Reservation.Show; }
             set
             {
                 Reservation.Show = value;
-                if(value == null)
-                {
+                if (Reservation.Show == null)
                     AfterShow(Visibility.Collapsed);
-                }
                 else
                 {
-                    ShowFreePlaces = value.FreePlacesString;
-                    ShowPrices = value.Prices;
-                    Categories = new MyObservableCollection<Category>(value.GetCategories());
+                    //ShowFreePlaces = Reservation.Show.FreePlacesString;
+                    //ShowPrices = Reservation.Show.Prices;
+                    Categories = new MyObservableCollection<Category>(Reservation.Show.GetCategories(false, Reservation));
                     AfterShow(Visibility.Visible);
                 }
+
                 RaisePropertyChanged(nameof(Show));
+                RaisePropertyChanged(nameof(ShowFreePlaces));
+                RaisePropertyChanged(nameof(ShowPrices));
             }
         }
 
@@ -204,11 +202,11 @@ namespace ReservationManager
             lblCategoryTitle.Visibility = v;
             cmbCategory.Visibility = v;
 
-            if(v == Visibility.Collapsed)
+            if (v == Visibility.Collapsed)
             {
                 Categories = null;
-                ShowFreePlaces = null;
-                ShowPrices = null;
+                //ShowFreePlaces = null;
+                //ShowPrices = null;
                 Categories = null;
                 Category = null;
                 NumberInput = null;
@@ -225,7 +223,7 @@ namespace ReservationManager
                 RaisePropertyChanged(nameof(Categories));
             }
         }
-        
+
         public Category Category
         {
             get { return Reservation.Category; }
@@ -244,7 +242,7 @@ namespace ReservationManager
         private void AfterCategory(Visibility v)
         {
             lblNumberTitle.Visibility = v;
-            txtNumber.Visibility = v; 
+            txtNumber.Visibility = v;
 
             if (v == Visibility.Collapsed)
                 NumberInput = null;
@@ -253,26 +251,15 @@ namespace ReservationManager
         }
 
 
-        private string showFreePlaces = null;
         public string ShowFreePlaces
         {
-            get { return showFreePlaces; }
-            set
-            {
-                showFreePlaces = value;
-                RaisePropertyChanged(nameof(ShowFreePlaces));
-            }
+            get { return Show != null ? Show.GetFreePlacesStr(Reservation) : null; }
         }
 
         private string showPrices = null;
         public string ShowPrices
         {
-            get { return showPrices; }
-            set
-            {
-                showPrices = value;
-                RaisePropertyChanged(nameof(ShowPrices));
-            }
+            get { return Show != null ? Show.Prices : null; }
         }
 
 
@@ -296,13 +283,13 @@ namespace ReservationManager
                     }
                     else
                     {
-                        int free = (int)Show.CalcFreePlacesByCat(Category);
+                        int free = (int)Show.CalcFreePlacesByCat(Category, Reservation);
                         if (intNumber > free)
                         {
                             intNumber = free;
                             selectText = true;
                         }
-                    } 
+                    }
                 }
 
                 Reservation.Number = intNumber;
@@ -327,10 +314,15 @@ namespace ReservationManager
         private bool CanSaveOrCancelAction()
         {
             if (IsNew)
-                return Reservation.Category != null 
+            {
+                Console.WriteLine("Category = " + Reservation.Category);
+                Console.WriteLine("Client = " + Reservation.Client);
+                Console.WriteLine("Number = " + Reservation.Number);
+                return Reservation.Category != null
                     && Reservation.Client != null
                     && Reservation.Number > 0
                     && !HasErrors;
+            }
 
             var change = (from r in App.Model.ChangeTracker.Entries<Reservation>()
                           where r.Entity == Reservation
@@ -373,7 +365,7 @@ namespace ReservationManager
         private bool confirmDelete = false;
         private void DeleteAction()
         {
-            if(!confirmDelete)
+            if (!confirmDelete)
             {
                 DeleteTxt = "CONFIRM";
                 confirmDelete = true;
