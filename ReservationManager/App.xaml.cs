@@ -50,7 +50,7 @@ namespace ReservationManager
             Thread.CurrentThread.CurrentCulture = ci;
             //TestingEntityFramework();
         }
-
+        
         private void ColdStart()
         {
             Model.Users.Find(1000);

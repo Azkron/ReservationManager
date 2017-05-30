@@ -118,124 +118,124 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Bdd" xml:space="preserve">
-    <value>Bdd</value>
+    <value>Fdn</value>
   </data>
   <data name="Bdd_Field" xml:space="preserve">
-    <value>Bdd :</value>
+    <value>Fdn :</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>Category</value>
+    <value>Categoría</value>
   </data>
   <data name="CategoryPlaces_Field" xml:space="preserve">
-    <value>Cat Places :</value>
+    <value>Plazas Cat :</value>
   </data>
   <data name="CategoryPrices_Field" xml:space="preserve">
-    <value>Cat Prices € :</value>
+    <value>Precios Cat € :</value>
   </data>
   <data name="Category_Field" xml:space="preserve">
-    <value>Category :</value>
+    <value>Categoría :</value>
   </data>
   <data name="Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Limpiar</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Client</value>
+    <value>Cliente</value>
   </data>
   <data name="Client_Field" xml:space="preserve">
-    <value>Client :</value>
+    <value>Cliente :</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Confirmar</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>€</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>Fecha</value>
   </data>
   <data name="Date_Field" xml:space="preserve">
-    <value>Date :</value>
+    <value>Fecha :</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Eliminar</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Descripción</value>
   </data>
   <data name="Description_Field" xml:space="preserve">
-    <value>Description :</value>
+    <value>Descripción :</value>
   </data>
   <data name="Error_DoesNotExist" xml:space="preserve">
-    <value>does not exist</value>
+    <value>No existe</value>
   </data>
   <data name="Error_LengthGreaterEqual3" xml:space="preserve">
-    <value>length must be &gt;= 3</value>
+    <value>Longitud debe ser  &gt;= 3</value>
   </data>
   <data name="Error_MustMatchConfirmPassword" xml:space="preserve">
-    <value>must match confirm password</value>
+    <value>La contraseña de confirmación debe concordar</value>
   </data>
   <data name="Error_MustMatchPassword" xml:space="preserve">
-    <value>must match password</value>
+    <value>La contraseña debe concordar</value>
   </data>
   <data name="Error_NotAvailable" xml:space="preserve">
-    <value>not available</value>
+    <value>No disponible</value>
   </data>
   <data name="Error_Required" xml:space="preserve">
-    <value>required</value>
+    <value>Requerido</value>
   </data>
   <data name="Error_WrongPassword" xml:space="preserve">
-    <value>wrong password</value>
+    <value>Contraseña incorrecta</value>
   </data>
   <data name="FirstName" xml:space="preserve">
-    <value>First Name</value>
+    <value>Nombre</value>
   </data>
   <data name="FirstName_Field" xml:space="preserve">
-    <value>First Name :</value>
+    <value>Nombre :</value>
   </data>
   <data name="FreePlaces" xml:space="preserve">
-    <value>Free Places</value>
+    <value>Plazas libres</value>
   </data>
   <data name="Has" xml:space="preserve">
-    <value>Has</value>
+    <value>Tiene</value>
   </data>
   <data name="HasReservations" xml:space="preserve">
-    <value>reservations !!!</value>
+    <value>reservaciones !!!</value>
   </data>
   <data name="LastName" xml:space="preserve">
-    <value>Last Name</value>
+    <value>Apellido</value>
   </data>
   <data name="LastName_Field" xml:space="preserve">
-    <value>Last Name :</value>
+    <value>Apellido :</value>
   </data>
   <data name="Load" xml:space="preserve">
-    <value>Load</value>
+    <value>Cargar</value>
   </data>
   <data name="LoginView_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="LoginView_Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Acceder</value>
   </data>
   <data name="LoginView_Message_1" xml:space="preserve">
-    <value>If you don´t have a login and a password, click</value>
+    <value>Si no tiene una cuenta , click</value>
   </data>
   <data name="LoginView_Message_2" xml:space="preserve">
-    <value>here</value>
+    <value>aqui</value>
   </data>
   <data name="LoginView_Message_3" xml:space="preserve">
-    <value>to sign-up.</value>
+    <value>para subscribirse</value>
   </data>
   <data name="LoginView_Password" xml:space="preserve">
-    <value>Password :</value>
+    <value>Contraseña :</value>
   </data>
   <data name="LoginView_Pseudo" xml:space="preserve">
     <value>Pseudo :</value>
   </data>
   <data name="LoginView_Title" xml:space="preserve">
-    <value>Login</value>
+    <value>Acceder</value>
   </data>
   <data name="Menu_SandBox" xml:space="preserve">
     <value>Sand Box</value>
@@ -247,46 +247,46 @@
     <value>Testing Master / Detail</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Nombre</value>
   </data>
   <data name="Name_Field" xml:space="preserve">
-    <value>Name :</value>
+    <value>Nombre :</value>
   </data>
   <data name="NewClient" xml:space="preserve">
-    <value>New Client</value>
+    <value>Nuevo cliente</value>
   </data>
   <data name="NewShow" xml:space="preserve">
-    <value>New Show</value>
+    <value>Nuevo show</value>
   </data>
   <data name="New_reservation" xml:space="preserve">
-    <value>New reservation</value>
+    <value>Nueva reservación</value>
   </data>
   <data name="NoReservations" xml:space="preserve">
-    <value>No reservations</value>
+    <value>Sin reservaciones</value>
   </data>
   <data name="Number_Field" xml:space="preserve">
-    <value>Number :</value>
+    <value>Cantidad :</value>
   </data>
   <data name="PostalCode" xml:space="preserve">
-    <value>Postal Code</value>
+    <value>Codigo postal</value>
   </data>
   <data name="PostalCode_Field" xml:space="preserve">
-    <value>Postal Code :</value>
+    <value>Codigo postal :</value>
   </data>
   <data name="Prices" xml:space="preserve">
-    <value>Prices €</value>
+    <value>Precios €</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Refrescar</value>
   </data>
   <data name="Reservation" xml:space="preserve">
-    <value>Reservation</value>
+    <value>Reservación</value>
   </data>
   <data name="Reservations" xml:space="preserve">
-    <value>Reservations</value>
+    <value>Reservaciones</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Guardar</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>

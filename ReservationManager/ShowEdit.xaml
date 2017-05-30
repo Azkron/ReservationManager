@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:p="clr-namespace:ReservationManager.Properties"
              xmlns:local="clr-namespace:ReservationManager"
              mc:Ignorable="d" 
              FontSize="14" d:DesignHeight="700" d:DesignWidth="700">
@@ -42,10 +43,10 @@
                 <StackPanel Grid.Row="1" Margin="-5,5,5,85">
                     <DockPanel>
                         <StackPanel Margin="5" Grid.Column="1" >
-                            <Button x:Name="btnLoad" Content="Load" Width="99"  Command="{Binding LoadImage}" Margin="0,0,0,5"/>
+                            <Button x:Name="btnLoad" Content="{x:Static p:Resources.Load}" Width="99"  Command="{Binding LoadImage}" Margin="0,0,0,5"/>
                         </StackPanel>
                         <StackPanel Margin="0,5" Grid.Column="2" >
-                            <Button x:Name="btnClear" Content="Clear" Width="99" Command="{Binding ClearImage}" Margin="0,0,0,5"/>
+                            <Button x:Name="btnClear" Content="{x:Static p:Resources.Clear}" Width="99" Command="{Binding ClearImage}" Margin="0,0,0,5"/>
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>
@@ -66,15 +67,15 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <!-- ROW #1 -->
-                <Label Content="Name :" />
+                <Label Content="{x:Static p:Resources.Name_Field}" />
                 <Label Name="lblName" Content="{Binding ShowName, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" Grid.Column="1"/>
                 <TextBox Name="txtName" Grid.Column="1" Text="{Binding ShowName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
                 <!-- ROW #2 -->
-                <Label Content="Description :" Grid.Row="1"/>
+                <Label Content="{x:Static p:Resources.Description_Field}" Grid.Row="1"/>
                 <Label Name="lblDescription" Content="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
                 <TextBox Name="txtDescription" Grid.Row="1" Grid.Column="1" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
                 <!-- ROW #3 -->
-                <Label Content="Date :" Grid.Row="2"/>
+                <Label Content="{x:Static p:Resources.Date_Field}" Grid.Row="2"/>
                 <Label Name="lblDate" Content="{Binding Date, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" Grid.Row="2" Grid.Column="1"/>
                 <DatePicker x:Name="txtDate" Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Margin="0,1,162,1">
                     <DatePicker.Resources>
@@ -83,9 +84,9 @@
                         </Style>
                     </DatePicker.Resources>
                 </DatePicker>
-                <Label Content="Cat Places :" Grid.Row="3"/>
+                <Label Content="{x:Static p:Resources.CategoryPlaces_Field}" Grid.Row="3"/>
                 <Label Content="{Binding Show.FreePlacesString}" Grid.Row="3" Grid.Column="1"/>
-                <Label Content="Cat Price € :" Grid.Row="4"/>
+                <Label Content="{x:Static p:Resources.CategoryPrices_Field}" Grid.Row="4"/>
                 <Label Content="{Binding Show.Prices}" Grid.Row="4" Grid.Column="1"/>
                 <Label Name="lblSetPrice" Content="Set price € :" Grid.Row="5"/>
 
@@ -99,7 +100,7 @@
                     </Grid.ColumnDefinitions>
                     <ComboBox ItemsSource="{Binding Categories}" SelectedValue="{Binding Category}" DisplayMemberPath="Name" Margin="0,0,0,10"/>
                     <TextBox Name="txtPrice" Grid.Column="1" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.735,0.483" Margin="5,0,0,10"/>
-                    <Label Name="txtCurrency" Content=" € " FontSize="12" Grid.Column="2" Margin="0,0,41,0"/>
+                    <Label Name="txtCurrency" Content="{x:Static p:Resources.Currency}" FontSize="12" Grid.Column="2" Margin="0,0,41,0"/>
                     <Button Name="btnDeletePrice" Content="{Binding DeletePriceTxt, UpdateSourceTrigger=PropertyChanged}" Command="{Binding DeletePriceCommand}" Width="auto" Grid.Column="2" Grid.ColumnSpan="2" Margin="44,0,21,10"/>
                     <Label Name="lblPriceHasReservations" Content="{Binding HasReservationsPriceTxt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.ColumnSpan="2" Margin="52,10,0,10"/>
                 </Grid>
@@ -107,8 +108,8 @@
             </Grid>
             <!-- ROW #4 -->
             <WrapPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Width="376" Height="24">
-                <Button Name="btnCancel" Content="Cancel" Command="{Binding CancelCommand}" Width="75" Padding="5,1"/>
-                <Button Name="btnSave" Content="Save" Command="{Binding SaveCommand}" Width="75" Margin="10,0,0,0" Padding="5,1"/>
+                <Button Name="btnCancel" Content="{x:Static p:Resources.Cancel}" Command="{Binding CancelCommand}" Width="75" Padding="5,1"/>
+                <Button Name="btnSave" Content="{x:Static p:Resources.Save}" Command="{Binding SaveCommand}" Width="75" Margin="10,0,0,0" Padding="5,1"/>
                 <Button Name="btnDelete" Content="{Binding DeleteTxt, UpdateSourceTrigger=PropertyChanged}" Command="{Binding DeleteCommand}" Width="75" Margin="10,0,0,0" Padding="5,1"/>
                 <Label Name="lblHasReservations" Content="{Binding HasReservationsTxt, UpdateSourceTrigger=PropertyChanged}" Width ="auto" Height="auto" VerticalAlignment="Top" RenderTransformOrigin="0.5,-1.565"/>
 

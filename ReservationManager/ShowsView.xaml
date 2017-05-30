@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReservationManager"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:p="clr-namespace:ReservationManager.Properties"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700">
@@ -22,11 +23,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Date"/>
+            <Label Content="{x:Static p:Resources.Date}"/>
             <DatePicker SelectedDate="{Binding DateFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="1"/>
-            <Label Content="Name" Grid.Column="2"/>
+            <Label Content="{x:Static p:Resources.Name}" Grid.Column="2"/>
             <TextBox Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="3"/>
-            <Button Content="Clear" Margin="5,0,0,0" Command="{Binding ClearFilter}" Grid.Column="4"/>
+            <Button Content="{x:Static p:Resources.Clear}" Margin="5,0,0,0" Command="{Binding ClearFilter}" Grid.Column="4"/>
         </Grid>
         <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Shows}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedShow}">
@@ -37,18 +38,18 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.Date}" Binding="{Binding Path=Date, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
 
-                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
-                <DataGridTextColumn Header="Free Places" Binding="{Binding Path=FreePlacesString}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
-                <DataGridTextColumn Header="Prices €" Binding="{Binding Path=Prices}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Name}" Binding="{Binding Path=Name}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" Width="*"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.Description}" Binding="{Binding Path=Description}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.FreePlaces}" Binding="{Binding Path=FreePlacesString}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Prices}" Binding="{Binding Path=Prices}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"  Width="*" />
                 
             </DataGrid.Columns>
         </f:MyDataGrid>
-        <Button Grid.Row="2" Name="btnNew" Content="New show" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
+        <Button Grid.Row="2" Name="btnNew" Content="{x:Static p:Resources.NewShow}" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding NewCommand}" HorizontalAlignment="Right" Width="97"/>
-        <Button Content="Refresh" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
+        <Button Content="{x:Static p:Resources.Refresh}" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding RefreshCommand}"/>
     </Grid>
 </f:UserControlBase>

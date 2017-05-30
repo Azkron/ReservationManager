@@ -351,7 +351,7 @@ namespace ReservationManager
             //App.Messenger.NotifyColleagues(App.MSG_CLOSE_TAB, Pseudo);
         }
 
-        private string deleteTxt = "Delete";
+        private string deleteTxt = Properties.Resources.Delete;
         public string DeleteTxt
         {
             get { return deleteTxt; }
@@ -367,7 +367,7 @@ namespace ReservationManager
         {
             if (!confirmDelete)
             {
-                DeleteTxt = "CONFIRM";
+                DeleteTxt = Properties.Resources.Confirm;
                 confirmDelete = true;
             }
             else

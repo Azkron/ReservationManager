@@ -196,9 +196,9 @@ namespace ReservationManager
             {
                 int ResCount = Show.Reservations.Count;
                 if (ResCount > 0)
-                    hasReservationsTxt = ResCount + " reservations !!!";
+                    hasReservationsTxt = ResCount + " " + Properties.Resources.HasReservations;
                 else
-                    hasReservationsTxt = "No reservations";
+                    hasReservationsTxt = Properties.Resources.NoReservations;
 
                 RaisePropertyChanged(nameof(HasReservationsPriceTxt));
             }
@@ -422,7 +422,7 @@ namespace ReservationManager
                 if (!confirmDelete)
                 {
                     confirmDelete = true;
-                    DeleteTxt = "CONFIRM";
+                    DeleteTxt = Properties.Resources.Confirm;
                 }
                 else
                 {
@@ -458,7 +458,7 @@ namespace ReservationManager
                 if(!confirmPriceDelete)
                 {
                     confirmPriceDelete = true;
-                    DeletePriceTxt = "CONFIRM";
+                    DeletePriceTxt = Properties.Resources.Confirm;
                 }
                 else
                 {

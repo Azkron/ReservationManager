@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ReservationManager"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:p="clr-namespace:ReservationManager.Properties"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="700">
@@ -22,11 +23,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Name"/>
+            <Label Content="{x:Static p:Resources.Name}"/>
             <TextBox Text="{Binding NameFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="1"/>
-            <Label Content="Postal Code" Grid.Column="2"/>
+            <Label Content="{x:Static p:Resources.PostalCode}" Grid.Column="2"/>
             <TextBox Text="{Binding PostalCodeFilter, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Grid.Column="3"/>
-            <Button Content="Clear" Margin="5,0,0,0" Command="{Binding ClearFilter}" Grid.Column="4"/>
+            <Button Content="{x:Static p:Resources.Clear}" Margin="5,0,0,0" Command="{Binding ClearFilter}" Grid.Column="4"/>
         </Grid>
         <f:MyDataGrid x:Name="dataGrid" Grid.Row="1" ItemsSource="{Binding Clients}" IsValid="{Binding IsValid, Mode=OneWayToSource}" Margin="10" 
                       SelectedItem="{Binding SelectedClient}">
@@ -37,17 +38,17 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Last Name" Width="*"  Binding="{Binding Path=LastName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
-                <DataGridTextColumn Header="First Name" Width="*" Binding="{Binding Path=FirstName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
-                <DataGridTextColumn Header="Postal Code" Width="*" Binding="{Binding Path=PostalCode}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
-                <DataGridTextColumn Header="Bdd" Width="*" Binding="{Binding Path=Bdd, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
-                <DataGridTextColumn Header="Reservations" Width="*" Binding="{Binding Path=TotalReservations}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
+                <DataGridTextColumn Header="{x:Static p:Resources.LastName}" Width="*"  Binding="{Binding Path=LastName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.FirstName}" Width="*" Binding="{Binding Path=FirstName}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.PostalCode}" Width="*" Binding="{Binding Path=PostalCode}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
+                <DataGridTextColumn Header="{x:Static p:Resources.Bdd}" Width="*" Binding="{Binding Path=Bdd, StringFormat=\{0:dd/MM/yyyy\}}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.Reservations}" Width="*" Binding="{Binding Path=TotalReservations}" CanUserSort="True" IsReadOnly="True" SortDirection="Descending" />
                 
             </DataGrid.Columns>
         </f:MyDataGrid>
-        <Button Grid.Row="2" Name="btnNew" Content="New Client" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
+        <Button Grid.Row="2" Name="btnNew" Content="{x:Static p:Resources.NewClient}" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding NewCommand}" HorizontalAlignment="Right" Width="97"/>
-        <Button Content="Refresh" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
+        <Button Content="{x:Static p:Resources.Refresh}" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="1.822,-0.32"
                 Command="{Binding RefreshCommand}"/>
     </Grid>
 </f:UserControlBase>

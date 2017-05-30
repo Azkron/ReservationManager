@@ -5,14 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:p="clr-namespace:ReservationManager.Properties"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
              xmlns:local="clr-namespace:ReservationManager"
              mc:Ignorable="d" 
              FontSize="14" d:DesignHeight="390" d:DesignWidth="528">
-    <UserControl.Resources>
-        <BitmapImage x:Key="UnknownUser" UriSource="images/unknown-user.jpg"/>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -31,17 +28,17 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- ROW #1 -->
-            <Label Content="Last Name :" />
+            <Label Content="{x:Static p:Resources.LastName_Field}" />
             <Label Name="lblLastName" Content="{Binding LastName}" Visibility="Collapsed" Grid.Column="1"/>
             <TextBox Name="txtLastName" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
             
             <!-- ROW #2 -->
-            <Label Content="First Name :" Grid.Row="1"/>
+            <Label Content="{x:Static p:Resources.FirstName_Field}" Grid.Row="1"/>
             <Label Name="lblFirstName" Content="{Binding FirstName}" Visibility="Collapsed" Grid.Row="1" Grid.Column="1"/>
             <TextBox Name="txtFirstName" Grid.Row="1" Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
             
             <!-- ROW #3 -->
-            <Label Content="Bdd :" Grid.Row="2"/>
+            <Label Content="{x:Static p:Resources.Bdd_Field}" Grid.Row="2"/>
             <Label Name="lblBdd" Content="{Binding Bdd}" Visibility="Collapsed" Grid.Row="2" Grid.Column="1"/>
             <DatePicker Name="txtBdd" Grid.Row="2" Grid.Column="1" SelectedDate="{Binding Bdd, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
                 <DatePicker.Resources>
@@ -52,15 +49,15 @@
             </DatePicker>
         
             <!-- ROW #4 -->
-            <Label Content="Postal Code :" Grid.Row="3"/>
+            <Label Content="{x:Static p:Resources.PostalCode_Field}" Grid.Row="3"/>
             <Label Name="lblPostalCode" Content="{Binding PostalCode}" Visibility="Collapsed" Grid.Row="3" Grid.Column="1"/>
             <TextBox Name="txtPostalCode" Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding ReadOnly}" VerticalAlignment="Center" />
         
             <!-- ROW #4 -->
             <WrapPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" Width="166">
-                <Button Name="btnCancel" Content="Cancel" Command="{Binding CancelCommand}" Width="auto" Padding="5,1"/>
-                <Button Name="btnSave" Content="Save" Command="{Binding SaveCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
-                <Button Name="btnDelete" Content="Delete" Command="{Binding DeleteCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
+                <Button Name="btnCancel" Content="{x:Static p:Resources.Cancel}" Command="{Binding CancelCommand}" Width="auto" Padding="5,1"/>
+                <Button Name="btnSave" Content="{x:Static p:Resources.Save}" Command="{Binding SaveCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
+                <Button Name="btnDelete" Content="{x:Static p:Resources.Delete}" Command="{Binding DeleteCommand}" Width="auto" Margin="10,0,0,0" Padding="5,1"/>
             </WrapPanel>
         </Grid>
         <DockPanel Grid.Row="1"  Margin="0,0,5,0">

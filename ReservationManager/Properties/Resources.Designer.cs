@@ -61,6 +61,24 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bdd.
+        /// </summary>
+        public static string Bdd {
+            get {
+                return ResourceManager.GetString("Bdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bdd :.
+        /// </summary>
+        public static string Bdd_Field {
+            get {
+                return ResourceManager.GetString("Bdd_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -75,6 +93,33 @@ namespace ReservationManager.Properties {
         public static string Category {
             get {
                 return ResourceManager.GetString("Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category :.
+        /// </summary>
+        public static string Category_Field {
+            get {
+                return ResourceManager.GetString("Category_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cat Places :.
+        /// </summary>
+        public static string CategoryPlaces_Field {
+            get {
+                return ResourceManager.GetString("CategoryPlaces_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cat Prices € :.
+        /// </summary>
+        public static string CategoryPrices_Field {
+            get {
+                return ResourceManager.GetString("CategoryPrices_Field", resourceCulture);
             }
         }
         
@@ -97,11 +142,29 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client :.
+        /// </summary>
+        public static string Client_Field {
+            get {
+                return ResourceManager.GetString("Client_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
             get {
                 return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to €.
+        /// </summary>
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
             }
         }
         
@@ -115,11 +178,38 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date :.
+        /// </summary>
+        public static string Date_Field {
+            get {
+                return ResourceManager.GetString("Date_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description :.
+        /// </summary>
+        public static string Description_Field {
+            get {
+                return ResourceManager.GetString("Description_Field", resourceCulture);
             }
         }
         
@@ -187,11 +277,74 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name :.
+        /// </summary>
+        public static string FirstName_Field {
+            get {
+                return ResourceManager.GetString("FirstName_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free Places.
+        /// </summary>
+        public static string FreePlaces {
+            get {
+                return ResourceManager.GetString("FreePlaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Has.
         /// </summary>
         public static string Has {
             get {
                 return ResourceManager.GetString("Has", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to reservations !!!.
+        /// </summary>
+        public static string HasReservations {
+            get {
+                return ResourceManager.GetString("HasReservations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name :.
+        /// </summary>
+        public static string LastName_Field {
+            get {
+                return ResourceManager.GetString("LastName_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string Load {
+            get {
+                return ResourceManager.GetString("Load", resourceCulture);
             }
         }
         
@@ -241,7 +394,7 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password:.
+        ///   Looks up a localized string similar to Password :.
         /// </summary>
         public static string LoginView_Password {
             get {
@@ -250,7 +403,7 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pseudo:.
+        ///   Looks up a localized string similar to Pseudo :.
         /// </summary>
         public static string LoginView_Pseudo {
             get {
@@ -304,11 +457,83 @@ namespace ReservationManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name :.
+        /// </summary>
+        public static string Name_Field {
+            get {
+                return ResourceManager.GetString("Name_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New reservation.
         /// </summary>
         public static string New_reservation {
             get {
                 return ResourceManager.GetString("New_reservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Client.
+        /// </summary>
+        public static string NewClient {
+            get {
+                return ResourceManager.GetString("NewClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Show.
+        /// </summary>
+        public static string NewShow {
+            get {
+                return ResourceManager.GetString("NewShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No reservations.
+        /// </summary>
+        public static string NoReservations {
+            get {
+                return ResourceManager.GetString("NoReservations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number :.
+        /// </summary>
+        public static string Number_Field {
+            get {
+                return ResourceManager.GetString("Number_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postal Code.
+        /// </summary>
+        public static string PostalCode {
+            get {
+                return ResourceManager.GetString("PostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postal Code :.
+        /// </summary>
+        public static string PostalCode_Field {
+            get {
+                return ResourceManager.GetString("PostalCode_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prices €.
+        /// </summary>
+        public static string Prices {
+            get {
+                return ResourceManager.GetString("Prices", resourceCulture);
             }
         }
         
@@ -354,6 +579,15 @@ namespace ReservationManager.Properties {
         public static string Show {
             get {
                 return ResourceManager.GetString("Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show :.
+        /// </summary>
+        public static string Show_Field {
+            get {
+                return ResourceManager.GetString("Show_Field", resourceCulture);
             }
         }
     }
